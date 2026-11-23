@@ -1,240 +1,1250 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pilmu · Más reseñas en Google para tu negocio</title>
-<meta name="description" content="Placas con NFC y QR que llevan a tu carta o tus servicios, a tu Instagram y a tu reseña en Google.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="icon" href="favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
-<meta name="theme-color" content="#2133d2">
-<meta name="apple-mobile-web-app-title" content="pilmu">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --mar: #2133d2;        /* azul mar: color de marca */
-    --mar-deep: #1626a8;
-    --tiza: #f2f4fb;       /* fondo claro, blanco frío */
-    --tinta: #0c1130;      /* texto y fondo oscuro */
-    --sandia: #ff5c7a;     /* acento: solo botones y ondas */
-    --aigua: #c9d3ff;      /* azul claro de apoyo */
-    --display: "Gabarito", "Trebuchet MS", system-ui, sans-serif;
-    --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
-  * { box-sizing: border-box; margin: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--body); font-size: 18px; line-height: 1.6; color: var(--tinta); background: var(--tiza); }
-  a { color: inherit; }
-  a:focus-visible, .btn:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
-  .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>pilmu · Cartas Digitales, Miniwebs y Placas NFC para Negocios</title>
+  <meta name="description" content="Cartas digitales interactivas, pedidos directos por WhatsApp, placas NFC y QR para mesas y mostradores, Wi-Fi en un toque y más reseñas en Google." />
 
-  /* Marca */
-  .logo { font-family: var(--display); font-weight: 800; font-size: 30px; letter-spacing: -.02em; text-decoration: none; line-height: 1; display: inline-flex; align-items: baseline; }
-  .logo .i { position: relative; display: inline-block; }
-  .logo .i::after { content: ""; position: absolute; left: 50%; top: -.04em; width: .2em; height: .2em; margin-left: -.1em; border-radius: 50%; background: var(--sandia); }
+  <!-- Iconos y Manifest existentes en la raíz de pilmu.com -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#0b1120" />
+  <meta name="apple-mobile-web-app-title" content="pilmu" />
 
-  /* Botones */
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 26px; border-radius: 999px; font: 600 17px/1.2 var(--body); text-decoration: none; border: 2px solid transparent; cursor: pointer; }
-  .btn svg { width: 20px; height: 20px; flex: none; }
-  .btn-main { background: var(--sandia); color: var(--tinta); }
-  .btn-main:hover { background: #ff7a93; }
-  .btn-line { border-color: currentColor; }
-  .btn-line:hover { background: rgba(255,255,255,.12); }
-  .btn-small { padding: 10px 20px; font-size: 15px; }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  /* Portada */
-  .hero { background: var(--mar); color: #fff; overflow-x: clip; }
-  .bar { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-  .hero-grid { display: grid; gap: 28px; padding: 28px 0 72px; align-items: center; }
-  h1 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 8.2vw, 72px); line-height: 1; letter-spacing: -.025em; max-width: 12ch; }
-  .lead { margin: 22px 0 32px; font-size: 19px; color: var(--aigua); max-width: 46ch; }
-  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  <style>
+    :root {
+      --bg-dark: #0b1120;
+      --bg-dark-card: #131c31;
+      --bg-dark-elevated: #1b2640;
+      --bg-light: #faf9f6;
+      --bg-white: #ffffff;
+      --bg-sand: #f1efe9;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-soft: rgba(37, 99, 235, 0.10);
+      --gold: #d4af37;
+      --gold-warm: #f59e0b;
+      --whatsapp: #25d366;
+      --whatsapp-dark: #062411;
+      --ink-dark: #0f172a;
+      --ink-muted: #475569;
+      --ink-light: #f8fafc;
+      --ink-light-muted: #94a3b8;
+      --border-light: rgba(15, 23, 42, 0.09);
+      --border-dark: rgba(255, 255, 255, 0.11);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-lg: 0 24px 48px -12px rgba(11, 17, 32, 0.14);
+      --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Fraunces", Georgia, serif;
+    }
 
-  /* El toque: placa + móvil */
-  .stage { position: relative; width: 100%; max-width: 450px; height: 430px; margin: 0 auto; }
-  .plaque { position: absolute; left: 0; bottom: 6px; width: 206px; height: 290px; background: var(--tiza); color: var(--tinta); border-radius: 24px; transform: rotate(-7deg); padding: 22px 18px; box-shadow: 0 30px 50px rgba(6,10,70,.35); }
-  .nfc { position: relative; width: 62px; height: 62px; border-radius: 50%; background: var(--mar); display: grid; place-items: center; margin-bottom: 16px; }
-  .nfc svg { width: 32px; height: 32px; }
-  .rip { position: absolute; inset: 0; border-radius: 50%; border: 2.5px solid var(--sandia); opacity: 0; animation: rip 2.6s ease-out 3 backwards; }
-  .rip:nth-child(2) { animation-delay: .45s; }
-  .rip:nth-child(3) { animation-delay: .9s; }
-  @keyframes rip { from { transform: scale(1); opacity: .95; } to { transform: scale(4.6); opacity: 0; } }
-  .plaque h2 { font-family: var(--display); font-size: 22px; line-height: 1.05; font-weight: 800; margin-bottom: 14px; }
-  .plaque ul { list-style: none; padding: 0; }
-  .plaque li { font-size: 14px; font-weight: 600; padding: 8px 0; border-top: 1.5px solid rgba(12,17,48,.18); }
-  .phone { position: absolute; left: 196px; top: 0; width: 214px; height: 404px; border-radius: 36px; background: #090c24; padding: 8px; transform: rotate(6deg); box-shadow: 0 30px 60px rgba(6,10,70,.45); z-index: 2; }
-  .screen { height: 100%; border-radius: 29px; background: #26272a; color: #f6f1e7; padding: 30px 14px 14px; display: flex; flex-direction: column; gap: 8px; text-align: center; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-  .screen .nm { color: #f39a2e; font-weight: 800; font-size: 25px; text-transform: uppercase; line-height: 1; }
-  .screen .ad { color: #bdbdc2; font-size: 9.5px; }
-  .screen .hi { font-size: 11px; margin: 2px 0 4px; }
-  .screen .b { background: #36383c; border: 1px solid rgba(246,241,231,.15); border-radius: 10px; padding: 9px 6px; font-size: 11.5px; font-weight: 600; }
-  .screen .b.go { background: #f39a2e; color: #1f1f21; border-color: #f39a2e; padding: 11px 6px; }
-  .screen .st { color: #f39a2e; font-size: 17px; letter-spacing: 3px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* Secciones claras */
-  section { padding: 84px 0; }
-  h2.t { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 5.4vw, 48px); line-height: 1.04; letter-spacing: -.02em; }
-  .sub { margin-top: 14px; color: #4a4f6b; max-width: 48ch; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  .steps { list-style: none; padding: 0; margin-top: 44px; display: grid; gap: 0; }
-  .steps li { border-top: 3px solid var(--tinta); padding: 18px 0 30px; }
-  .steps .n { font-family: var(--display); font-weight: 800; font-size: 64px; line-height: 1; color: var(--mar); }
-  .steps h3 { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.15; margin: 10px 0 8px; }
-  .steps p { color: #4a4f6b; max-width: 34ch; }
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink-dark);
+      background-color: var(--bg-light);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  .incl { background: #fff; }
-  .incl .wrap { display: grid; gap: 36px; }
-  dl.rows { display: grid; }
-  .rows div { border-top: 1.5px solid rgba(12,17,48,.18); padding: 22px 0; }
-  .rows div:last-child { border-bottom: 1.5px solid rgba(12,17,48,.18); }
-  .rows dt { font-family: var(--display); font-weight: 700; font-size: 23px; line-height: 1.15; margin-bottom: 6px; }
-  .rows dd { color: #4a4f6b; max-width: 52ch; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  .try { background: var(--aigua); }
-  .try .wrap { display: grid; gap: 24px; align-items: end; }
-  .try .btn { background: var(--tinta); color: #fff; justify-self: start; }
-  .try .btn:hover { background: #1c2354; }
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-  .talk { background: var(--mar); color: #fff; }
-  .talk h2.t { max-width: 14ch; }
-  .talk p { margin: 16px 0 30px; color: var(--aigua); max-width: 42ch; }
+    /* Marca pilmu */
+    .brand-logo {
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      display: inline-flex;
+      align-items: baseline;
+      line-height: 1;
+    }
 
-  footer { background: var(--tinta); color: #aab1d6; padding: 28px 0; font-size: 15px; }
-  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+    .brand-logo .dotless-i {
+      position: relative;
+      display: inline-block;
+    }
 
-  @media (min-width: 820px) {
-    .hero-grid { grid-template-columns: 1.1fr .9fr; padding-bottom: 96px; }
-    .steps { grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    .incl .wrap { grid-template-columns: .8fr 1.2fr; gap: 64px; }
-    .try .wrap { grid-template-columns: 1.4fr 1fr; }
-    .try .btn { justify-self: end; }
-  }
-  @media (max-width: 440px) { .stage { max-width: 340px; height: 380px; } .plaque { width: 164px; height: 238px; padding: 16px 14px; } .plaque h2 { font-size: 18px; } .plaque li { font-size: 12.5px; padding: 6px 0; } .nfc { width: 52px; height: 52px; margin-bottom: 12px; } .phone { left: 146px; width: 190px; height: 360px; } .screen { padding-top: 26px; } .screen .nm { font-size: 22px; } }
-  @media (prefers-reduced-motion: reduce) {
-    .rip { animation: none; opacity: .5; }
-    .rip:nth-child(1) { transform: scale(1.9); }
-    .rip:nth-child(2) { transform: scale(2.8); opacity: .32; }
-    .rip:nth-child(3) { transform: scale(3.7); opacity: .18; }
-    html { scroll-behavior: auto; }
-  }
-</style>
+    .brand-logo .dotless-i::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -0.04em;
+      width: 0.22em;
+      height: 0.22em;
+      margin-left: -0.11em;
+      border-radius: 50%;
+      background: var(--gold-warm);
+    }
+
+    /* Botones */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.2;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform 0.16s ease, background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn svg {
+      width: 19px;
+      height: 19px;
+      flex-shrink: 0;
+    }
+
+    .btn-wa {
+      background: var(--whatsapp);
+      color: var(--whatsapp-dark);
+      box-shadow: 0 10px 24px rgba(37, 211, 102, 0.24);
+    }
+
+    .btn-wa:hover {
+      background: #2be06e;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost-light {
+      background: rgba(255, 255, 255, 0.07);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .btn-ghost-light:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.38);
+    }
+
+    .btn-dark {
+      background: var(--bg-dark);
+      color: #ffffff;
+    }
+
+    .btn-dark:hover {
+      background: #1e293b;
+    }
+
+    .btn-sm {
+      padding: 10px 18px;
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       HERO COMERCIAL OSCURO CON DEMOSTRACIÓN INTERACTIVA
+       ========================================================= */
+    .hero {
+      background: radial-gradient(circle at 78% 22%, rgba(37, 99, 235, 0.24), transparent 46%),
+                  radial-gradient(circle at 18% 82%, rgba(212, 175, 55, 0.12), transparent 44%),
+                  var(--bg-dark);
+      color: var(--ink-light);
+      padding-bottom: 76px;
+      position: relative;
+      overflow-x: clip;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .nav-links {
+      display: none;
+      gap: 28px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink-light-muted);
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    @media (min-width: 860px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 44px;
+      padding-top: 44px;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1.12fr 0.88fr;
+        padding-top: 60px;
+      }
+    }
+
+    .eyebrow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 13px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--whatsapp);
+      box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.2);
+    }
+
+    .hero h1 {
+      font-weight: 800;
+      font-size: clamp(36px, 5.4vw, 58px);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #60a5fa;
+    }
+
+    .hero-lead {
+      font-size: 17.5px;
+      color: #cbd5e1;
+      max-width: 52ch;
+      margin-bottom: 28px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      font-size: 13.5px;
+      color: var(--ink-light-muted);
+    }
+
+    .hero-trust span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Escenario interactivo: Placa NFC + Teléfono */
+    .showcase-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 410px;
+      margin: 0 auto;
+    }
+
+    .nfc-plaque {
+      position: absolute;
+      left: 0;
+      bottom: 14px;
+      width: 194px;
+      height: 274px;
+      background: linear-gradient(155deg, #ffffff 0%, #f1f5f9 100%);
+      color: var(--ink-dark);
+      border-radius: 24px;
+      transform: rotate(-6deg);
+      padding: 20px 16px;
+      box-shadow: 0 28px 50px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .nfc-wave-badge {
+      position: relative;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+    }
+
+    .nfc-wave-badge svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .pulse-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      opacity: 0;
+      animation: nfcPulse 2.8s ease-out infinite;
+    }
+
+    .pulse-ring:nth-child(2) {
+      animation-delay: 0.9s;
+    }
+
+    @keyframes nfcPulse {
+      0% { transform: scale(1); opacity: 0.85; }
+      100% { transform: scale(2.35); opacity: 0; }
+    }
+
+    .plaque-title {
+      font-weight: 800;
+      font-size: 19px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .plaque-sub {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.35;
+    }
+
+    .plaque-mini-qr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid rgba(15, 23, 42, 0.12);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Teléfono mockup real */
+    .phone-frame {
+      position: absolute;
+      right: 4px;
+      top: 0;
+      width: 222px;
+      height: 394px;
+      border-radius: 36px;
+      background: #05070e;
+      padding: 8px;
+      transform: rotate(4deg);
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.14);
+      z-index: 2;
+    }
+
+    .phone-screen {
+      height: 100%;
+      border-radius: 29px;
+      background: #111114;
+      color: #f6f3ec;
+      padding: 20px 13px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .phone-pill-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      color: #a1a1aa;
+    }
+
+    .phone-live-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 7px;
+      border-radius: 999px;
+      color: #e4e4e7;
+    }
+
+    .phone-live-dot::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .phone-biz-title {
+      font-family: var(--font-serif);
+      font-size: 21px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-top: 4px;
+    }
+
+    .phone-biz-loc {
+      font-size: 9.5px;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .phone-dynamic-box {
+      background: #19191f;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 10px;
+      text-align: left;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      margin: 4px 0 8px;
+    }
+
+    .mock-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #22222a;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 10px;
+    }
+
+    .mock-price {
+      background: rgba(212, 175, 55, 0.18);
+      color: var(--gold);
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .phone-cta-bar {
+      background: var(--gold);
+      color: #121214;
+      font-weight: 800;
+      font-size: 10.5px;
+      padding: 9px 8px;
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* Selector interactivo debajo del mockup */
+    .preview-tabs {
+      display: inline-flex;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 5px;
+      border-radius: 999px;
+      border: 1px solid var(--border-dark);
+      margin-top: 14px;
+    }
+
+    .preview-tab {
+      border: none;
+      background: transparent;
+      color: #cbd5e1;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 7px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .preview-tab.active {
+      background: #ffffff;
+      color: var(--ink-dark);
+    }
+
+    /* =========================================================
+       SECCIONES COMERCIALES
+       ========================================================= */
+    .section {
+      padding: 84px 0;
+    }
+
+    .section-white {
+      background: var(--bg-white);
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .section-header {
+      max-width: 640px;
+      margin-bottom: 48px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-weight: 800;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--ink-dark);
+      margin-bottom: 14px;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--ink-muted);
+    }
+
+    /* Grid de 6 funcionalidades */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 640px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 960px) {
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .feature-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 28px 24px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3 {
+      font-size: 19px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      color: var(--ink-dark);
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      color: var(--ink-muted);
+    }
+
+    /* Sectores / Tipos de negocio */
+    .sector-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 820px) {
+      .sector-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .sector-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sector-badge {
+      display: inline-block;
+      align-self: flex-start;
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .sector-card h3 {
+      font-size: 21px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .sector-list {
+      list-style: none;
+      margin: 14px 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14.5px;
+      color: var(--ink-muted);
+    }
+
+    .sector-list li::before {
+      content: "✓ ";
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    /* Pasos de puesta en marcha */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 820px) {
+      .steps-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .step-box {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 28px 24px;
+      position: relative;
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--bg-dark);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 17px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+    }
+
+    .step-box h3 {
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .step-box p {
+      font-size: 15px;
+      color: var(--ink-muted);
+    }
+
+    /* Banner Demo Real en Vivo */
+    .demo-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      border-radius: 28px;
+      padding: 36px 28px;
+      display: grid;
+      gap: 24px;
+      align-items: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    @media (min-width: 820px) {
+      .demo-banner {
+        grid-template-columns: 1.35fr 0.65fr;
+        padding: 48px 44px;
+      }
+    }
+
+    .demo-banner h2 {
+      font-size: clamp(26px, 3.6vw, 36px);
+      font-weight: 800;
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .demo-banner p {
+      color: #cbd5e1;
+      font-size: 16px;
+      max-width: 50ch;
+    }
+
+    .demo-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    @media (min-width: 820px) {
+      .demo-actions {
+        align-items: flex-end;
+      }
+    }
+
+    /* Preguntas Frecuentes (Acordeón limpio) */
+    .faq-list {
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    details.faq-item {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+    }
+
+    details.faq-item summary {
+      font-weight: 700;
+      font-size: 16.5px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    details.faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.faq-item summary::after {
+      content: "+";
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    details.faq-item[open] summary::after {
+      content: "−";
+    }
+
+    details.faq-item p {
+      margin-top: 12px;
+      font-size: 15px;
+      color: var(--ink-muted);
+      padding-top: 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    /* Cierre Comercial */
+    .cta-final {
+      background: var(--bg-dark);
+      color: #ffffff;
+      padding: 84px 0;
+      text-align: center;
+    }
+
+    .cta-final h2 {
+      font-size: clamp(30px, 4.5vw, 46px);
+      font-weight: 800;
+      line-height: 1.1;
+      max-width: 18ch;
+      margin: 0 auto 14px;
+    }
+
+    .cta-final p {
+      color: #cbd5e1;
+      font-size: 17px;
+      max-width: 46ch;
+      margin: 0 auto 30px;
+    }
+
+    .cta-final-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* Footer */
+    footer {
+      background: #070b14;
+      color: #94a3b8;
+      padding: 28px 0;
+      font-size: 14px;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px 24px;
+    }
+
+    .footer-inner a:hover {
+      color: #ffffff;
+    }
+
+    @media (max-width: 430px) {
+      .stage { max-width: 336px; height: 375px; }
+      .nfc-plaque { width: 158px; height: 235px; padding: 15px 13px; }
+      .plaque-title { font-size: 16px; }
+      .phone-frame { width: 194px; height: 356px; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="wrap">
-    <div class="bar">
-      <a class="logo" href="#" aria-label="pilmu">p<span class="i">ı</span>lmu</a>
-      <a class="btn btn-main btn-small" href="https://wa.me/34665075934?text=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20pilmu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.2-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
-        WhatsApp
-      </a>
+  <!-- CABECERA Y PORTADA PRINCIPAL -->
+  <header class="hero">
+    <div class="container">
+      <nav class="navbar">
+        <a class="brand-logo" href="#" aria-label="pilmu">p<span class="dotless-i">ı</span>lmu</a>
+
+        <div class="nav-links">
+          <a href="#soluciones">Qué incluye</a>
+          <a href="#negocios">Para tu negocio</a>
+          <a href="#como-funciona">Cómo funciona</a>
+          <a href="#ejemplo-real">Ver demo</a>
+        </div>
+
+        <a class="btn btn-wa btn-sm" href="https://wa.me/34665075934?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20cartas%20digitales%20y%20placas%20NFC%20de%20pilmu" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.2-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+          WhatsApp
+        </a>
+      </nav>
+
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow-pill">
+            <span class="eyebrow-dot"></span>
+            Cartas digitales, pedidos y placas NFC · Mallorca
+          </div>
+
+          <h1>Tu carta digital, pedidos y reseñas <span>en un solo toque.</span></h1>
+
+          <p class="hero-lead">
+            Diseñamos la miniweb a medida de tu negocio y la conectamos a placas con <strong>NFC y código QR</strong> para tus mesas o mostrador. Sin apps que descargar y sin comisiones por pedido.
+          </p>
+
+          <div class="hero-cta-row">
+            <a class="btn btn-wa" href="https://wa.me/34665075934?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20presupuesto%20para%20mi%20negocio%20con%20pilmu" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.2-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+              Solicitar información por WhatsApp
+            </a>
+            <a class="btn btn-ghost-light" href="https://pilmu.com/bar_es_cau/" target="_blank" rel="noopener">
+              Ver demo en vivo →
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <span>✓ Sin cuotas ni comisiones por pedido</span>
+            <span>✓ Bilingüe Español / Inglés</span>
+            <span>✓ Listo en 48 horas</span>
+          </div>
+        </div>
+
+        <!-- Demostración visual interactiva -->
+        <div class="showcase-wrap">
+          <div class="stage" aria-label="Placa NFC de pilmu junto a un móvil mostrando la miniweb de Bar Es Cau">
+            <div class="nfc-plaque">
+              <div>
+                <div class="nfc-wave-badge">
+                  <span class="pulse-ring"></span>
+                  <span class="pulse-ring"></span>
+                  <svg viewBox="0 0 32 32" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+                    <circle cx="8" cy="16" r="2.2" fill="#ffffff" stroke="none" />
+                    <path d="M13 10.5a7.5 7.5 0 0 1 0 11" />
+                    <path d="M18 7a12 12 0 0 1 0 18" />
+                    <path d="M23 3.8a16 16 0 0 1 0 24.4" />
+                  </svg>
+                </div>
+                <div class="plaque-title">Acerca tu móvil</div>
+                <div class="plaque-sub">Carta digital, Wi-Fi, Instagram y reseñas al instante.</div>
+              </div>
+              <div class="plaque-mini-qr">
+                <span>NFC + QR</span>
+                <span>pilmu.com</span>
+              </div>
+            </div>
+
+            <div class="phone-frame">
+              <div class="phone-screen" id="phoneScreenPreview">
+                <div>
+                  <div class="phone-pill-top">
+                    <span class="phone-live-dot">Abierto ahora</span>
+                    <span>ES | EN</span>
+                  </div>
+                  <div class="phone-biz-title">Bar Es Cau</div>
+                  <div class="phone-biz-loc">📍 Ronda Felanitx, 65</div>
+                </div>
+
+                <div class="phone-dynamic-box" id="phoneDynamicContent">
+                  <div class="mock-row"><span>Variado Mallorquín</span><span class="mock-price">7,50 €</span></div>
+                  <div class="mock-row"><span>Pa amb Oli Serrà</span><span class="mock-price">6,80 €</span></div>
+                  <div class="mock-row"><span>Llonguet Camaiot</span><span class="mock-price">4,50 €</span></div>
+                </div>
+
+                <a href="https://pilmu.com/bar_es_cau/" target="_blank" rel="noopener" class="phone-cta-bar" id="phoneCtaLabel">
+                  📲 Pedir por WhatsApp →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-tabs" role="tablist" aria-label="Vistas de ejemplo en el móvil">
+            <button type="button" class="preview-tab active" onclick="switchMockup('menu', this)">📖 Carta y Pedidos</button>
+            <button type="button" class="preview-tab" onclick="switchMockup('wifi', this)">📶 Wi-Fi 1 Toque</button>
+            <button type="button" class="preview-tab" onclick="switchMockup('reviews', this)">⭐ Reseñas</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="hero-grid">
-      <div>
-        <h1>Tus clientes te dejan su reseña con solo acercar el móvil.</h1>
-        <p class="lead">Una placa con NFC y código QR para tu mostrador, tu barra o tus mesas. Tu cliente acerca el móvil y ve tu carta o tus servicios, te sigue en Instagram y te deja una reseña en Google.</p>
-        <div class="actions">
-          <a class="btn btn-main" href="https://wa.me/34665075934?text=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20pilmu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.2-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
-            Escríbenos por WhatsApp
+  </header>
+
+  <main>
+    <!-- QUÉ INCLUYE EL SERVICIO -->
+    <section id="soluciones" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Todo en uno para tu local</span>
+          <h2 class="section-title">Mucho más que un QR con un PDF lento</h2>
+          <p class="section-desc">
+            Tus clientes abren una miniweb rápida, clara y pensada para vender más en sala, para recoger o a domicilio.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon">📖</div>
+            <h3>Carta digital interactiva</h3>
+            <p>Organizada por categorías, con fotos reales de tus platos o servicios, precios claros y filtro de alérgenos integrado.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">📲</div>
+            <h3>Pedidos directos por WhatsApp</h3>
+            <p>El cliente elige sus platos, indica si recoge en el local o pide a domicilio y te llega el pedido listo a tu WhatsApp, sin comisiones.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">📡</div>
+            <h3>Placas NFC y QR personalizadas</h3>
+            <p>Soportes físicos resistentes con el nombre de tu negocio para mesas, barra o escaparate. Funcionan acercando el móvil o escaneando.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <h3>Español e Inglés en un clic</h3>
+            <p>Pensado para el cliente local y el visitante extranjero: cambian el idioma de toda la carta al instante desde la barra superior.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">📶</div>
+            <h3>Wi-Fi para clientes en 1 toque</h3>
+            <p>Olvídate de repetir la contraseña diez veces al día: tus clientes ven la red y copian la clave con un solo botón.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⭐</div>
+            <h3>Más reseñas en Google e Instagram</h3>
+            <p>Acceso directo a tu ficha de Google Maps y a tu perfil de Instagram para convertir clientes satisfechos en nuevas valoraciones.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARA QUÉ NEGOCIOS -->
+    <section id="negocios" class="section section-white">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Adaptado a tu actividad</span>
+          <h2 class="section-title">Diseñado para negocios que atienden al público</h2>
+          <p class="section-desc">
+            Personalizamos colores, logotipo, textos y funciones según lo que necesite tu establecimiento.
+          </p>
+        </div>
+
+        <div class="sector-grid">
+          <div class="sector-card">
+            <div>
+              <span class="sector-badge">🍽️ Hostelería</span>
+              <h3>Bares y Restaurantes</h3>
+              <p style="font-size:14.5px; color:var(--ink-muted);">Agiliza el servicio en horas punta y facilita pedidos para llevar sin depender de plataformas externas.</p>
+              <ul class="sector-list">
+                <li>Carta completa con alérgenos e idiomas</li>
+                <li>Carrito de pedidos directo a WhatsApp</li>
+                <li>Placas NFC/QR para cada mesa o barra</li>
+              </ul>
+            </div>
+            <a href="https://pilmu.com/bar_es_cau/" target="_blank" rel="noopener" style="font-weight:700; font-size:14.5px; color:var(--primary);">Ver ejemplo de Bar Es Cau →</a>
+          </div>
+
+          <div class="sector-card">
+            <div>
+              <span class="sector-badge">🥐 Cafeterías y Take Away</span>
+              <h3>Cafés, Hornos y Heladerías</h3>
+              <p style="font-size:14.5px; color:var(--ink-muted);">Ideal para desayunos rápidos, encargos por adelantado y fidelización de clientes habituales.</p>
+              <ul class="sector-list">
+                <li>Galería visual de especialidades del día</li>
+                <li>Botón directo de Wi-Fi e Instagram</li>
+                <li>Icono instalable en el móvil del cliente</li>
+              </ul>
+            </div>
+            <a href="https://pilmu.com/cafe_sa_placa/" target="_blank" rel="noopener" style="font-weight:700; font-size:14.5px; color:var(--primary);">Ver ejemplo de Cafetería →</a>
+          </div>
+
+          <div class="sector-card">
+            <div>
+              <span class="sector-badge">✂️ Servicios y Comercio</span>
+              <h3>Peluquerías, Clínicas y Tiendas</h3>
+              <p style="font-size:14.5px; color:var(--ink-muted);">Presenta tus tarifas, reserva citas por WhatsApp y multiplica tus reseñas en el mostrador.</p>
+              <ul class="sector-list">
+                <li>Lista clara de servicios y precios</li>
+                <li>Reserva de cita directa por WhatsApp</li>
+                <li>Placa NFC en recepción para reseñas Google</li>
+              </ul>
+            </div>
+            <a href="https://wa.me/34665075934?text=Hola%2C%20tengo%20un%20negocio%20de%20servicios%20y%20quiero%20ver%20c%C3%B3mo%20funcionaria%20pilmu" target="_blank" rel="noopener" style="font-weight:700; font-size:14.5px; color:var(--primary);">Consultar para mi negocio →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section id="como-funciona" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Llave en mano</span>
+          <h2 class="section-title">Así de fácil lo ponemos en marcha</h2>
+          <p class="section-desc">
+            No tienes que programar ni configurar nada. Nos encargamos de todo el montaje técnico y visual.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-box">
+            <div class="step-num">1</div>
+            <h3>Nos envías tu carta y tus datos</h3>
+            <p>Nos pasas por WhatsApp una foto de tu carta actual o lista de servicios, tu horario, logo y enlace de Google.</p>
+          </div>
+
+          <div class="step-box">
+            <div class="step-num">2</div>
+            <h3>Creamos tu web y tus placas</h3>
+            <p>Diseñamos tu página a medida con tu propia dirección web y grabamos tus placas personalizadas con NFC y QR.</p>
+          </div>
+
+          <div class="step-box">
+            <div class="step-num">3</div>
+            <h3>Colocas las placas y listo</h3>
+            <p>Las pones en tus mesas o mostrador. Cuando necesites cambiar un precio o añadir un plato, nos avisas y lo actualizamos.</p>
+          </div>
+        </div>
+
+        <!-- Banner Demo Real -->
+        <div id="ejemplo-real" class="demo-banner" style="margin-top: 56px;">
+          <div>
+            <h2>Pruébalo ahora mismo en tu móvil</h2>
+            <p>
+              Abre la miniweb real de <strong>Bar Es Cau</strong> en Manacor y comprueba lo rápido que carga, cómo funciona el filtro de alérgenos y cómo se prepara un pedido por WhatsApp.
+            </p>
+          </div>
+          <div class="demo-actions">
+            <a class="btn btn-wa" href="https://pilmu.com/bar_es_cau/" target="_blank" rel="noopener">
+              Abrir demo real de Bar Es Cau →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREGUNTAS FRECUENTES -->
+    <section class="section section-white">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Dudas habituales</span>
+          <h2 class="section-title">Preguntas frecuentes</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>¿Mis clientes tienen que descargar alguna aplicación?</summary>
+            <p>No. Al acercar el móvil a la placa NFC o escanear el código QR, la página se abre directamente en el navegador del teléfono en menos de un segundo, tanto en iPhone como en Android.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Qué pasa si un cliente tiene un móvil antiguo sin NFC?</summary>
+            <p>Todas nuestras placas incorporan tanto el chip NFC interior como el código QR impreso en alta definición, así que cualquier teléfono puede entrar sin problemas.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Cobráis comisiones por los pedidos que entran por WhatsApp?</summary>
+            <p>Ninguna. Los pedidos llegan directamente al número de WhatsApp de tu negocio y el cliente te paga a ti directamente, sin intermediarios ni porcentajes por venta.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Puedo actualizar precios, platos o horarios más adelante?</summary>
+            <p>Sí. Cuando cambies tu carta o tus tarifas, nos envías los cambios por WhatsApp y actualizamos tu miniweb manteniendo exactamente las mismas placas NFC y códigos QR que ya tienes en el local.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CIERRE Y CONTACTO -->
+    <section class="cta-final">
+      <div class="container">
+        <h2>¿Preparamos una muestra para tu negocio?</h2>
+        <p>Escríbenos por WhatsApp sin compromiso, cuéntanos qué tipo de local tienes y te enseñamos cómo quedaría.</p>
+
+        <div class="cta-final-buttons">
+          <a class="btn btn-wa" href="https://wa.me/34665075934?text=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20pilmu%20para%20mi%20negocio" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.2-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+            Hablar por WhatsApp (665 075 934)
           </a>
-          <a class="btn btn-line" href="#ejemplo">Ver un ejemplo</a>
+
+          <a class="btn btn-ghost-light" href="https://www.instagram.com/pilmu2026" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram @pilmu2026
+          </a>
         </div>
       </div>
+    </section>
+  </main>
 
-      <div class="stage" role="img" aria-label="Un móvil junto a una placa de pilmu: al acercarlo se abre la página de Bar Es Cau con su carta, su Instagram y el botón de reseña.">
-        <div class="plaque">
-          <div class="nfc">
-            <span class="rip"></span><span class="rip"></span><span class="rip"></span>
-            <svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="16" r="2" fill="#fff" stroke="none"/><path d="M13 10.5a7.5 7.5 0 0 1 0 11"/><path d="M18 7a12 12 0 0 1 0 18"/><path d="M23 3.8a16 16 0 0 1 0 24.4"/></svg>
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 pilmu · Cartas digitales y placas NFC para negocios</span>
+      <span><a href="https://www.instagram.com/pilmu2026" target="_blank" rel="noopener">@pilmu2026</a> · Manacor, Mallorca</span>
+    </div>
+  </footer>
+
+  <script>
+    const MOCKUP_VIEWS = {
+      menu: {
+        rows: `
+          <div class="mock-row"><span>Variado Mallorquín</span><span class="mock-price">7,50 €</span></div>
+          <div class="mock-row"><span>Pa amb Oli Serrà</span><span class="mock-price">6,80 €</span></div>
+          <div class="mock-row"><span>Llonguet Camaiot</span><span class="mock-price">4,50 €</span></div>
+        `,
+        cta: "📲 Pedir por WhatsApp →"
+      },
+      wifi: {
+        rows: `
+          <div class="mock-row"><span>Red Wi-Fi</span><span style="color:#fff;font-weight:700;">Bar_Es_Cau</span></div>
+          <div class="mock-row"><span>Contraseña</span><span class="mock-price">escau2026</span></div>
+          <div style="font-size:9.5px;color:#a1a1aa;text-align:center;margin-top:2px;">Conexión gratuita para clientes</div>
+        `,
+        cta: "📋 Copiar contraseña Wi-Fi"
+      },
+      reviews: {
+        rows: `
+          <div style="text-align:center;padding:4px 0;">
+            <div style="color:#d4af37;font-size:15px;letter-spacing:2px;">★★★★★</div>
+            <div style="font-size:10.5px;font-weight:700;color:#fff;margin-top:3px;">¿Qué tal tu experiencia?</div>
+            <div style="font-size:9px;color:#a1a1aa;margin-top:2px;">Acceso directo a Google Maps e Instagram</div>
           </div>
-          <h2>Acerca tu móvil</h2>
-          <ul><li>Carta</li><li>Instagram</li><li>Reseña en Google</li></ul>
-        </div>
-        <div class="phone">
-          <div class="screen">
-            <div class="nm">Bar Es Cau</div>
-            <div class="ad">Ronda de Felanitx, 65 · Manacor</div>
-            <div class="hi">¡Bienvenido! Esperamos que estés disfrutando.</div>
-            <div class="b">Ver nuestra Carta</div>
-            <div class="b">Síguenos en Instagram</div>
-            <div class="b go">Déjanos tu reseña en Google</div>
-            <div class="st">★★★★★</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        `,
+        cta: "⭐ Dejar reseña en Google"
+      }
+    };
 
-<main>
-<section id="como">
-  <div class="wrap">
-    <h2 class="t">Así lo usa tu cliente</h2>
-    <p class="sub">Sin descargar nada y sin registrarse. Funciona con el móvil de cualquier cliente.</p>
-    <ol class="steps">
-      <li><div class="n">1</div><h3>Acerca el móvil</h3><p>Sobre la placa, o escaneando el código QR que lleva al lado.</p></li>
-      <li><div class="n">2</div><h3>Mira tu carta o tus servicios</h3><p>Siempre a mano en su pantalla, y en el idioma que necesite.</p></li>
-      <li><div class="n">3</div><h3>Deja su reseña</h3><p>Un botón directo a tu ficha de Google para escribir su opinión.</p></li>
-    </ol>
-  </div>
-</section>
-
-<section class="incl">
-  <div class="wrap">
-    <div>
-      <h2 class="t">Qué incluye</h2>
-      <p class="sub">Todo lo necesario para empezar, sin complicaciones para ti.</p>
-    </div>
-    <dl class="rows">
-      <div><dt>Placa con NFC y QR</dt><dd>Personalizada con el nombre de tu negocio. Tú eliges cuántas necesitas y dónde colocarlas.</dd></div>
-      <div><dt>Mini web</dt><dd>Una página sencilla con tres botones: tu carta o tus servicios, tu Instagram y tu reseña en Google.</dd></div>
-      <div><dt>Carta y servicios al día</dt><dd>Si cambias precios, platos o servicios, lo actualizamos. Puede estar en varios idiomas para tus clientes extranjeros.</dd></div>
-      <div><dt>Nada que instalar</dt><dd>Ni apps ni cuentas. Te lo dejamos listo y funcionando.</dd></div>
-    </dl>
-  </div>
-</section>
-
-<section id="ejemplo" class="try">
-  <div class="wrap">
-    <div>
-      <h2 class="t">Pruébalo en tu móvil</h2>
-      <p class="sub">Esta es la página que ve el cliente de Bar Es Cau al acercar el móvil a su placa.</p>
-    </div>
-    <a class="btn" href="https://pilmu.com/barescau/">Abrir el ejemplo</a>
-  </div>
-</section>
-
-<section class="talk">
-  <div class="wrap">
-    <h2 class="t">¿Hablamos?</h2>
-    <p>Cuéntanos qué negocio tienes y te explicamos cómo lo montamos.</p>
-    <div class="actions">
-      <a class="btn btn-main" href="https://wa.me/34665075934?text=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20pilmu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.2-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
-        Escríbenos por WhatsApp
-      </a>
-      <a class="btn btn-line" href="https://www.instagram.com/pilmu2026">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-        Síguenos en Instagram
-      </a>
-    </div>
-  </div>
-</section>
-</main>
-
-<footer>
-  <div class="wrap">
-    <span>© pilmu</span>
-    <!-- ANTES DE PUBLICAR: añadir aquí los datos del titular y el aviso legal que corresponda (consultar con una gestoría) -->
-    <span><a href="https://www.instagram.com/pilmu2026">@pilmu2026</a> · Manacor, Mallorca</span>
-  </div>
-</footer>
-
+    function switchMockup(key, btnEl) {
+      document.querySelectorAll(".preview-tab").forEach(b => b.classList.remove("active"));
+      btnEl.classList.add("active");
+      const view = MOCKUP_VIEWS[key];
+      document.getElementById("phoneDynamicContent").innerHTML = view.rows;
+      document.getElementById("phoneCtaLabel").textContent = view.cta;
+    }
+  </script>
 </body>
 </html>
