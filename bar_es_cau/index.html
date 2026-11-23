@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <title>Bar Es Cau · Carta Digital y Pedidos</title>
+  <meta name="description" content="Variados tradicionales, pa amb oli con trampó, bocadillos recién hechos y hamburguesas en Ronda Felanitx, 65." />
+
+  <!-- Configuración de Aplicación (PWA / Pantalla Completa) -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Bar Es Cau" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#141416" />
+
+  <!-- Iconos y Manifest propios de Bar Es Cau -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+  <link rel="manifest" href="manifest.json" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #09090b;
+      --bg-surface: #131317;
+      --bg-elevated: #1b1b21;
+      --glass: rgba(19, 19, 23, 0.84);
+      --gold: #d4af37;
+      --gold-light: #e8cb6b;
+      --gold-soft: rgba(212, 175, 55, 0.13);
+      --gold-border: rgba(212, 175, 55, 0.32);
+      --terracotta: #c84b31;
+      --whatsapp: #25d366;
+      --text-primary: #f6f3ec;
+      --text-secondary: #9e9a91;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --radius-lg: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.5;
+      padding-bottom: 96px;
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    /* Gestión de vistas (Portada vs Carta dedicada) */
+    .view-screen {
+      display: none;
+      animation: fadeScreen 0.25s ease;
+    }
+
+    .view-screen.active {
+      display: block;
+    }
+
+    @keyframes fadeScreen {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Barra superior flotante de Portada */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(9, 9, 11, 0.94), rgba(9, 9, 11, 0));
+      pointer-events: none;
+    }
+
+    .navbar > * {
+      pointer-events: auto;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+      flex-shrink: 0;
+    }
+
+    .dot.closed {
+      background: var(--terracotta);
+      box-shadow: 0 0 10px var(--terracotta);
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--gold-border);
+      border-radius: 999px;
+      padding: 3px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--gold);
+      color: #111113;
+    }
+
+    /* Portada Hero escenográfica */
+    .hero {
+      position: relative;
+      padding: 84px 18px 28px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.32) contrast(1.08);
+      transform: scale(1.03);
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 24%, rgba(212, 175, 55, 0.16) 0%, transparent 52%),
+        linear-gradient(to bottom, rgba(9, 9, 11, 0.2) 0%, rgba(9, 9, 11, 0.76) 56%, var(--bg-canvas) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .avatar-ring {
+      width: 102px;
+      height: 102px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), rgba(212, 175, 55, 0.2));
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65), 0 0 28px rgba(212, 175, 55, 0.18);
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #141416;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.06);
+    }
+
+    .location-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      font-weight: 700;
+      text-decoration: none;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--gold-border);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.65rem, 7vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.02;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-tagline {
+      max-width: 460px;
+      margin: 10px auto 24px;
+      color: #d4d0c7;
+      font-size: 0.92rem;
+    }
+
+    /* Botón Protagonista Dorado + 3 Accesos apilados en vertical */
+    .vertical-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .hero-cta-gold {
+      width: 100%;
+      background: linear-gradient(135deg, #ebd075 0%, #d4af37 55%, #b89225 100%);
+      color: #111113;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 18px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.02rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      transition: transform 0.16s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-cta-gold:active {
+      transform: scale(0.985);
+    }
+
+    .cta-sub-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(17, 17, 19, 0.14);
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
+    }
+
+    .action-row-btn {
+      width: 100%;
+      background: linear-gradient(180deg, rgba(26, 26, 32, 0.88), rgba(18, 18, 22, 0.92));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      font-size: 0.94rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
+      transition: transform 0.15s ease, border-color 0.2s ease;
+    }
+
+    .action-row-btn:hover {
+      border-color: var(--gold-border);
+    }
+
+    .action-row-btn:active {
+      transform: scale(0.985);
+    }
+
+    .action-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .action-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--gold-soft);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .action-arrow {
+      font-size: 0.95rem;
+      color: var(--gold);
+      opacity: 0.85;
+    }
+
+    /* Contenedor principal */
+    .main-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Galería fotográfica horizontal (clicable hacia la carta, sin botones encima) */
+    .section-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 8px 0 12px;
+    }
+
+    .section-heading {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .section-sub {
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .gallery-strip {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      margin-bottom: 22px;
+    }
+
+    .gallery-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .photo-card {
+      position: relative;
+      flex: 0 0 215px;
+      height: 152px;
+      border-radius: 18px;
+      overflow: hidden;
+      scroll-snap-align: start;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      transition: transform 0.16s ease, border-color 0.2s ease;
+    }
+
+    .photo-card:hover {
+      border-color: var(--gold-border);
+    }
+
+    .photo-card:active {
+      transform: scale(0.97);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .photo-caption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 24px 12px 10px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.88), transparent);
+      font-size: 0.81rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Bloque de Reseñas (Conforme a políticas de Google) */
+    .review-card {
+      background: linear-gradient(155deg, var(--bg-surface), #18181e);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg);
+      padding: 24px 18px;
+      margin-bottom: 18px;
+      text-align: center;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .review-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .cta-subtle-wa {
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: #d8f3dc;
+    }
+
+    /* Bloque de Horarios y Ubicación */
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 620px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .detail-box h3 {
+      font-size: 1.45rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .detail-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      gap: 10px;
+    }
+
+    .detail-line:last-child {
+      border-bottom: none;
+    }
+
+    /* =======================================================
+       VISTA DEDICADA DE LA CARTA (COMPACTA Y ESTILIZADA)
+       ======================================================= */
+    .menu-sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 42;
+      background: rgba(9, 9, 11, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 11px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-home-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-light);
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-home-btn:active {
+      transform: scale(0.96);
+    }
+
+    .menu-header-right {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .allergen-toggle-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .allergen-toggle-btn.has-filter {
+      border-color: var(--gold);
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .menu-view-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 14px 14px 20px;
+    }
+
+    .editorial-notice {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(200, 75, 49, 0.07));
+      border: 1px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 11px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .notice-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--gold-soft);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .notice-body {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #e4e0d8;
+    }
+
+    .notice-body strong {
+      color: var(--gold);
+    }
+
+    .allergen-drawer {
+      display: none;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 15px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .allergen-drawer.open {
+      display: block;
+    }
+
+    .allergen-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .al-filter-chip {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .al-filter-chip.excluded {
+      background: rgba(200, 75, 49, 0.22);
+      border-color: var(--terracotta);
+      color: #ffb8a8;
+    }
+
+    /* Tarjetas de Carta Compactas */
+    .menu-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 14px 14px 10px;
+      margin-bottom: 13px;
+    }
+
+    .menu-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+      padding-bottom: 7px;
+      margin-bottom: 4px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .menu-card-title {
+      font-size: 1.48rem;
+      color: var(--gold);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .menu-card-note {
+      font-size: 0.73rem;
+      color: var(--text-secondary);
+    }
+
+    /* Fila compacta de plato */
+    .dish-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+      gap: 10px;
+    }
+
+    .dish-row:last-child {
+      border-bottom: none;
+      padding-bottom: 2px;
+    }
+
+    .dish-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dish-title-line {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .dish-title {
+      font-size: 0.91rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.28;
+    }
+
+    .inline-allergens {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.72rem;
+      opacity: 0.85;
+    }
+
+    .dish-sub {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      line-height: 1.25;
+      margin-top: 1px;
+    }
+
+    .price-pills {
+      display: flex;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .add-price-pill {
+      background: var(--bg-elevated);
+      border: 1px solid var(--gold-border);
+      color: var(--text-primary);
+      border-radius: 10px;
+      padding: 4px 9px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+      cursor: pointer;
+      transition: all 0.14s ease;
+    }
+
+    .add-price-pill:hover {
+      background: var(--gold-soft);
+      border-color: var(--gold);
+    }
+
+    .add-price-pill:active {
+      transform: scale(0.94);
+    }
+
+    .pill-size {
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .pill-amount {
+      font-size: 0.86rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* Barra flotante del carrito */
+    .floating-cart {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(150%);
+      width: calc(100% - 26px);
+      max-width: 692px;
+      background: linear-gradient(135deg, #25d366, #1db954);
+      color: #06210f;
+      border-radius: 16px;
+      padding: 13px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
+      z-index: 45;
+      cursor: pointer;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .floating-cart.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .cart-pill-count {
+      background: #06210f;
+      color: #fff;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-right: 7px;
+    }
+
+    /* Modales (Wi-Fi y Carrito) */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 60;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .overlay.open {
+      display: flex;
+    }
+
+    .sheet {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--gold-border);
+      border-top-left-radius: 26px;
+      border-top-right-radius: 26px;
+      width: 100%;
+      max-width: 540px;
+      padding: 22px 18px 28px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    .sheet-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .close-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* Tarjeta Wi-Fi (sin QR, copia en un toque) */
+    .wifi-card-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--gold-border);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .wifi-cred-row {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 11px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mode-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .mode-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 9px;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .mode-btn.selected {
+      border-color: var(--gold);
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .cart-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 10px;
+    }
+
+    .qty-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .notes-input {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 11px 13px;
+      border-radius: 13px;
+      font-size: 0.88rem;
+      margin-top: 12px;
+      outline: none;
+    }
+
+    .notes-input:focus {
+      border-color: var(--gold);
+    }
+
+    .alert-min {
+      display: none;
+      background: rgba(200, 75, 49, 0.18);
+      border: 1px solid var(--terracotta);
+      color: #ffb6a6;
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    .cta-full {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.94rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .cta-whatsapp {
+      background: var(--whatsapp);
+      color: #06210f;
+    }
+
+    .cta-gold {
+      background: var(--gold);
+      color: #121214;
+    }
+
+    .footer-sign {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.76rem;
+      margin: 18px 0 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       PANTALLA 1: PORTADA BOUTIQUE
+       ========================================================= -->
+  <div id="homeView" class="view-screen active">
+    <nav class="navbar">
+      <div class="status-badge">
+        <span class="dot" id="liveDot"></span>
+        <span id="liveStatusText">Comprobando horario...</span>
+      </div>
+
+      <div class="lang-switch" role="group" aria-label="Selector de idioma">
+        <button type="button" class="lang-btn active" data-lang-btn="es" onclick="setLang('es')">ES</button>
+        <button type="button" class="lang-btn" data-lang-btn="en" onclick="setLang('en')">EN</button>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <img class="hero-bg" id="heroBgImg" alt="Ambiente Bar Es Cau" />
+      <div class="hero-gradient"></div>
+
+      <div class="hero-content">
+        <div class="avatar-ring">
+          <div class="avatar-inner">
+            <img src="logo.png" alt="Logo Bar Es Cau" onerror="this.onerror=null; this.src='icon-192.png';" />
+          </div>
+        </div>
+
+        <a class="location-chip" href="https://maps.google.com/?q=Ronda+Felanitx+65" target="_blank" rel="noopener">
+          📍 <span data-i18n="heroMap">Ronda Felanitx, 65 · Cómo llegar</span>
+        </a>
+        <h1 class="hero-title serif">Bar Es Cau</h1>
+        <p class="hero-tagline" data-i18n="heroBio">
+          Variados tradicionales, pa amb oli, trampó, bocadillos recién hechos y hamburguesas. Para disfrutar aquí, recoger o a domicilio.
+        </p>
+
+        <!-- Botón Protagonista Dorado + 3 Accesos apilados en vertical -->
+        <div class="vertical-actions">
+          <button type="button" class="hero-cta-gold" onclick="openMenuView()">
+            <span class="action-left">
+              <span style="font-size:1.25rem;">📖</span>
+              <span data-i18n="btnOpenMenu">Ver Carta Digital y Pedir</span>
+            </span>
+            <span class="cta-sub-pill" data-i18n="btnOpenMenuTag">Carta →</span>
+          </button>
+
+          <button type="button" class="action-row-btn" onclick="openWifiModal()">
+            <span class="action-left">
+              <span class="action-icon-box">📶</span>
+              <span data-i18n="btnWifi">Wi-Fi Clientes</span>
+            </span>
+            <span class="action-arrow">→</span>
+          </button>
+
+          <a class="action-row-btn" href="https://www.instagram.com/bar_es_cau/" target="_blank" rel="noopener">
+            <span class="action-left">
+              <span class="action-icon-box">📸</span>
+              <span data-i18n="btnInstagram">Síguenos en Instagram</span>
+            </span>
+            <span class="action-arrow">↗</span>
+          </a>
+
+          <a class="action-row-btn" href="#seccion-resenas">
+            <span class="action-left">
+              <span class="action-icon-box">⭐</span>
+              <span data-i18n="btnReviews">Dejar una reseña</span>
+            </span>
+            <span class="action-arrow">↓</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-wrap">
+      <!-- Galería Visual de Especialidades (limpia y clicable hacia la Carta Digital) -->
+      <div class="section-label-row">
+        <h2 class="section-heading serif" data-i18n="galleryTitle">Nuestras Especialidades</h2>
+        <span class="section-sub" data-i18n="gallerySwipe">Desliza para ver →</span>
+      </div>
+      <div class="gallery-strip" id="galleryStrip"></div>
+
+      <!-- Sección de Reseñas (Acceso directo para todos los clientes) -->
+      <section class="review-card" id="seccion-resenas">
+        <span class="eyebrow" data-i18n="reviewEyebrow">Tu opinión nos importa</span>
+        <h2 class="serif" style="font-size:1.85rem; margin-top:4px;" data-i18n="reviewTitle">¿Qué tal tu experiencia en Bar Es Cau?</h2>
+        <p style="color:var(--text-secondary); font-size:0.85rem; max-width:430px; margin:6px auto 0;" data-i18n="reviewSubtitle">
+          Comparte tu valoración en Google o escríbenos directamente si quieres comentarnos algo.
+        </p>
+
+        <div class="review-actions">
+          <a href="https://search.google.com/local/writereview?placeid=ChIJaZ1rPglJlhIRVXGWaEU8epY" target="_blank" rel="noopener" class="cta-full cta-gold" style="max-width:340px;" data-i18n="reviewGoogleBtn">
+            ⭐ Dejar una reseña en Google
+          </a>
+
+          <button type="button" class="cta-full cta-subtle-wa" style="max-width:340px;" onclick="openDirectFeedbackWa()" data-i18n="reviewDirectWaBtn">
+            💬 Sugerencia o incidencia por WhatsApp
+          </button>
+        </div>
+      </section>
+
+      <!-- Horarios y Contacto (sin teléfono fijo) -->
+      <section class="details-grid">
+        <div class="detail-box">
+          <h3 class="serif" data-i18n="hoursTitle">Horario</h3>
+          <div class="detail-line"><span data-i18n="daysMonFri">Lunes a Viernes</span><strong>06:00 – 15:00 h</strong></div>
+          <div class="detail-line"><span data-i18n="daysSat">Sábados</span><strong>06:00 – 14:00 h</strong></div>
+          <div class="detail-line"><span data-i18n="daysSun">Domingos y Festivos</span><strong>06:00 – 12:00 h</strong></div>
+          <div class="detail-line"><span data-i18n="daysDelivery">Llevar y Domicilio</span><strong>08:30 – 14:30 h</strong></div>
+        </div>
+
+        <div class="detail-box">
+          <h3 class="serif" data-i18n="contactTitle">Contacto y Local</h3>
+          <div class="detail-line"><span data-i18n="lblAddress">Dirección</span><strong>Ronda Felanitx, 65</strong></div>
+          <div class="detail-line"><span data-i18n="lblMobile">WhatsApp / Móvil</span><strong><a href="tel:+34665075934" style="color:var(--text-primary); text-decoration:none;">665 075 934</a></strong></div>
+          <div class="detail-line"><span>Instagram</span><strong><a href="https://www.instagram.com/bar_es_cau/" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:none;">@bar_es_cau</a></strong></div>
+        </div>
+      </section>
+
+      <p class="footer-sign" data-i18n="footerHomeSign">
+        Bar Es Cau · Ronda Felanitx, 65
+      </p>
+    </main>
+  </div>
+
+  <!-- =========================================================
+       PANTALLA 2: CARTA DIGITAL DEDICADA Y COMPACTA
+       ========================================================= -->
+  <div id="menuView" class="view-screen">
+    <div class="menu-sticky-header">
+      <button type="button" class="back-home-btn" onclick="closeMenuView()">
+        ← <span data-i18n="backHome">Inicio</span>
+      </button>
+
+      <div class="menu-header-right">
+        <button type="button" class="allergen-toggle-btn" id="allergenToggleBtn" onclick="toggleAllergenDrawer()">
+          🌾 Alérgenos
+        </button>
+
+        <div class="lang-switch" role="group" aria-label="Selector de idioma">
+          <button type="button" class="lang-btn active" data-lang-btn="es" onclick="setLang('es')">ES</button>
+          <button type="button" class="lang-btn" data-lang-btn="en" onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-view-body">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+        <h1 class="serif" style="font-size:2rem; color:#fff;" data-i18n="menuMainTitle">Nuestra Carta</h1>
+        <span style="font-size:0.74rem; color:var(--text-secondary);" data-i18n="tapToOrderHint">Toca un precio para pedir</span>
+      </div>
+
+      <!-- Aviso editorial Variados -->
+      <div class="editorial-notice">
+        <div class="notice-icon">🥘</div>
+        <div class="notice-body" id="variadosNoticeBox"></div>
+      </div>
+
+      <!-- Filtro desplegable de Alérgenos -->
+      <div class="allergen-drawer" id="allergenDrawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+          <span style="font-size:0.77rem; color:var(--text-secondary);" data-i18n="allergenHelp">
+            Toca los alérgenos que deseas evitar en la carta:
+          </span>
+          <button type="button" style="background:var(--bg-elevated); border:1px solid var(--border-subtle); color:var(--text-secondary); padding:3px 9px; border-radius:8px; font-size:0.72rem; cursor:pointer;" onclick="clearAllergenFilters()" data-i18n="clearBtn">
+            Limpiar
+          </button>
+        </div>
+        <div class="allergen-pills" id="allergenFilterPills"></div>
+      </div>
+
+      <!-- Listado compacto de la Carta por orden -->
+      <div id="menuSections"></div>
+
+      <p class="footer-sign" data-i18n="footerSign">
+        Bar Es Cau · Toca cualquier precio de la carta para preparar tu pedido por WhatsApp.
+      </p>
+    </div>
+  </div>
+
+  <!-- Barra flotante de pedido (visible en cualquier pantalla si hay productos) -->
+  <div class="floating-cart" id="floatingCart" onclick="openCartSheet()">
+    <div>
+      <span class="cart-pill-count" id="cartCount">0</span>
+      <span data-i18n="viewOrderBtn">Ver pedido WhatsApp</span>
+    </div>
+    <span style="font-size:1.05rem;" id="cartTotal">0,00 €</span>
+  </div>
+
+  <!-- Modal Wi-Fi (sin QR, copia en un toque) -->
+  <div class="overlay" id="wifiOverlay" onclick="if(event.target===this) closeWifiModal()">
+    <div class="sheet">
+      <div class="sheet-top">
+        <h2 class="serif" style="font-size:1.65rem; color:var(--gold);" data-i18n="wifiModalTitle">Wi-Fi Clientes</h2>
+        <button type="button" class="close-circle" onclick="closeWifiModal()">✕</button>
+      </div>
+
+      <div class="wifi-card-box">
+        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:14px;" data-i18n="wifiModalSub">
+          Conéctate gratis seleccionando nuestra red en los ajustes Wi-Fi de tu móvil:
+        </p>
+
+        <div class="wifi-cred-row">
+          <div>
+            <div style="font-size:0.71rem; color:var(--text-secondary);" data-i18n="wifiNetLabel">Nombre de la red</div>
+            <strong id="wifiSsidDisplay" style="font-size:0.98rem;">Bar_Es_Cau_Clientes</strong>
+          </div>
+          <span style="font-size:1.15rem;">📶</span>
+        </div>
+
+        <div class="wifi-cred-row" style="margin-bottom:16px;">
+          <div>
+            <div style="font-size:0.71rem; color:var(--text-secondary);" data-i18n="wifiPassLabel">Contraseña</div>
+            <strong id="wifiPassDisplay" style="font-size:1.02rem; letter-spacing:0.04em; color:var(--gold);">escau2026</strong>
+          </div>
+          <span style="font-size:1.05rem;">🔑</span>
+        </div>
+
+        <button type="button" class="cta-full cta-gold" id="copyWifiBtn" onclick="copyWifiPassword()" data-i18n="wifiCopyBtn">
+          📋 Copiar contraseña
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Carrito WhatsApp -->
+  <div class="overlay" id="cartOverlay" onclick="if(event.target===this) closeCartSheet()">
+    <div class="sheet">
+      <div class="sheet-top">
+        <h2 class="serif" style="font-size:1.65rem; color:var(--gold);" data-i18n="cartTitle">Tu Pedido</h2>
+        <button type="button" class="close-circle" onclick="closeCartSheet()">✕</button>
+      </div>
+
+      <div class="mode-switch">
+        <button type="button" class="mode-btn selected" id="btnModePickup" onclick="setDeliveryMode('pickup')" data-i18n="modePickup">
+          🛍️ Recoger en el bar
+        </button>
+        <button type="button" class="mode-btn" id="btnModeDelivery" onclick="setDeliveryMode('delivery')" data-i18n="modeDelivery">
+          🛵 A domicilio
+        </button>
+      </div>
+
+      <div class="alert-min" id="minOrderAlert" data-i18n="minOrderWarn">
+        ⚠️ El reparto a domicilio de Variados tiene un pedido mínimo de 15,00 € (pedidos hasta las 11:00 h).
+      </div>
+
+      <div id="cartLinesContainer"></div>
+
+      <input
+        type="text"
+        id="orderExtraNotes"
+        class="notes-input"
+        placeholder="Dirección de entrega o nota (ej. pan tostado, hora de recogida...)"
+      />
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0 14px;">
+        <span style="color:var(--text-secondary);" data-i18n="estTotal">Total estimado</span>
+        <strong class="serif" style="font-size:1.8rem; color:var(--gold);" id="sheetTotal">0,00 €</strong>
+      </div>
+
+      <button type="button" class="cta-full cta-whatsapp" onclick="checkoutWhatsapp()" data-i18n="sendWaOrder">
+        📲 Enviar Pedido por WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Configuración principal del establecimiento
+    const CONFIG = {
+      name: "Bar Es Cau",
+      whatsapp: "34665075934",
+      wifiSsid: "Bar_Es_Cau_Clientes",
+      wifiPass: "escau2026",
+      heroImage: "variado-ensaladilla.jpg"
+    };
+
+    // Diccionario Español / Inglés
+    const I18N = {
+      es: {
+        openUntil: "Abierto · Hasta las {h} h",
+        closedOpens: "Cerrado · Abre 06:00 h",
+        heroMap: "Ronda Felanitx, 65 · Cómo llegar",
+        heroBio: "Variados tradicionales, pa amb oli, trampó, bocadillos recién hechos y hamburguesas. Para disfrutar aquí, recoger o a domicilio.",
+        btnOpenMenu: "Ver Carta Digital y Pedir",
+        btnOpenMenuTag: "Carta →",
+        btnWifi: "Wi-Fi Clientes",
+        btnInstagram: "Síguenos en Instagram",
+        btnReviews: "Dejar una reseña",
+        backHome: "Inicio",
+        tapToOrderHint: "Toca un precio para pedir",
+        galleryTitle: "Nuestras Especialidades",
+        gallerySwipe: "Desliza para ver →",
+        variadosNoticeHtml: "<strong>Variados a domicilio (Jueves a Domingo):</strong> recogida de pedidos hasta las <strong>11:00 h</strong> y reparto hasta las <strong>14:30 h</strong>. Pedido mínimo <strong>15,00 €</strong>.",
+        menuMainTitle: "Nuestra Carta",
+        allergenBtn: "🌾 Alérgenos",
+        allergenBtnActive: "🌾 Alérgenos ({n})",
+        allergenHelp: "Toca los alérgenos que deseas evitar en la carta:",
+        clearBtn: "Limpiar",
+        avoidPrefix: "🚫 Sin ",
+        emptyMenu: "No hay platos disponibles con los filtros de alérgenos seleccionados.",
+        reviewEyebrow: "Tu opinión nos importa",
+        reviewTitle: "¿Qué tal tu experiencia en Bar Es Cau?",
+        reviewSubtitle: "Comparte tu valoración en Google o escríbenos directamente si quieres comentarnos algo.",
+        reviewGoogleBtn: "⭐ Dejar una reseña en Google",
+        reviewDirectWaBtn: "💬 Sugerencia o incidencia por WhatsApp",
+        hoursTitle: "Horario",
+        daysMonFri: "Lunes a Viernes",
+        daysSat: "Sábados",
+        daysSun: "Domingos y Festivos",
+        daysDelivery: "Llevar y Domicilio",
+        contactTitle: "Contacto y Local",
+        lblAddress: "Dirección",
+        lblMobile: "WhatsApp / Móvil",
+        footerHomeSign: "Bar Es Cau · Ronda Felanitx, 65",
+        footerSign: "Bar Es Cau · Toca cualquier precio de la carta para preparar tu pedido por WhatsApp.",
+        viewOrderBtn: "Ver pedido WhatsApp",
+        wifiModalTitle: "Wi-Fi Clientes",
+        wifiModalSub: "Conéctate gratis seleccionando nuestra red en los ajustes Wi-Fi de tu móvil:",
+        wifiNetLabel: "Nombre de la red",
+        wifiPassLabel: "Contraseña",
+        wifiCopyBtn: "📋 Copiar contraseña",
+        wifiCopiedBtn: "✓ ¡Contraseña copiada!",
+        cartTitle: "Tu Pedido",
+        modePickup: "🛍️ Recoger en el bar",
+        modeDelivery: "🛵 A domicilio",
+        minOrderWarn: "⚠️ El reparto a domicilio de Variados tiene un pedido mínimo de 15,00 € (pedidos hasta las 11:00 h).",
+        notesPlaceholder: "Dirección de entrega o nota (ej. pan tostado, hora de recogida...)",
+        estTotal: "Total estimado",
+        sendWaOrder: "📲 Enviar Pedido por WhatsApp",
+        sizes: {
+          "Mediano": "Mediano",
+          "Grande": "Grande",
+          "Unidad": "Unidad",
+          "Entero": "Entero",
+          "Medio": "Medio",
+          "Ración": "Ración",
+          "Copa": "Copa"
+        }
+      },
+      en: {
+        openUntil: "Open · Until {h}",
+        closedOpens: "Closed · Opens 06:00",
+        heroMap: "Ronda Felanitx, 65 · Directions",
+        heroBio: "Traditional Mallorcan tapas (variados), pa amb oli, trampó, freshly made sandwiches & burgers. Dine-in, takeaway or delivery.",
+        btnOpenMenu: "View Digital Menu & Order",
+        btnOpenMenuTag: "Menu →",
+        btnWifi: "Guest Wi-Fi",
+        btnInstagram: "Follow us on Instagram",
+        btnReviews: "Leave a review",
+        backHome: "Home",
+        tapToOrderHint: "Tap any price to order",
+        galleryTitle: "Our Specialties",
+        gallerySwipe: "Swipe to explore →",
+        variadosNoticeHtml: "<strong>Home delivery for Variados (Thu–Sun):</strong> orders taken until <strong>11:00 AM</strong>, delivered until <strong>2:30 PM</strong>. Minimum order <strong>€15.00</strong>.",
+        menuMainTitle: "Our Menu",
+        allergenBtn: "🌾 Allergens",
+        allergenBtnActive: "🌾 Allergens ({n})",
+        allergenHelp: "Tap the allergens you want to avoid on the menu:",
+        clearBtn: "Clear",
+        avoidPrefix: "🚫 No ",
+        emptyMenu: "No dishes match the selected allergen filters.",
+        reviewEyebrow: "We value your feedback",
+        reviewTitle: "How was your experience at Bar Es Cau?",
+        reviewSubtitle: "Share your review on Google or message us directly if you'd like to tell us anything.",
+        reviewGoogleBtn: "⭐ Leave a review on Google",
+        reviewDirectWaBtn: "💬 Suggestion or issue via WhatsApp",
+        hoursTitle: "Opening Hours",
+        daysMonFri: "Monday to Friday",
+        daysSat: "Saturdays",
+        daysSun: "Sundays & Holidays",
+        daysDelivery: "Takeaway & Delivery",
+        contactTitle: "Contact & Location",
+        lblAddress: "Address",
+        lblMobile: "WhatsApp / Mobile",
+        footerHomeSign: "Bar Es Cau · Ronda Felanitx, 65",
+        footerSign: "Bar Es Cau · Tap any price on the menu to build your WhatsApp order.",
+        viewOrderBtn: "View WhatsApp order",
+        wifiModalTitle: "Guest Wi-Fi",
+        wifiModalSub: "Connect for free by selecting our network in your phone's Wi-Fi settings:",
+        wifiNetLabel: "Network name",
+        wifiPassLabel: "Password",
+        wifiCopyBtn: "📋 Copy password",
+        wifiCopiedBtn: "✓ Password copied!",
+        cartTitle: "Your Order",
+        modePickup: "🛍️ Pick up at the bar",
+        modeDelivery: "🛵 Home delivery",
+        minOrderWarn: "⚠️ Home delivery for Variados requires a €15.00 minimum order (orders until 11:00 AM).",
+        notesPlaceholder: "Delivery address or note (e.g. toasted bread, pickup time...)",
+        estTotal: "Estimated total",
+        sendWaOrder: "📲 Send Order via WhatsApp",
+        sizes: {
+          "Mediano": "Medium",
+          "Grande": "Large",
+          "Unidad": "Each",
+          "Entero": "Full",
+          "Medio": "Half",
+          "Ración": "Portion",
+          "Copa": "Glass"
+        }
+      }
+    };
+
+    const ALLERGENS = [
+      { id: "gluten", es: "Gluten", en: "Gluten", icon: "🌾" },
+      { id: "lacteos", es: "Lácteos", en: "Dairy", icon: "🥛" },
+      { id: "huevo", es: "Huevo", en: "Egg", icon: "🥚" },
+      { id: "pescado", es: "Pescado", en: "Fish", icon: "🐟" },
+      { id: "moluscos", es: "Moluscos", en: "Molluscs", icon: "🦑" },
+      { id: "sulfitos", es: "Sulfitos", en: "Sulphites", icon: "🍷" }
+    ];
+
+    function makeFallbackArt(title) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1e1e24"/>
+            <stop offset="100%" stop-color="#101014"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="400" fill="url(#g)"/>
+        <circle cx="300" cy="180" r="84" fill="none" stroke="#d4af37" stroke-width="2" stroke-opacity="0.45"/>
+        <circle cx="300" cy="180" r="62" fill="#d4af37" fill-opacity="0.12"/>
+        <text x="300" y="188" text-anchor="middle" fill="#d4af37" font-family="Georgia, serif" font-size="26" font-weight="bold">${title}</text>
+        <text x="300" y="325" text-anchor="middle" fill="#a39f96" font-family="sans-serif" font-size="14" letter-spacing="3">BAR ES CAU</text>
+      </svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    // Galería exclusiva de productos reales de Bar Es Cau
+    const GALLERY_ITEMS = [
+      {
+        es: "Variado Completo con Ensaladilla",
+        en: "Complete Variado with Russian Salad",
+        url: "variado-ensaladilla.jpg"
+      },
+      {
+        es: "Pa amb Oli de Lomo, Queso y Trampó",
+        en: "Pa amb Oli with Pork Loin, Cheese & Trampó",
+        url: "pa-amb-oli-lomo-queso.jpg"
+      },
+      {
+        es: "Frito de Sepia Mallorquín",
+        en: "Mallorcan Cuttlefish Frito",
+        url: "frito-sepia.jpg"
+      },
+      {
+        es: "Variado de Albóndigas e Hígado",
+        en: "Meatballs & Liver Variado",
+        url: "variado-albondigas-higado.jpg"
+      },
+      {
+        es: "Pa amb Oli de Pinchos con Trampó",
+        en: "Pa amb Oli with Marinated Skewers & Trampó",
+        url: "pa-amb-oli-pinchos.jpg"
+      },
+      {
+        es: "Bocadillo de Anchoas y Tomate",
+        en: "Anchovy & Tomato Sandwich",
+        url: "bocadillo-anchoas.jpg"
+      },
+      {
+        es: "Pa amb Oli de Atún y Trampó",
+        en: "Tuna & Trampó Pa amb Oli",
+        url: "pa-amb-oli-atun.jpg"
+      },
+      {
+        es: "Hígado en Salsa Casero",
+        en: "Homemade Liver in Sauce",
+        url: "variado-higado.jpg"
+      }
+    ];
+
+    const MENU_CATEGORIES = [
+      {
+        id: "variados",
+        titleEs: "Variados",
+        titleEn: "Traditional Mallorcan Tapas (Variados)",
+        noteEs: "Mediano o Grande · Domicilio Jue–Dom",
+        noteEn: "Medium or Large · Delivery Thu–Sun",
+        items: [
+          { id: "v1", nameEs: "Caminantes", nameEn: "Caminantes (Braised Trotters)", allergens: ["sulfitos"], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 6.00 }] },
+          { id: "v2", nameEs: "Lengua", nameEn: "Braised Beef Tongue in Sauce", allergens: ["sulfitos"], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v3", nameEs: "Callos", nameEn: "Traditional Spanish Tripe Stew", allergens: ["sulfitos"], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v4", nameEs: "Freixura", nameEn: "Mallorcan Lamb Offal Fry", allergens: ["sulfitos"], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v5", nameEs: "Frito Matanzas", nameEn: "Traditional Mallorcan Pork Fry", allergens: [], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v6", nameEs: "Hígado", nameEn: "Pan-Seared Liver with Garlic & Parsley", allergens: [], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v7", nameEs: "Albóndigas", nameEn: "Homemade Meatballs in Sauce", allergens: ["gluten", "huevo"], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v8", nameEs: "Sepia en salsa", nameEn: "Cuttlefish in Rich Sauce", allergens: ["moluscos", "sulfitos"], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v9", nameEs: "Costilla al horno", nameEn: "Slow-Roasted Pork Ribs", allergens: [], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v10", nameEs: "Lomo en salsa con champiñones", nameEn: "Pork Loin in Mushroom Sauce", allergens: ["sulfitos"], prices: [{ label: "Mediano", amount: 3.50 }, { label: "Grande", amount: 5.00 }] },
+          { id: "v11", nameEs: "Costilla con salsa", nameEn: "Pork Ribs in Savory Sauce", allergens: ["sulfitos"], prices: [{ label: "Mediano", amount: 2.50 }, { label: "Grande", amount: 5.00 }] }
+        ]
+      },
+      {
+        id: "paamboli",
+        titleEs: "Pa amb Oli",
+        titleEn: "Traditional Mallorcan Pa amb Oli",
+        noteEs: "Pan payés con tomate y aceite de oliva",
+        noteEn: "Rustic bread rubbed with tomato & olive oil",
+        items: [
+          { id: "p1", nameEs: "Jamón", nameEn: "Cured Ham", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p2", nameEs: "Queso", nameEn: "Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p3", nameEs: "Atún", nameEn: "Tuna", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p4", nameEs: "Sardinillas picantes", nameEn: "Spicy Small Sardines", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p5", nameEs: "Anchoas", nameEn: "Anchovies", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p6", nameEs: "Anchoas con queso", nameEn: "Anchovies with Cheese", allergens: ["gluten", "pescado", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p7", nameEs: "Pollo", nameEn: "Grilled Chicken", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p8", nameEs: "Pollo queso", nameEn: "Chicken & Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p9", nameEs: "Pollo queso bacon", nameEn: "Chicken, Cheese & Bacon", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
+          { id: "p10", nameEs: "Lomo", nameEn: "Grilled Pork Loin", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p11", nameEs: "Lomo queso", nameEn: "Pork Loin & Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p12", nameEs: "Lomo queso bacon", nameEn: "Pork Loin, Cheese & Bacon", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
+          { id: "p13", nameEs: "Salchichas", nameEn: "Sausages", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p14", nameEs: "Panceta", nameEn: "Crispy Pork Belly", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p15", nameEs: "Camaiot", nameEn: "Camaiot (Traditional Mallorcan Cold Cut)", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p16", nameEs: "Tortilla", nameEn: "Spanish Omelette", allergens: ["gluten", "huevo"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p17", nameEs: "Pinchos", nameEn: "Marinated Pork Skewers", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] }
+        ]
+      },
+      {
+        id: "bocadillos",
+        titleEs: "Bocadillos y 1/2 Panecillos",
+        titleEn: "Sandwiches & Half Rolls",
+        noteEs: "Panecillos enteros y medios",
+        noteEn: "Full & half freshly made rolls",
+        items: [
+          { id: "b1", nameEs: "Trampó", nameEn: "Trampó (Mallorcan Tomato & Pepper Salad)", allergens: [], prices: [{ label: "Unidad", amount: 1.50 }] },
+          { id: "b2", nameEs: "Panecillo tipo Jamón", nameEn: "Cured Ham Roll", allergens: ["gluten"], prices: [{ label: "Entero", amount: 3.00 }] },
+          { id: "b3", nameEs: "Panecillo tipo Lomo", nameEn: "Grilled Pork Loin Roll", allergens: ["gluten"], prices: [{ label: "Entero", amount: 3.50 }] },
+          { id: "b4", nameEs: "Panecillo tipo Pollo", nameEn: "Grilled Chicken Roll", allergens: ["gluten"], prices: [{ label: "Entero", amount: 3.50 }] },
+          { id: "b5", nameEs: "Panecillo Lomo Queso-Bacon", nameEn: "Pork Loin, Cheese & Bacon Roll", allergens: ["gluten", "lacteos"], prices: [{ label: "Entero", amount: 3.80 }] },
+          { id: "b6", nameEs: "Panecillo Pollo Queso-Bacon", nameEn: "Chicken, Cheese & Bacon Roll", allergens: ["gluten", "lacteos"], prices: [{ label: "Entero", amount: 3.80 }] },
+          { id: "b7", nameEs: "Panecillo Tortilla", nameEn: "Spanish Omelette Roll", allergens: ["gluten", "huevo"], prices: [{ label: "Entero", amount: 3.50 }] },
+          { id: "b8", nameEs: "Panecillo Panceta", nameEn: "Crispy Pork Belly Roll", allergens: ["gluten"], prices: [{ label: "Entero", amount: 3.50 }] },
+          { id: "b9", nameEs: "Panecillo Pinchos", nameEn: "Marinated Pork Skewers Roll", allergens: ["gluten"], prices: [{ label: "Entero", amount: 3.50 }] },
+          { id: "b10", nameEs: "1/2 Panecillo Lomo", nameEn: "Half Pork Loin Roll", allergens: ["gluten"], prices: [{ label: "Medio", amount: 2.00 }] },
+          { id: "b11", nameEs: "1/2 Panecillo Pollo", nameEn: "Half Chicken Roll", allergens: ["gluten"], prices: [{ label: "Medio", amount: 2.00 }] },
+          { id: "b12", nameEs: "1/2 Panecillo tipo Jamón", nameEn: "Half Cured Ham Roll", allergens: ["gluten"], prices: [{ label: "Medio", amount: 1.50 }] }
+        ]
+      },
+      {
+        id: "hamburguesas",
+        titleEs: "Hamburguesas",
+        titleEn: "Burgers",
+        noteEs: "En el local o para llevar",
+        noteEn: "Dine-in or takeaway",
+        items: [
+          { id: "h1", nameEs: "Hamburguesa", nameEn: "Classic Burger", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 2.50 }] },
+          { id: "h2", nameEs: "Hamburguesa Queso", nameEn: "Cheeseburger", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "h3", nameEs: "Hamburguesa Queso Bacon", nameEn: "Bacon Cheeseburger", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "h4", nameEs: "Hamburguesa Completa", nameEn: "Full House Burger", descEs: "Con queso, bacon y huevo", descEn: "With cheese, bacon & fried egg", allergens: ["gluten", "lacteos", "huevo"], prices: [{ label: "Unidad", amount: 4.00 }] },
+          { id: "h5", nameEs: "Patatas", nameEn: "French Fries", allergens: [], prices: [{ label: "Ración", amount: 1.50 }] }
+        ]
+      },
+      {
+        id: "bebidas",
+        titleEs: "Cafés, Refrescos y Cervezas",
+        titleEn: "Coffee, Soft Drinks & Beer",
+        noteEs: "Desde las 06:00 h",
+        noteEn: "Served from 6:00 AM",
+        items: [
+          { id: "d1", nameEs: "Café", nameEn: "Espresso Coffee", allergens: [], prices: [{ label: "Unidad", amount: 1.00 }] },
+          { id: "d2", nameEs: "Café con leche", nameEn: "White Coffee / Latte", allergens: ["lacteos"], prices: [{ label: "Unidad", amount: 1.30 }] },
+          { id: "d3", nameEs: "Cortado", nameEn: "Cortado (Espresso with a dash of milk)", allergens: ["lacteos"], prices: [{ label: "Unidad", amount: 1.10 }] },
+          { id: "d4", nameEs: "Infusiones", nameEn: "Herbal Teas", allergens: [], prices: [{ label: "Unidad", amount: 1.00 }] },
+          { id: "d5", nameEs: "Refrescos", nameEn: "Soft Drinks", allergens: [], prices: [{ label: "Unidad", amount: 1.50 }] },
+          { id: "d6", nameEs: "Cerveza pequeña", nameEn: "Small Bottled Beer", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 1.30 }] },
+          { id: "d7", nameEs: "Cerveza mediana", nameEn: "Medium Bottled Beer", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 1.60 }] },
+          { id: "d8", nameEs: "Caña", nameEn: "Draft Beer (Small)", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 1.60 }] },
+          { id: "d9", nameEs: "Caña grande", nameEn: "Draft Beer (Large)", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 2.60 }] },
+          { id: "d10", nameEs: "Shandi grande", nameEn: "Large Lemon Shandy", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 2.00 }] },
+          { id: "d11", nameEs: "Agua", nameEn: "Still Water", allergens: [], prices: [{ label: "Unidad", amount: 1.00 }] },
+          { id: "d12", nameEs: "Agua con gas", nameEn: "Sparkling Water", allergens: [], prices: [{ label: "Unidad", amount: 1.00 }] },
+          { id: "d13", nameEs: "San Narciso", nameEn: "San Narciso Mineral Water", allergens: [], prices: [{ label: "Unidad", amount: 1.30 }] },
+          { id: "d14", nameEs: "Zumos", nameEn: "Fruit Juices", allergens: [], prices: [{ label: "Unidad", amount: 1.50 }] },
+          { id: "d15", nameEs: "Laccao", nameEn: "Laccao (Mallorcan Chocolate Milk)", allergens: ["lacteos"], prices: [{ label: "Unidad", amount: 1.50 }] }
+        ]
+      },
+      {
+        id: "copas",
+        titleEs: "Ponches, Copas y Combinados",
+        titleEn: "Liqueurs, Spirits & Mixed Drinks",
+        noteEs: "Sobremesa y licores",
+        noteEn: "Digestifs & spirits",
+        items: [
+          { id: "c1", nameEs: "Ponche tipo Terry", nameEn: "Terry-style Spanish Brandy Punch", allergens: ["sulfitos"], prices: [{ label: "Copa", amount: 1.60 }] },
+          { id: "c2", nameEs: "Ponche tipo Carlos", nameEn: "Carlos-style Brandy Punch", allergens: ["sulfitos"], prices: [{ label: "Copa", amount: 1.70 }] },
+          { id: "c3", nameEs: "Ponche tipo Whisky", nameEn: "Whisky Punch", allergens: [], prices: [{ label: "Copa", amount: 2.00 }] },
+          { id: "c4", nameEs: "Copa tipo Terry", nameEn: "Glass of Terry Brandy", allergens: ["sulfitos"], prices: [{ label: "Copa", amount: 1.30 }] },
+          { id: "c5", nameEs: "Copa Hierbas", nameEn: "Hierbas Mallorquinas (Local Herb Liqueur)", allergens: [], prices: [{ label: "Copa", amount: 1.30 }] },
+          { id: "c6", nameEs: "Copa tipo Carlos", nameEn: "Glass of Carlos Brandy", allergens: ["sulfitos"], prices: [{ label: "Copa", amount: 1.40 }] },
+          { id: "c7", nameEs: "Copa tipo Whisky", nameEn: "Glass of Whisky", allergens: [], prices: [{ label: "Copa", amount: 2.00 }] },
+          { id: "c8", nameEs: "Copa Baileys", nameEn: "Glass of Baileys Irish Cream", allergens: ["lacteos"], prices: [{ label: "Copa", amount: 2.00 }] },
+          { id: "c9", nameEs: "Copa Barceló", nameEn: "Glass of Barceló Rum", allergens: [], prices: [{ label: "Copa", amount: 2.00 }] },
+          { id: "c10", nameEs: "Martini", nameEn: "Martini Vermouth", allergens: ["sulfitos"], prices: [{ label: "Copa", amount: 1.40 }] },
+          { id: "c11", nameEs: "Tío Pepe", nameEn: "Tío Pepe Dry Sherry", allergens: ["sulfitos"], prices: [{ label: "Copa", amount: 1.10 }] },
+          { id: "c12", nameEs: "Palo", nameEn: "Palo de Mallorca (Traditional Aperitif)", allergens: ["sulfitos"], prices: [{ label: "Copa", amount: 1.40 }] },
+          { id: "c13", nameEs: "Combinado Bacardi / Gordon's / Vodka", nameEn: "Mixed Drink: Bacardi / Gordon's / Vodka", allergens: [], prices: [{ label: "Copa", amount: 4.00 }] },
+          { id: "c14", nameEs: "Combinado Beefeater / Xoriguer / Whisky", nameEn: "Mixed Drink: Beefeater / Xoriguer Gin / Whisky", allergens: [], prices: [{ label: "Copa", amount: 4.50 }] }
+        ]
+      }
+    ];
+
+    let currentLang = "es";
+    let excludedAllergens = [];
+    let cart = [];
+    let deliveryMode = "pickup";
+    let isMenuOpen = false;
+
+    function eur(n) {
+      return n.toFixed(2).replace(".", ",") + " €";
+    }
+
+    // Navegación entre Portada y Carta dedicada (con soporte botón Atrás del móvil)
+    function openMenuView(fromPopState = false) {
+      isMenuOpen = true;
+      document.getElementById("homeView").classList.remove("active");
+      document.getElementById("menuView").classList.add("active");
+      window.scrollTo({ top: 0, behavior: "instant" });
+      if (!fromPopState && window.history && window.history.pushState) {
+        window.history.pushState({ view: "menu" }, "", "#carta");
+      }
+    }
+
+    function closeMenuView(fromPopState = false) {
+      isMenuOpen = false;
+      document.getElementById("menuView").classList.remove("active");
+      document.getElementById("homeView").classList.add("active");
+      window.scrollTo({ top: 0, behavior: "instant" });
+      if (!fromPopState && window.location.hash === "#carta" && window.history && window.history.back) {
+        window.history.back();
+      }
+    }
+
+    window.addEventListener("popstate", () => {
+      if (isMenuOpen && window.location.hash !== "#carta") {
+        closeMenuView(true);
+      } else if (!isMenuOpen && window.location.hash === "#carta") {
+        openMenuView(true);
+      }
+    });
+
+    // Cambio de idioma ES / EN
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-lang-btn]").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-lang-btn") === lang);
+      });
+
+      const t = I18N[lang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key]) el.textContent = t[key];
+      });
+
+      document.getElementById("variadosNoticeBox").innerHTML = t.variadosNoticeHtml;
+      document.getElementById("orderExtraNotes").placeholder = t.notesPlaceholder;
+
+      refreshOpenClock();
+      renderGallery();
+      renderAllergenFilterPills();
+      renderMenu();
+      syncCartUI();
+    }
+
+    // Horario en tiempo real
+    function refreshOpenClock() {
+      const now = new Date();
+      const day = now.getDay();
+      const mins = now.getHours() * 60 + now.getMinutes();
+      const openM = 6 * 60;
+      let closeM = 15 * 60;
+      if (day === 6) closeM = 14 * 60;
+      if (day === 0) closeM = 12 * 60;
+
+      const open = mins >= openM && mins < closeM;
+      const dot = document.getElementById("liveDot");
+      const txt = document.getElementById("liveStatusText");
+      const t = I18N[currentLang];
+
+      if (open) {
+        dot.classList.remove("closed");
+        const h = String(Math.floor(closeM / 60)).padStart(2, "0") + ":00";
+        txt.textContent = t.openUntil.replace("{h}", h);
+      } else {
+        dot.classList.add("closed");
+        txt.textContent = t.closedOpens;
+      }
+    }
+
+    // Galería deslizante de productos (al hacer clic lleva a la Carta Digital, sin botones encima)
+    function renderGallery() {
+      const strip = document.getElementById("galleryStrip");
+      strip.innerHTML = GALLERY_ITEMS.map(g => {
+        const title = currentLang === "es" ? g.es : g.en;
+        return `
+          <div class="photo-card" role="button" tabindex="0" onclick="openMenuView()" onkeydown="if(event.key==='Enter'||event.key===' ') openMenuView()">
+            <img src="${g.url}" alt="${title}" onerror="this.src=makeFallbackArt('${title}')" />
+            <div class="photo-caption">${title}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Filtro de Alérgenos
+    function toggleAllergenDrawer() {
+      document.getElementById("allergenDrawer").classList.toggle("open");
+    }
+
+    function renderAllergenFilterPills() {
+      const t = I18N[currentLang];
+      const container = document.getElementById("allergenFilterPills");
+      container.innerHTML = ALLERGENS.map(a => {
+        const isEx = excludedAllergens.includes(a.id);
+        const label = currentLang === "es" ? a.es : a.en;
+        return `
+          <button type="button" class="al-filter-chip ${isEx ? 'excluded' : ''}" onclick="toggleExcludeAllergen('${a.id}')">
+            ${isEx ? t.avoidPrefix : a.icon + ' '}${label}
+          </button>
+        `;
+      }).join("");
+
+      const btn = document.getElementById("allergenToggleBtn");
+      btn.classList.toggle("has-filter", excludedAllergens.length > 0);
+      btn.textContent = excludedAllergens.length > 0
+        ? t.allergenBtnActive.replace("{n}", excludedAllergens.length)
+        : t.allergenBtn;
+    }
+
+    function toggleExcludeAllergen(alId) {
+      if (excludedAllergens.includes(alId)) {
+        excludedAllergens = excludedAllergens.filter(x => x !== alId);
+      } else {
+        excludedAllergens.push(alId);
+      }
+      renderAllergenFilterPills();
+      renderMenu();
+    }
+
+    function clearAllergenFilters() {
+      excludedAllergens = [];
+      renderAllergenFilterPills();
+      renderMenu();
+    }
+
+    // Carta compacta continua por orden
+    function renderMenu() {
+      const container = document.getElementById("menuSections");
+      const t = I18N[currentLang];
+
+      const markup = MENU_CATEGORIES.map(cat => {
+        const items = cat.items.filter(it => {
+          const itemAllergens = it.allergens || [];
+          return !excludedAllergens.some(ex => itemAllergens.includes(ex));
+        });
+        if (!items.length) return "";
+
+        const rows = items.map(it => {
+          const title = currentLang === "es" ? it.nameEs : it.nameEn;
+          const desc = currentLang === "es" ? it.descEs : it.descEn;
+
+          const btns = it.prices.map((p, idx) => `
+            <button
+              type="button"
+              class="add-price-pill"
+              onclick="addDish('${cat.id}', '${it.id}', ${idx})"
+            >
+              <span class="pill-size">${t.sizes[p.label] || p.label}</span>
+              <span class="pill-amount">${eur(p.amount)}</span>
+            </button>
+          `).join("");
+
+          const alIcons = (it.allergens || []).map(alId => {
+            const info = ALLERGENS.find(a => a.id === alId);
+            const alName = info ? (currentLang === "es" ? info.es : info.en) : "";
+            return info ? `<span title="${alName}">${info.icon}</span>` : "";
+          }).join("");
+
+          return `
+            <div class="dish-row">
+              <div class="dish-meta">
+                <div class="dish-title-line">
+                  <span class="dish-title">${title}</span>
+                  ${alIcons ? `<span class="inline-allergens">${alIcons}</span>` : ''}
+                </div>
+                ${desc ? `<div class="dish-sub">${desc}</div>` : ''}
+              </div>
+              <div class="price-pills">${btns}</div>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <section class="menu-card">
+            <div class="menu-card-header">
+              <h2 class="menu-card-title serif">${currentLang === "es" ? cat.titleEs : cat.titleEn}</h2>
+              <span class="menu-card-note">${currentLang === "es" ? cat.noteEs : cat.noteEn}</span>
+            </div>
+            ${rows}
+          </section>
+        `;
+      }).join("");
+
+      container.innerHTML = markup || `<div class="detail-box" style="text-align:center; color:var(--text-secondary);">${t.emptyMenu}</div>`;
+    }
+
+    // Carrito y pedido por WhatsApp (mantiene nombres en español claros para la barra)
+    function addDish(catId, itemId, priceIdx) {
+      const cat = MENU_CATEGORIES.find(c => c.id === catId);
+      const item = cat.items.find(i => i.id === itemId);
+      const p = item.prices[priceIdx];
+      const key = `${itemId}_${priceIdx}`;
+      const found = cart.find(c => c.key === key);
+
+      const fullNameEs = catId === "paamboli" ? `Pa amb Oli de ${item.nameEs}` : item.nameEs;
+      const fullNameEn = catId === "paamboli" ? `Pa amb Oli: ${item.nameEn}` : item.nameEn;
+
+      if (found) {
+        found.qty += 1;
+      } else {
+        cart.push({
+          key,
+          catId,
+          nameEs: fullNameEs,
+          nameEn: fullNameEn,
+          sizeEs: p.label,
+          price: p.amount,
+          qty: 1
+        });
+      }
+      syncCartUI();
+    }
+
+    function stepQty(key, delta) {
+      const idx = cart.findIndex(c => c.key === key);
+      if (idx === -1) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      syncCartUI();
+      if (!cart.length) closeCartSheet();
+    }
+
+    function syncCartUI() {
+      const t = I18N[currentLang];
+      const count = cart.reduce((s, c) => s + c.qty, 0);
+      const sum = cart.reduce((s, c) => s + c.qty * c.price, 0);
+
+      document.getElementById("cartCount").textContent = count;
+      document.getElementById("cartTotal").textContent = eur(sum);
+      document.getElementById("sheetTotal").textContent = eur(sum);
+
+      document.getElementById("floatingCart").classList.toggle("visible", count > 0);
+
+      document.getElementById("cartLinesContainer").innerHTML = cart.map(c => {
+        const displayTitle = currentLang === "es" ? c.nameEs : c.nameEn;
+        const displaySize = t.sizes[c.sizeEs] || c.sizeEs;
+        return `
+          <div class="cart-row">
+            <div>
+              <strong>${displayTitle}</strong>
+              <div style="font-size:0.76rem; color:var(--text-secondary);">${displaySize} · ${eur(c.price)}</div>
+            </div>
+            <div class="qty-box">
+              <button type="button" class="qty-circle" onclick="stepQty('${c.key}', -1)">-</button>
+              <span style="min-width:18px; text-align:center; font-weight:700;">${c.qty}</span>
+              <button type="button" class="qty-circle" onclick="stepQty('${c.key}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      const hasVariados = cart.some(c => c.catId === "variados");
+      document.getElementById("minOrderAlert").style.display =
+        (deliveryMode === "delivery" && hasVariados && sum < 15) ? "block" : "none";
+    }
+
+    function setDeliveryMode(mode) {
+      deliveryMode = mode;
+      document.getElementById("btnModePickup").classList.toggle("selected", mode === "pickup");
+      document.getElementById("btnModeDelivery").classList.toggle("selected", mode === "delivery");
+      syncCartUI();
+    }
+
+    function openCartSheet() {
+      syncCartUI();
+      document.getElementById("cartOverlay").classList.add("open");
+    }
+
+    function closeCartSheet() {
+      document.getElementById("cartOverlay").classList.remove("open");
+    }
+
+    function checkoutWhatsapp() {
+      if (!cart.length) return;
+      const sum = cart.reduce((s, c) => s + c.qty * c.price, 0);
+      const notes = document.getElementById("orderExtraNotes").value.trim();
+
+      let text = `Hola *${CONFIG.name}*, me gustaría hacer este pedido:
+
+`;
+      cart.forEach(c => {
+        const tag = c.sizeEs !== "Unidad" ? ` (${c.sizeEs})` : "";
+        text += `• ${c.qty}x ${c.nameEs}${tag} — ${eur(c.qty * c.price)}
+`;
+      });
+      text += `
+*Total estimado:* ${eur(sum)}`;
+      text += `
+*Entrega:* ${deliveryMode === "delivery" ? "Reparto a domicilio" : "Recoger en el local"}`;
+      if (notes) text += `
+*Notas / Dirección:* ${notes}`;
+
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+    }
+
+    // Modal Wi-Fi (sin QR, copia en un toque)
+    function openWifiModal() {
+      document.getElementById("wifiSsidDisplay").textContent = CONFIG.wifiSsid;
+      document.getElementById("wifiPassDisplay").textContent = CONFIG.wifiPass;
+      document.getElementById("copyWifiBtn").textContent = I18N[currentLang].wifiCopyBtn;
+      document.getElementById("wifiOverlay").classList.add("open");
+    }
+
+    function closeWifiModal() {
+      document.getElementById("wifiOverlay").classList.remove("open");
+    }
+
+    function copyWifiPassword() {
+      const btn = document.getElementById("copyWifiBtn");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(CONFIG.wifiPass);
+      } else {
+        const temp = document.createElement("textarea");
+        temp.value = CONFIG.wifiPass;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+      }
+      btn.textContent = I18N[currentLang].wifiCopiedBtn;
+      setTimeout(() => {
+        btn.textContent = I18N[currentLang].wifiCopyBtn;
+      }, 2200);
+    }
+
+    // Canal directo de sugerencias por WhatsApp (sin filtro previo de reseñas)
+    function openDirectFeedbackWa() {
+      const msg = currentLang === "es"
+        ? `Hola *${CONFIG.name}*, os escribo desde vuestra web para comentaros una sugerencia:`
+        : `Hello *${CONFIG.name}*, I'm messaging from your website to share some feedback:`;
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+    }
+
+    // Inicialización
+    const heroImg = document.getElementById("heroBgImg");
+    heroImg.onerror = () => { heroImg.src = makeFallbackArt(CONFIG.name); };
+    heroImg.src = CONFIG.heroImage;
+
+    setLang("es");
+    setInterval(refreshOpenClock, 60000);
+  </script>
+</body>
+</html>

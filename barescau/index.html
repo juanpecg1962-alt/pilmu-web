@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Es Cau">
+<meta name="theme-color" content="#26272a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Bar Es Cau · Manacor</title>
+<style>
+:root{--bg:#26272a;--s:#36383c;--t:#f6f1e7;--m:#bdbdc2;--a:#f39a2e;--oa:#1f1f21}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--t);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;min-height:100vh;display:flex;justify-content:center;padding:14px 20px 96px}
+main{width:100%;max-width:480px;min-width:0}
+.v{display:flex;flex-direction:column;gap:12px}
+.top{position:sticky;top:0;z-index:6;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 0;margin-bottom:6px;background:var(--bg)}
+.lg{display:flex;gap:6px;margin-left:auto}
+.lg button{font:inherit;font-size:13px;font-weight:700;padding:5px 11px;border-radius:999px;border:1px solid rgba(246,241,231,.25);background:none;color:var(--m);cursor:pointer}
+.lg button.on{background:var(--a);border-color:var(--a);color:var(--oa)}
+h1{text-align:center;text-transform:uppercase;font-size:clamp(32px,11vw,44px);font-weight:800;line-height:1;letter-spacing:.5px;color:var(--a)}
+.pl,.th{text-align:center;color:var(--m);font-size:15px}
+.est{text-align:center;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;background:#22c55e;flex:none}.dot.c{background:#e0583a}
+.wel{text-align:center;font-size:19px;line-height:1.4}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px 20px;border-radius:14px;text-decoration:none;text-align:center;text-wrap:balance;overflow-wrap:anywhere;font:inherit;font-weight:600;font-size:17px;background:var(--s);color:var(--t);border:1px solid rgba(246,241,231,.15);cursor:pointer}
+.btn svg{width:22px;height:22px;flex:none;color:var(--a)}
+.wa{background:#25D366;color:#0b2e1a;border-color:#25D366}.wa svg{color:#fff}
+.pri{flex-direction:column;gap:6px;background:var(--a);color:var(--oa);border-color:var(--a);font-size:20px;padding:20px 14px}
+.pri .st{font-size:34px;line-height:1;letter-spacing:4px}
+.btn:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--t);outline-offset:3px}
+.in{text-align:center;color:var(--m);font-size:17px;line-height:1.45}
+.fb{text-align:center;color:var(--m);font-size:15px}.fb a{color:var(--a)}
+details{margin-top:8px}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;border-radius:14px;text-align:center;text-wrap:balance;border:1px dashed rgba(246,241,231,.35);color:var(--m);font-size:15px}
+summary::-webkit-details-marker{display:none}
+summary svg{width:20px;height:20px;flex:none;color:var(--a)}
+ol{padding:14px 6px 0 28px;color:var(--m);font-size:16px;line-height:1.55}li{margin-bottom:6px}ol strong{color:var(--t)}
+.bk{color:var(--a);font-weight:600;font-size:16px;text-decoration:none;padding:8px 14px;border:1px solid rgba(246,241,231,.25);border-radius:999px}
+.h2{font-size:30px;font-weight:800;text-transform:uppercase;color:var(--a)}
+.hint{color:var(--m);font-size:14px}
+.note{background:var(--s);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.45;color:var(--m)}.note strong{color:var(--t)}
+.cat{background:var(--s);border-radius:14px;padding:6px 14px 8px}
+.cat h2{font-size:18px;text-transform:uppercase;color:var(--a);padding:10px 0 4px}
+.row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 12px;padding:9px 0;border-top:1px solid rgba(246,241,231,.09);font-size:16px}
+.nm{flex:1 1 150px;min-width:0;overflow-wrap:anywhere;line-height:1.3}
+.pp{display:flex;gap:6px;flex:none;margin-left:auto}
+.pp button{font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:66px;padding:6px 10px;border-radius:10px;border:1px solid var(--a);background:none;cursor:pointer;line-height:1.15}
+.pp small{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--a)}
+.pp b{font-size:15px;color:var(--t);white-space:nowrap}
+.pp button:active{background:var(--a)}.pp button:active small,.pp button:active b{color:var(--oa)}
+#bar{position:fixed;left:50%;transform:translateX(-50%);bottom:max(14px,env(safe-area-inset-bottom));width:calc(100% - 40px);max-width:420px;display:flex;justify-content:space-between;align-items:center;padding:15px 18px;border-radius:14px;border:0;background:#25D366;color:#0b2e1a;font:inherit;font-weight:700;font-size:17px;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.45)}
+#sh,#wf{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:9}
+.sp{background:var(--bg);width:100%;max-width:460px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom))}
+.sp h2{font-size:24px;color:var(--a);display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sp h2 button{font:inherit;font-size:20px;background:none;border:0;color:var(--m);cursor:pointer;padding:0 4px}
+.md{display:flex;gap:8px;margin-bottom:10px}.md button{flex:1;font:inherit;font-size:14px;font-weight:600;padding:11px 6px;border-radius:12px;border:1px solid rgba(246,241,231,.25);background:none;color:var(--t);cursor:pointer}
+.md button.on{background:var(--a);border-color:var(--a);color:var(--oa)}
+.al{background:#4a2a1c;color:#ffd9c9;border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:10px}
+.ln{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-top:1px solid rgba(246,241,231,.09);font-size:16px}
+.ln small{display:block;color:var(--m);font-size:13px}
+.q{display:flex;align-items:center;gap:10px;flex:none}.q button{width:32px;height:32px;border-radius:50%;border:1px solid var(--a);background:none;color:var(--a);font:inherit;font-size:18px;cursor:pointer}
+#nt{width:100%;margin:12px 0;padding:12px;border-radius:12px;border:1px solid rgba(246,241,231,.25);background:var(--s);color:var(--t);font:inherit;font-size:16px}
+.tt{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--m)}.tt strong{font-size:26px;color:var(--a)}
+.cr{background:var(--s);border-radius:12px;padding:12px 14px;margin-bottom:10px}.cr small{display:block;color:var(--m);font-size:13px}.cr strong{font-size:19px;word-break:break-all}
+.ab{font:inherit;font-size:15px;font-weight:600;padding:9px 14px;border-radius:999px;border:1px solid var(--a);background:none;color:var(--a);cursor:pointer}
+.ab.on{background:var(--a);color:var(--oa)}
+.ald{background:var(--s);border-radius:12px;padding:12px 14px}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{font:inherit;font-size:14px;padding:7px 11px;border-radius:999px;border:1px solid rgba(246,241,231,.3);background:none;color:var(--t);cursor:pointer}
+.chip.on{background:#4a2a1c;border-color:#e0583a;color:#ffd9c9}
+.lk{font:inherit;font-size:14px;background:none;border:0;color:var(--a);cursor:pointer;padding:0;text-decoration:underline}
+.ic{font-size:13px;margin-left:6px;white-space:nowrap}.aw{color:var(--m);font-size:13px;text-align:center;line-height:1.4}
+@media(max-width:360px){body{padding-left:14px;padding-right:14px}.btn{font-size:16px;padding:15px 14px}.pp button{min-width:60px;padding:5px 8px}.ab{font-size:14px;padding:8px 11px}.bk{font-size:15px;padding:8px 11px}}
+.ins h3,#ins h3{font-size:15px;color:var(--t);padding-top:14px}#ins ol{padding-top:6px}
+.gt{font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--a);margin-bottom:8px}
+.gal{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.gal::-webkit-scrollbar{display:none}
+.gc{position:relative;display:block;flex:0 0 min(58%,190px);aspect-ratio:3/4;border-radius:14px;overflow:hidden;scroll-snap-align:start;border:1px solid rgba(246,241,231,.15);background:var(--s)}
+.gc img{width:100%;height:100%;object-fit:cover;display:block}
+.gc span{position:absolute;inset:auto 0 0 0;padding:34px 10px 9px;background:linear-gradient(to top,rgba(0,0,0,.9),transparent);line-height:1.25;font-size:14px;font-weight:600;color:#fff}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><a class="bk" id="bk" href="#" data-i="back" hidden></a><button type="button" class="ab" id="alb" hidden></button><div class="lg"><button type="button" data-l="es">ES</button><button type="button" data-l="en">EN</button></div></div>
+
+<div id="home" class="v">
+  <h1>Bar Es Cau</h1>
+  <p class="pl">Ronda de Felanitx, 65 · Manacor</p>
+  <p class="est"><span class="dot" id="dot"></span><span id="est"></span></p>
+  <p class="wel" data-i="wel"></p>
+  <a class="btn" href="#carta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+    <span data-i="carta"></span>
+  </a>
+  <button type="button" class="btn" id="wfb">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 19.5h.01"/></svg>
+    <span data-i="wifi"></span>
+  </button>
+  <div style="min-width:0"><p class="gt" data-i="gt"></p><div class="gal" id="gal"></div></div>
+  <a class="btn" href="https://www.instagram.com/bar_es_cau">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    <span data-i="ig"></span>
+  </a>
+  <a class="btn pri" href="https://search.google.com/local/writereview?placeid=ChIJaZ1rPglJlhIRVXGWaEU8epY">
+    <span data-i="rev"></span><span class="st" aria-hidden="true">★★★★★</span>
+  </a>
+  <p class="in" data-i="in"></p>
+  <a class="btn wa" id="fb" href="#">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <span data-i="fb"></span>
+  </a>
+  <p class="th" data-i="thx"></p>
+  <button type="button" class="btn" id="ib" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>
+    <span data-i="ib"></span>
+  </button>
+  <details id="inst">
+    <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg><span data-i="inst"></span></summary>
+    <div id="ins">
+      <div id="g-ios"><h3 data-i="ih"></h3><ol data-h="ios"></ol></div>
+      <div id="g-and"><h3 data-i="ah"></h3><ol data-h="and"></ol></div>
+    </div>
+  </details>
+</div>
+
+<div id="carta" class="v" hidden>
+  <h2 class="h2" data-i="ct"></h2>
+  <p class="hint" data-i="hint"></p>
+  <div class="ald" id="ald" hidden><p class="hint" data-i="alh"></p><div class="chips" id="alc"></div><button type="button" class="lk" id="alx" data-i="clr"></button></div>
+  <p class="note" data-h="note"></p>
+  <div id="menu" class="v"></div>
+  <p class="aw" data-i="alw"></p>
+</div>
+</main>
+
+<button type="button" id="bar" hidden><span><span id="cn"></span> · <span data-i="ver"></span></span><span id="ct2"></span></button>
+
+<div id="sh" hidden>
+  <div class="sp">
+    <h2><span data-i="ord"></span><button type="button" id="x" aria-label="Cerrar">✕</button></h2>
+    <div class="md"><button type="button" data-m="b" class="on" data-i="mb"></button><button type="button" data-m="p" data-i="pk"></button><button type="button" data-m="d" data-i="dl"></button></div>
+    <p class="al" id="al" hidden data-i="min"></p>
+    <div id="ls"></div>
+    <input id="nt" type="text" autocomplete="off">
+    <div class="tt"><span data-i="tot"></span><strong id="tt"></strong></div>
+    <button type="button" class="btn wa" id="send"><span data-i="send"></span></button>
+  </div>
+</div>
+
+<div id="wf" hidden>
+  <div class="sp">
+    <h2><span data-i="wifi"></span><button type="button" id="wx" aria-label="Cerrar">✕</button></h2>
+    <p class="hint" data-i="wsub" style="margin-bottom:12px"></p>
+    <div class="cr"><small data-i="wnet"></small><strong id="wn"></strong></div>
+    <div class="cr"><small data-i="wpw"></small><strong id="wp"></strong></div>
+    <button type="button" class="btn pri" id="cp"><span id="cps" data-i="wcp"></span></button>
+  </div>
+</div>
+
+<script>
+(function(){
+var WA="34665075934",MIN=15,WIFI={n:"Bar_Es_Cau_Clientes",p:"escau2026"};
+// Horario según Google Maps: lunes a sábado 05:00–14:30, domingo cerrado (minutos desde medianoche; índice 0 = domingo)
+var H=[null,[300,870],[300,870],[300,870],[300,870],[300,870],[300,870]];
+var T={es:{
+wel:"¡Bienvenido! Esperamos que estés disfrutando.",carta:"Ver carta y pedir",ig:"Síguenos en Instagram",rev:"Déjanos tu reseña en Google",
+in:"¿Qué tal te ha ido? Tu reseña en Google ayuda a que más gente nos encuentre. Solo te llevará un minuto.",fb:"¿Algo que mejorar? Escríbenos",thx:"Gracias por tu visita",
+alb:"🌾 Alérgenos",alh:"Toca los alérgenos que quieres evitar:",clr:"Limpiar",alw:"Información orientativa. Si tienes alergia o intolerancia, consúltalo con el personal.",emp:"No hay platos sin esos alérgenos.",back:"← Volver",ct:"Carta",hint:"Toca un precio para añadirlo a tu pedido",
+note:"<strong>Variados a domicilio (jueves a domingo):</strong> pedidos hasta las <strong>11:00</strong> y reparto hasta las <strong>14:30</strong>. Pedido mínimo <strong>15,00 €</strong>.",
+ver:"Ver pedido",ord:"Tu pedido",mb:"En el bar",pk:"Recoger",dl:"A domicilio",min:"El reparto de Variados tiene un pedido mínimo de 15,00 €.",
+ph:"Nota (ej. hora de recogida)",phb:"Mesa o nombre (opcional)",phd:"Dirección de entrega y nota",wifi:"Wi-Fi para clientes",wsub:"Conéctate gratis desde los ajustes Wi-Fi de tu móvil:",wnet:"Nombre de la red",wpw:"Contraseña",wcp:"Copiar contraseña",wok:"✓ ¡Copiada!",tot:"Total estimado",send:"Enviar pedido por WhatsApp",
+gt:"Nuestras especialidades",ib:"Instalar la app",inst:"Añadir esta web a tu pantalla de inicio",ih:"iPhone (Safari)",ah:"Android (Chrome)",
+ios:"<li>Abre esta página en <strong>Safari</strong>.</li><li>Pulsa <strong>Compartir</strong> (el cuadrado con una flecha hacia arriba).</li><li>Elige <strong>Añadir a pantalla de inicio</strong> (si no la ves, desliza el menú hacia arriba) y confirma.</li>",
+and:"<li>Pulsa el menú <strong>⋮</strong> de Chrome (arriba a la derecha).</li><li>Elige <strong>Instalar aplicación</strong> (o <strong>Añadir a pantalla de inicio</strong>).</li><li>Confirma.</li>",
+opn:"Abierto · hasta las ",cls:"Cerrado · abre ",td:"hoy",tm:"mañana",on:"el ",at:" a las ",
+dy:["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],sz:["Mediano","Grande"]},
+en:{
+wel:"Welcome! We hope you are enjoying your visit.",carta:"View menu & order",ig:"Follow us on Instagram",rev:"Leave us a Google review",
+in:"How was your visit? Your Google review helps more people find us. It only takes a minute.",fb:"Something to improve? Write to us",thx:"Thank you for visiting",
+alb:"🌾 Allergens",alh:"Tap the allergens you want to avoid:",clr:"Clear",alw:"Guidance only. If you have an allergy or intolerance, please ask our staff.",emp:"No dishes without those allergens.",back:"← Back",ct:"Menu",hint:"Tap a price to add it to your order",
+note:"<strong>Home delivery of Variados (Thursday to Sunday):</strong> orders until <strong>11:00</strong>, delivery until <strong>14:30</strong>. Minimum order <strong>€15.00</strong>.",
+ver:"View order",ord:"Your order",mb:"At the bar",pk:"Pickup",dl:"Delivery",min:"Variados delivery has a minimum order of €15.00.",
+ph:"Note (e.g. pickup time)",phb:"Table or name (optional)",phd:"Delivery address and note",wifi:"Guest Wi-Fi",wsub:"Connect for free from your phone's Wi-Fi settings:",wnet:"Network name",wpw:"Password",wcp:"Copy password",wok:"✓ Copied!",tot:"Estimated total",send:"Send order via WhatsApp",
+gt:"Our specialties",ib:"Install the app",inst:"Add this website to your home screen",ih:"iPhone (Safari)",ah:"Android (Chrome)",
+ios:"<li>Open this page in <strong>Safari</strong>.</li><li>Tap <strong>Share</strong> (the square with an up arrow).</li><li>Choose <strong>Add to Home Screen</strong> (swipe the menu up if you don't see it) and confirm.</li>",
+and:"<li>Tap the Chrome menu <strong>⋮</strong> (top right).</li><li>Choose <strong>Install app</strong> (or <strong>Add to Home screen</strong>).</li><li>Confirm.</li>",
+opn:"Open · until ",cls:"Closed · opens ",td:"today",tm:"tomorrow",on:"on ",at:" at ",
+dy:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],sz:["Medium","Large"]}};
+// Carta (fotos de la carta del bar). Ítem: [español, inglés, precio] o [español, inglés, precio mediano, precio grande]
+var M=[
+["Variados","Variados (traditional dishes)",[["Caminantes","Braised trotters",3.5,6],["Lengua","Tongue",3.5,5],["Callos","Tripe stew",3.5,5],["Freixura","Lamb offal fry",3.5,5],["Frito matanzas","Mallorcan pork fry",3.5,5],["Hígado","Liver",3.5,5],["Albóndigas","Meatballs",3.5,5],["Sepia salsa","Cuttlefish in sauce",3.5,5],["Costilla horno","Oven-roasted ribs",3.5,5],["Lomo salsa champiñones","Pork loin, mushroom sauce",3.5,5],["Costilla con salsa","Ribs in sauce",2.5,5]]],
+["Pa amb oli","Pa amb oli (bread with tomato & olive oil)",[["Pa amb oli de jamón","Pa amb oli: ham",3],["Pa amb oli de queso","Pa amb oli: cheese",3],["Pa amb oli de atún","Pa amb oli: tuna",3],["Pa amb oli de sardinillas picantes","Pa amb oli: spicy sardines",3],["Pa amb oli de anchoas","Pa amb oli: anchovies",3],["Pa amb oli de anchoas con queso","Pa amb oli: anchovies & cheese",3.5],["Pa amb oli de pollo","Pa amb oli: chicken",3.5],["Pa amb oli de pollo queso","Pa amb oli: chicken & cheese",3.5],["Pa amb oli de pollo queso bacon","Pa amb oli: chicken, cheese & bacon",4],["Pa amb oli de lomo","Pa amb oli: pork loin",3.5],["Pa amb oli de lomo queso","Pa amb oli: loin & cheese",3.5],["Pa amb oli de lomo queso bacon","Pa amb oli: loin, cheese & bacon",4],["Pa amb oli de salchichas","Pa amb oli: sausages",3.5],["Pa amb oli de panceta","Pa amb oli: pork belly",3.5],["Pa amb oli de camaiot","Pa amb oli: camaiot",3.5],["Pa amb oli de tortilla","Pa amb oli: omelette",3.5],["Pa amb oli de pinchos","Pa amb oli: skewers",3.5]]],
+["Bocadillos","Sandwiches",[["Trampó","Trampó (tomato & pepper salad)",1.5],["Panecillo tipo jamón","Ham roll",3],["Panecillo tipo lomo","Pork loin roll",3.5],["Panecillo tipo pollo","Chicken roll",3.5],["Panecillo lomo queso-bacon","Loin, cheese & bacon roll",3.8],["Panecillo pollo queso-bacon","Chicken, cheese & bacon roll",3.8],["Panecillo tortilla","Omelette roll",3.5],["Panecillo panceta","Pork belly roll",3.5],["Panecillo pinchos","Skewers roll",3.5],["1/2 panecillo lomo","Half loin roll",2],["1/2 panecillo pollo","Half chicken roll",2],["1/2 panecillo tipo jamón","Half ham roll",1.5]]],
+["Hamburguesas","Burgers",[["Hamburguesa","Burger",2.5],["Hamburguesa queso","Cheeseburger",3],["Hamburguesa queso bacon","Bacon cheeseburger",3.5],["Hamburguesa completa (queso, bacon, huevo)","Full burger (cheese, bacon, egg)",4],["Patatas","Fries",1.5]]],
+["Cafés e infusiones","Coffee & infusions",[["Café","Coffee",1],["Café con leche","White coffee",1.3],["Cortado","Cortado",1.1],["Infusiones","Herbal tea",1]]],
+["Refrescos y cervezas","Soft drinks & beer",[["Refrescos","Soft drink",1.5],["Cerveza pequeña","Small beer",1.3],["Cerveza mediana","Medium beer",1.6],["Caña","Draught beer",1.6],["Caña grande","Large draught beer",2.6],["Shandi grande","Large shandy",2],["Agua","Water",1],["Agua con gas","Sparkling water",1],["San Narciso","San Narciso water",1.3],["Zumos","Juice",1.5],["Laccao","Cocoa milk",1.5]]],
+["Ponches, copas y combinados","Punches, spirits & mixed drinks",[["Ponche tipo Terry","Terry-style punch",1.6],["Ponche tipo Carlos","Carlos-style punch",1.7],["Ponche tipo whisky","Whisky punch",2],["Copa tipo Terry","Terry-style glass",1.3],["Copa hierbas","Herbal liqueur",1.3],["Copa tipo Carlos","Carlos-style glass",1.4],["Copa tipo whisky","Whisky glass",2],["Copa Baileys","Baileys",2],["Copa Barceló","Barceló rum",2],["Martini","Martini",1.4],["Tío Pepe","Tío Pepe sherry",1.1],["Palo","Palo",1.4],["Combinado Bacardi-Gordon's-Vodka","Bacardi / Gordon's / Vodka mix",4],["Combinado Beefeater-Xoriguer-Whisky","Beefeater / Xoriguer / Whisky mix",4.5]]]
+];
+// Alérgenos por plato (mismo orden que M): g gluten, l lácteos, h huevo, p pescado, m moluscos, s sulfitos
+var AG=[["g","🌾","Gluten","Gluten"],["l","🥛","Lácteos","Dairy"],["h","🥚","Huevo","Egg"],["p","🐟","Pescado","Fish"],["m","🦑","Moluscos","Molluscs"],["s","🍷","Sulfitos","Sulphites"]],
+AL=["s,s,s,s,,,gh,ms,,s,s","g,gl,gp,gp,gp,gpl,g,gl,gl,g,gl,gl,g,g,g,gh,g",",g,g,g,gl,gl,gh,g,g,g,g,g","g,gl,gl,glh,",",l,l,",",g,g,g,g,g,,,,,l","s,s,,s,,s,,l,,s,s,s,,"].map(function(x){return x.split(",")}),EX=[];
+// Fotos de las especialidades (Instagram del bar); [español, inglés, archivo]
+var GA=[["Variado completito","Mixed tapas plate","esp-variado.jpg"],["Frito de sepia","Fried cuttlefish","esp-sepia.jpg"],["Hígado","Liver stew","esp-higado.jpg"],["Pa amb oli de pinchos con trampó","Pa amb oli with pork skewers & trampó","esp-pinchos.jpg"],["Pa amb oli con trampó y atún","Pa amb oli with trampó & tuna","esp-atun.jpg"],["Pa amb oli de lomo con queso","Pa amb oli with loin & cheese","esp-lomo-queso.jpg"],["Bocadillo de anchoas","Anchovy sandwich","esp-anchoas.jpg"]];
+var L=/^(es|ca)/i.test(navigator.language||"es")?"es":"en",mode="b",cart={};
+function $(i){return document.getElementById(i)}
+function eur(n){return n.toFixed(2).replace(".",",")+" €"}
+function hm(m){return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0")}
+function est(){
+ var o={};new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Madrid",weekday:"short",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).forEach(function(x){o[x.type]=x.value});
+ var d=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(o.weekday),m=+o.hour*60+ +o.minute,t=T[L],h=H[d],s;
+ if(h&&m>=h[0]&&m<h[1]){s=t.opn+hm(h[1]);$("dot").className="dot"}
+ else{$("dot").className="dot c";var w;
+  if(h&&m<h[0])w=t.td+t.at+hm(h[0]);
+  else{for(var i=1;i<8;i++){var n=(d+i)%7;if(H[n]){w=(i==1?t.tm:t.on+t.dy[n])+t.at+hm(H[n][0]);break}}}
+  s=t.cls+w}
+ $("est").textContent=s}
+function ic(c){return c?'<span class="ic">'+AG.filter(function(a){return c.indexOf(a[0])>-1}).map(function(a){return a[1]}).join("")+'</span>':""}
+function menu(){
+ var h=M.map(function(c,ci){var r=c[2].map(function(it,ii){var q=AL[ci][ii]||"";
+  if(EX.some(function(x){return q.indexOf(x)>-1}))return "";var p=it.slice(2);
+  return '<div class="row"><span class="nm">'+(L=="es"?it[0]:it[1])+ic(q)+'</span><span class="pp">'+p.map(function(v,pi){return '<button type="button" data-k="'+ci+"."+ii+"."+pi+'">'+(p.length>1?'<small>'+T[L].sz[pi]+'</small>':"")+'<b>'+eur(v)+'</b></button>'}).join("")+'</span></div>'}).join("");
+  return r?'<section class="cat"><h2>'+(L=="es"?c[0]:c[1])+'</h2>'+r+'</section>':""}).join("");
+ $("menu").innerHTML=h||'<p class="note">'+T[L].emp+'</p>';
+ $("alb").textContent=T[L].alb+(EX.length?" ("+EX.length+")":"");$("alb").className="ab"+(EX.length?" on":"");
+ $("alc").innerHTML=AG.map(function(a){var o=EX.indexOf(a[0])>-1;return '<button type="button" class="chip'+(o?" on":"")+'" data-a="'+a[0]+'">'+(o?"🚫 ":a[1]+" ")+a[L=="es"?2:3]+'</button>'}).join("")}
+function lang(l){
+ L=l;document.documentElement.lang=l;var t=T[l];
+ document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=t[e.getAttribute("data-i")]});
+ document.querySelectorAll("[data-h]").forEach(function(e){e.innerHTML=t[e.getAttribute("data-h")]});
+ document.querySelectorAll(".lg button").forEach(function(b){b.className=b.getAttribute("data-l")==l?"on":""});
+ $("fb").href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hola Bar Es Cau, os escribo desde vuestra web: ");
+ $("gal").innerHTML=GA.map(function(g){var n=g[L=="es"?0:1];return '<a class="gc" href="#carta"><img src="'+g[2]+'" alt="'+n+'" loading="lazy" onerror="this.parentNode.remove()"><span>'+n+'</span></a>'}).join("");
+ est();menu();sync()}
+function sync(){
+ var k=Object.keys(cart),n=0,s=0,v=false,h="";
+ k.forEach(function(x){var c=cart[x];n+=c.q;s+=c.q*c.p;if(c.v)v=true;
+  h+='<div class="ln"><span>'+(L=="es"?c.es:c.en)+'<small>'+(c.z?c.z+" · ":"")+eur(c.p)+'</small></span><span class="q"><button type="button" data-d="-1" data-k="'+x+'">−</button><b>'+c.q+'</b><button type="button" data-d="1" data-k="'+x+'">+</button></span></div>'});
+ $("ls").innerHTML=h;$("cn").textContent=n;$("ct2").textContent=eur(s);$("tt").textContent=eur(s);
+ $("nt").placeholder=T[L][mode=="b"?"phb":mode=="d"?"phd":"ph"];$("bar").hidden=!n;$("al").hidden=!(mode=="d"&&v&&s<MIN);if(!n)$("sh").hidden=true}
+function add(k){
+ var a=k.split("."),it=M[a[0]][2][a[1]],p=it.slice(2),c=cart[k];
+ if(c)c.q++;else cart[k]={es:it[0],en:it[1],p:p[a[2]],q:1,v:a[0]==0,z:p.length>1?T.es.sz[a[2]]:""};
+ sync()}
+function go(){var c=location.hash=="#carta";$("home").hidden=c;$("carta").hidden=!c;$("bk").hidden=!c;$("alb").hidden=!c;if(!c)$("ald").hidden=true;scrollTo(0,0)}
+document.addEventListener("click",function(e){
+ var b=e.target.closest("button");if(!b)return;
+ if(b.dataset.l)lang(b.dataset.l);
+ else if(b.dataset.d){var c=cart[b.dataset.k];c.q+=+b.dataset.d;if(c.q<1)delete cart[b.dataset.k];sync()}
+ else if(b.dataset.k)add(b.dataset.k);
+ else if(b.dataset.a){var i=EX.indexOf(b.dataset.a);if(i>-1)EX.splice(i,1);else EX.push(b.dataset.a);menu()}
+ else if(b.id=="alb")$("ald").hidden=!$("ald").hidden;
+ else if(b.id=="alx"){EX=[];menu()}
+ else if(b.dataset.m){mode=b.dataset.m;document.querySelectorAll(".md button").forEach(function(x){x.className=x==b?"on":""});sync()}
+ else if(b.id=="bar")$("sh").hidden=false;
+ else if(b.id=="wfb"){$("wn").textContent=WIFI.n;$("wp").textContent=WIFI.p;$("wf").hidden=false}
+ else if(b.id=="wx")$("wf").hidden=true;
+ else if(b.id=="cp"){
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(WIFI.p);
+  else{var a=document.createElement("textarea");a.value=WIFI.p;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}
+  $("cps").textContent=T[L].wok;setTimeout(function(){$("cps").textContent=T[L].wcp},2200)}
+ else if(b.id=="x")$("sh").hidden=true;
+ else if(b.id=="send"){
+  var s=0,t="Hola *Bar Es Cau*, me gustaría hacer este pedido:\n\n";
+  Object.keys(cart).forEach(function(k){var c=cart[k];s+=c.q*c.p;t+="• "+c.q+"x "+c.es+(c.z?" ("+c.z+")":"")+" — "+eur(c.q*c.p)+"\n"});
+  t+="\n*Total estimado:* "+eur(s)+"\n*Entrega:* "+(mode=="d"?"Reparto a domicilio":mode=="p"?"Recoger en el local":"Servir en el bar");
+  var n=$("nt").value.trim();if(n)t+="\n*Notas / Dirección:* "+n;
+  window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(t),"_blank","noopener")}});
+[$("sh"),$("wf")].forEach(function(o){o.addEventListener("click",function(e){if(e.target==o)o.hidden=true})});
+window.addEventListener("hashchange",go);
+var u=navigator.userAgent||"",ios=/iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1),and=/Android/.test(u),
+ st=navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
+if(st)$("inst").hidden=true;else if(and)$("ins").insertBefore($("g-and"),$("g-ios"));
+var dip=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dip=e;if(!st)$("ib").hidden=false});
+window.addEventListener("appinstalled",function(){dip=null;$("ib").hidden=true;$("inst").hidden=true});
+$("ib").addEventListener("click",function(){if(dip){dip.prompt();dip.userChoice.then(function(){dip=null;$("ib").hidden=true})}});
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js",{scope:"./"}).catch(function(){});
+lang(L);go();setInterval(est,60000);
+})();
+</script>
+</body>
+</html>

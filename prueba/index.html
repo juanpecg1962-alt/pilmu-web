@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bar de Prueba · Manacor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #26272a;      /* pizarra */
+    --surface: #36383c;
+    --text: #f6f1e7;
+    --muted: #bdbdc2;
+    --accent: #f39a2e;  /* naranja del logo */
+    --on-accent: #1f1f21;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 44px 20px;
+  }
+  main { width: 100%; max-width: 420px; }
+  h1 {
+    text-align: center; text-transform: uppercase;
+    font-size: 44px; font-weight: 800; line-height: 1; letter-spacing: .5px;
+    color: var(--accent);
+  }
+  .place { margin-top: 10px; text-align: center; color: var(--muted); font-size: 15px; }
+  .welcome { margin: 22px 0 28px; text-align: center; font-size: 19px; line-height: 1.4; }
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 17px 20px; margin-bottom: 12px;
+    border-radius: 14px; text-decoration: none;
+    text-align: center; text-wrap: balance;
+    font: inherit; font-weight: 600; font-size: 17px;
+    background: var(--surface); color: var(--text);
+    border: 1px solid rgba(246,241,231,.15);
+  }
+  .btn svg { width: 22px; height: 22px; flex: none; color: var(--accent); }
+  .btn.primary {
+    background: var(--accent); color: var(--on-accent);
+    border-color: var(--accent); font-size: 20px; padding: 20px 14px;
+    margin-bottom: 0;
+  }
+  .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  .review-intro { margin: 30px 0 16px; text-align: center; color: var(--muted); font-size: 17px; line-height: 1.45; }
+  .stars {
+    display: flex; gap: 6px; justify-content: center; margin-top: 22px;
+    color: var(--accent); font-size: 38px; line-height: 1;
+  }
+  .thanks { margin-top: 26px; text-align: center; color: var(--muted); font-size: 15px; }
+</style>
+</head>
+<body>
+<main>
+  <!-- CAMBIAR para cada cliente: nombre, dirección, textos y enlaces -->
+  <h1>Bar de Prueba</h1>
+  <p class="place">Calle de Ejemplo, 1 · Manacor</p>
+  <p class="welcome">Esta es una página de prueba.</p>
+
+  <a class="btn" href="carta.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+    Ver nuestra Carta
+  </a>
+  <a class="btn" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    Síguenos en Instagram
+  </a>
+
+  <p class="review-intro">¿Qué tal te ha ido? Tu reseña en Google ayuda a que más gente nos encuentre. Solo te llevará un minuto.</p>
+  <a class="btn primary" href="#">Déjanos tu reseña en Google</a>
+
+  <div class="stars" aria-hidden="true">★★★★★</div>
+  <p class="thanks">Gracias por tu visita</p>
+</main>
+</body>
+</html>
