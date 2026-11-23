@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <title>Cafè Sa Plaça · Carta Digital y Pedidos</title>
+  <meta name="description" content="Café de especialidad, ensaimadas recién horneadas, llonguets mallorquines y tostadas artesanas." />
+
+  <!-- PWA / Pantalla Completa -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Cafè Sa Plaça" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#faf6f0" />
+
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+  <link rel="manifest" href="manifest.json" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-canvas: #faf6f0;
+      --bg-surface: #ffffff;
+      --bg-sand: #f1e9dd;
+      --bg-espresso: #1f1a17;
+      --terracotta: #c25934;
+      --terracotta-dark: #9e4322;
+      --terracotta-soft: rgba(194, 89, 52, 0.11);
+      --olive: #3b6e52;
+      --olive-soft: rgba(59, 110, 82, 0.12);
+      --whatsapp: #25d366;
+      --ink-primary: #1f1a17;
+      --ink-secondary: #685e56;
+      --border-warm: rgba(31, 26, 23, 0.10);
+      --shadow-card: 0 10px 28px rgba(31, 26, 23, 0.06);
+      --radius-xl: 24px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--ink-primary);
+      line-height: 1.5;
+      padding-bottom: 98px;
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Fraunces', Georgia, serif;
+    }
+
+    .view-screen {
+      display: none;
+      animation: riseIn 0.24s ease;
+    }
+
+    .view-screen.active { display: block; }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Barra superior cálida */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(250, 246, 240, 0.90);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-warm);
+    }
+
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-warm);
+      font-size: 0.77rem;
+      font-weight: 600;
+      color: var(--ink-primary);
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--olive);
+      box-shadow: 0 0 0 3px var(--olive-soft);
+    }
+
+    .live-dot.closed {
+      background: #c93b2b;
+      box-shadow: 0 0 0 3px rgba(201, 59, 43, 0.14);
+    }
+
+    .lang-pill-group {
+      display: inline-flex;
+      background: var(--bg-sand);
+      padding: 3px;
+      border-radius: 999px;
+      border: 1px solid var(--border-warm);
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: var(--ink-secondary);
+      font-weight: 700;
+      font-size: 0.74rem;
+      padding: 5px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: var(--bg-espresso);
+      color: #faf6f0;
+    }
+
+    /* Contenedor principal */
+    .shell {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Cabecera Editorial */
+    .editorial-hero {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 16px;
+    }
+
+    .hero-banner {
+      position: relative;
+      height: 175px;
+      background: var(--bg-espresso);
+      overflow: hidden;
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.88;
+    }
+
+    .hero-banner-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(31, 26, 23, 0.55), transparent 60%);
+    }
+
+    .hero-profile {
+      padding: 0 20px 22px;
+      text-align: center;
+      position: relative;
+    }
+
+    .crest-wrap {
+      width: 92px;
+      height: 92px;
+      margin: -46px auto 12px;
+      border-radius: 50%;
+      padding: 4px;
+      background: var(--bg-surface);
+      box-shadow: 0 8px 20px rgba(31, 26, 23, 0.14);
+      position: relative;
+      z-index: 2;
+    }
+
+    .crest-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .place-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.77rem;
+      font-weight: 600;
+      color: var(--terracotta);
+      background: var(--terracotta-soft);
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      margin-bottom: 8px;
+    }
+
+    .brand-name {
+      font-size: 2.05rem;
+      line-height: 1.12;
+      color: var(--ink-primary);
+      margin-bottom: 8px;
+    }
+
+    .brand-bio {
+      font-size: 0.88rem;
+      color: var(--ink-secondary);
+      max-width: 440px;
+      margin: 0 auto 18px;
+    }
+
+    /* Botón principal Carta + Cuadrícula Bento 2x2 */
+    .primary-menu-btn {
+      width: 100%;
+      border: none;
+      background: var(--terracotta);
+      color: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 15px 18px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(194, 89, 52, 0.26);
+      margin-bottom: 10px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .primary-menu-btn:active { transform: scale(0.99); }
+
+    .primary-tag {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .bento-tile {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-md);
+      padding: 12px 8px;
+      text-decoration: none;
+      color: var(--ink-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      transition: background 0.15s ease;
+    }
+
+    .bento-tile:hover { background: var(--bg-sand); }
+
+    .bento-icon {
+      font-size: 1.25rem;
+    }
+
+    /* Galería horizontal */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 20px 2px 10px;
+    }
+
+    .section-head h2 {
+      font-size: 1.45rem;
+      color: var(--ink-primary);
+    }
+
+    .section-head span {
+      font-size: 0.76rem;
+      color: var(--ink-secondary);
+      font-weight: 600;
+    }
+
+    .gallery-row {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .gallery-row::-webkit-scrollbar { display: none; }
+
+    .dish-card {
+      flex: 0 0 156px;
+      height: 204px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      scroll-snap-align: start;
+      border: 1px solid var(--border-warm);
+      background: var(--bg-espresso);
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(31, 26, 23, 0.08);
+    }
+
+    .dish-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .dish-card-label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 26px 10px 10px;
+      background: linear-gradient(to top, rgba(22, 18, 15, 0.88), transparent);
+      color: #faf6f0;
+      font-size: 0.79rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    /* Tarjeta de Reseñas Directas (Sin filtro previo) */
+    .review-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-xl);
+      padding: 20px 18px;
+      margin-top: 18px;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .eyebrow-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--olive);
+    }
+
+    .review-btn-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    /* Horarios y Ubicación */
+    .info-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 520px) {
+      .info-cards { grid-template-columns: 1fr 1fr; }
+    }
+
+    .info-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .info-box h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--terracotta);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      padding: 5px 0;
+      border-bottom: 1px dashed var(--border-warm);
+    }
+
+    .info-row:last-child { border-bottom: none; }
+
+    /* Pantalla 2: Carta Digital */
+    .menu-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 45;
+      background: rgba(250, 246, 240, 0.94);
+      backdrop-filter: blur(12px);
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border-warm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back-pill {
+      border: 1px solid var(--border-warm);
+      background: var(--bg-surface);
+      color: var(--ink-primary);
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .allergen-btn {
+      border: 1px solid var(--border-warm);
+      background: var(--bg-surface);
+      color: var(--ink-primary);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .allergen-btn.active {
+      background: var(--terracotta);
+      color: #fff;
+      border-color: var(--terracotta);
+    }
+
+    .allergen-box {
+      display: none;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .allergen-box.open { display: block; }
+
+    .allergen-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .al-chip {
+      border: 1px solid var(--border-warm);
+      background: var(--bg-canvas);
+      color: var(--ink-primary);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .al-chip.excluded {
+      background: #fde8e6;
+      color: #a6281c;
+      border-color: #f3b7b1;
+    }
+
+    .cat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .cat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-warm);
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+    }
+
+    .cat-header h2 {
+      font-size: 1.38rem;
+      color: var(--terracotta);
+    }
+
+    .cat-note {
+      font-size: 0.73rem;
+      color: var(--ink-secondary);
+      font-weight: 600;
+    }
+
+    .item-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-warm);
+    }
+
+    .item-line:last-child { border-bottom: none; padding-bottom: 2px; }
+
+    .item-name {
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .item-desc {
+      font-size: 0.78rem;
+      color: var(--ink-secondary);
+      margin-top: 2px;
+    }
+
+    .price-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .price-btn {
+      border: 1px solid rgba(194, 89, 52, 0.35);
+      background: var(--terracotta-soft);
+      color: var(--terracotta-dark);
+      padding: 6px 11px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.15;
+    }
+
+    .price-btn:active {
+      background: var(--terracotta);
+      color: #fff;
+    }
+
+    .price-size {
+      font-size: 0.65rem;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+
+    /* Barra flotante de pedido */
+    .cart-bar {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      max-width: 572px;
+      margin: 0 auto;
+      z-index: 50;
+      background: var(--bg-espresso);
+      color: #faf6f0;
+      border-radius: 18px;
+      padding: 14px 18px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(31, 26, 23, 0.32);
+      cursor: pointer;
+    }
+
+    .cart-bar.visible { display: flex; }
+
+    .badge-num {
+      display: inline-block;
+      background: var(--terracotta);
+      color: #fff;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-right: 8px;
+    }
+
+    /* Modales */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(31, 26, 23, 0.52);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    .modal-bg.open { display: flex; }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 540px;
+      background: var(--bg-surface);
+      border-radius: 24px;
+      padding: 20px;
+      max-height: 86vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.25);
+    }
+
+    .sheet-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .x-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border-warm);
+      background: var(--bg-canvas);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .wifi-row {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-warm);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .mode-tab {
+      border: 1px solid var(--border-warm);
+      background: var(--bg-canvas);
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .mode-tab.selected {
+      background: var(--terracotta-soft);
+      border-color: var(--terracotta);
+      color: var(--terracotta-dark);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border-warm);
+      font-size: 0.88rem;
+    }
+
+    .qty-ctrl {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border-warm);
+      background: var(--bg-canvas);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .note-box {
+      width: 100%;
+      margin-top: 12px;
+      padding: 11px 13px;
+      border-radius: 12px;
+      border: 1px solid var(--border-warm);
+      background: var(--bg-canvas);
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+
+    .btn-block {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-terracotta { background: var(--terracotta); color: #fff; }
+    .btn-wa { background: var(--whatsapp); color: #062411; }
+    .btn-sand { background: var(--bg-sand); color: var(--ink-primary); border: 1px solid var(--border-warm); }
+
+    .foot-note {
+      text-align: center;
+      font-size: 0.76rem;
+      color: var(--ink-secondary);
+      margin-top: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PANTALLA 1: PORTADA -->
+  <div id="homeView" class="view-screen active">
+    <nav class="topbar">
+      <div class="live-pill">
+        <span class="live-dot" id="liveDot"></span>
+        <span id="liveStatusText">Comprobando horario...</span>
+      </div>
+
+      <div class="lang-pill-group" role="group" aria-label="Idioma">
+        <button type="button" class="lang-btn active" data-lang-btn="es" onclick="setLang('es')">ES</button>
+        <button type="button" class="lang-btn" data-lang-btn="en" onclick="setLang('en')">EN</button>
+      </div>
+    </nav>
+
+    <main class="shell">
+      <header class="editorial-hero">
+        <div class="hero-banner">
+          <img id="heroCoverImg" alt="Cafè Sa Plaça" />
+          <div class="hero-banner-fade"></div>
+        </div>
+
+        <div class="hero-profile">
+          <div class="crest-wrap">
+            <img src="logo.png" alt="Logo Cafè Sa Plaça" onerror="this.onerror=null; this.src='icon-192.png';" />
+          </div>
+
+          <a class="place-badge" href="https://maps.google.com/?q=Placa+Major+Mallorca" target="_blank" rel="noopener">
+            📍 <span data-i18n="heroMap">Plaça Major, 12 · Cómo llegar</span>
+          </a>
+
+          <h1 class="brand-name serif">Cafè Sa Plaça</h1>
+          <p class="brand-bio" data-i18n="heroBio">
+            Café de especialidad recién tostado, ensaimadas artesanas del día, llonguets calientes y cocas mallorquinas.
+          </p>
+
+          <button type="button" class="primary-menu-btn" onclick="openMenuView()">
+            <span>🥐 <span data-i18n="btnOpenMenu">Ver Carta Digital y Pedir</span></span>
+            <span class="primary-tag" data-i18n="btnOpenMenuTag">Carta →</span>
+          </button>
+
+          <div class="bento-grid">
+            <button type="button" class="bento-tile" onclick="openWifiModal()">
+              <span class="bento-icon">📶</span>
+              <span data-i18n="btnWifi">Wi-Fi Gratis</span>
+            </button>
+
+            <a class="bento-tile" href="https://www.instagram.com/" target="_blank" rel="noopener">
+              <span class="bento-icon">📸</span>
+              <span>Instagram</span>
+            </a>
+
+            <a class="bento-tile" href="#seccion-resenas">
+              <span class="bento-icon">⭐</span>
+              <span data-i18n="btnReviews">Reseñas</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Galería de especialidades -->
+      <div class="section-head">
+        <h2 class="serif" data-i18n="galleryTitle">Nuestras Especialidades</h2>
+        <span data-i18n="gallerySwipe">Desliza →</span>
+      </div>
+      <div class="gallery-row" id="galleryStrip"></div>
+
+      <!-- Reseñas directas sin filtro previo -->
+      <section class="review-panel" id="seccion-resenas">
+        <span class="eyebrow-tag" data-i18n="reviewEyebrow">Tu opinión nos ayuda</span>
+        <h2 class="serif" style="font-size:1.55rem; margin-top:4px;" data-i18n="reviewTitle">¿Has disfrutado tu visita?</h2>
+        <p style="font-size:0.84rem; color:var(--ink-secondary); max-width:420px; margin:6px auto 0;" data-i18n="reviewSubtitle">
+          Déjanos tu valoración en Google o escríbenos por WhatsApp si quieres comentarnos cualquier detalle.
+        </p>
+
+        <div class="review-btn-stack">
+          <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn-block btn-terracotta" style="max-width:340px;" data-i18n="reviewGoogleBtn">
+            ⭐ Dejar una reseña en Google
+          </a>
+          <button type="button" class="btn-block btn-sand" style="max-width:340px;" onclick="openDirectFeedbackWa()" data-i18n="reviewDirectWaBtn">
+            💬 Sugerencia directa por WhatsApp
+          </button>
+        </div>
+      </section>
+
+      <!-- Horario y Contacto -->
+      <section class="info-cards">
+        <div class="info-box">
+          <h3 class="serif" data-i18n="hoursTitle">Horario</h3>
+          <div class="info-row"><span data-i18n="daysMonFri">Lunes a Viernes</span><strong>07:00 – 20:00 h</strong></div>
+          <div class="info-row"><span data-i18n="daysSat">Sábados</span><strong>07:30 – 15:00 h</strong></div>
+          <div class="info-row"><span data-i18n="daysSun">Domingos</span><strong>08:00 – 14:00 h</strong></div>
+        </div>
+
+        <div class="info-box">
+          <h3 class="serif" data-i18n="contactTitle">Contacto</h3>
+          <div class="info-row"><span data-i18n="lblAddress">Dirección</span><strong>Plaça Major, 12</strong></div>
+          <div class="info-row"><span>WhatsApp</span><strong>600 000 000</strong></div>
+          <div class="info-row"><span>Instagram</span><strong>@cafesaplaca</strong></div>
+        </div>
+      </section>
+
+      <p class="foot-note">Cafè Sa Plaça · Miniweb de prueba en Pilmu</p>
+    </main>
+  </div>
+
+  <!-- PANTALLA 2: CARTA DIGITAL -->
+  <div id="menuView" class="view-screen">
+    <div class="menu-topbar">
+      <button type="button" class="back-pill" onclick="closeMenuView()">
+        ← <span data-i18n="backHome">Inicio</span>
+      </button>
+
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button type="button" class="allergen-btn" id="allergenToggleBtn" onclick="toggleAllergenDrawer()">
+          🌾 Alérgenos
+        </button>
+
+        <div class="lang-pill-group">
+          <button type="button" class="lang-btn active" data-lang-btn="es" onclick="setLang('es')">ES</button>
+          <button type="button" class="lang-btn" data-lang-btn="en" onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="shell">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;">
+        <h1 class="serif" style="font-size:1.85rem;" data-i18n="menuMainTitle">Nuestra Carta</h1>
+        <span style="font-size:0.75rem; color:var(--ink-secondary); font-weight:600;" data-i18n="tapToOrderHint">Toca un precio para pedir</span>
+      </div>
+
+      <div class="allergen-box" id="allergenDrawer">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.78rem; color:var(--ink-secondary);" data-i18n="allergenHelp">Selecciona los alérgenos a evitar:</span>
+          <button type="button" class="al-chip" onclick="clearAllergenFilters()" data-i18n="clearBtn">Limpiar</button>
+        </div>
+        <div class="allergen-chips" id="allergenFilterPills"></div>
+      </div>
+
+      <div id="menuSections"></div>
+    </div>
+  </div>
+
+  <!-- Barra flotante carrito -->
+  <div class="cart-bar" id="floatingCart" onclick="openCartSheet()">
+    <div>
+      <span class="badge-num" id="cartCount">0</span>
+      <span data-i18n="viewOrderBtn">Ver pedido WhatsApp</span>
+    </div>
+    <span id="cartTotal">0,00 €</span>
+  </div>
+
+  <!-- Modal Wi-Fi -->
+  <div class="modal-bg" id="wifiOverlay" onclick="if(event.target===this) closeWifiModal()">
+    <div class="modal-sheet">
+      <div class="sheet-head">
+        <h2 class="serif" style="font-size:1.55rem; color:var(--terracotta);" data-i18n="wifiModalTitle">Wi-Fi Clientes</h2>
+        <button type="button" class="x-btn" onclick="closeWifiModal()">✕</button>
+      </div>
+
+      <p style="font-size:0.84rem; color:var(--ink-secondary); margin-bottom:12px;" data-i18n="wifiModalSub">
+        Selecciona nuestra red en los ajustes de tu móvil y pega la contraseña:
+      </p>
+
+      <div class="wifi-row">
+        <div>
+          <div style="font-size:0.72rem; color:var(--ink-secondary);" data-i18n="wifiNetLabel">Red Wi-Fi</div>
+          <strong id="wifiSsidDisplay">Cafe_Sa_Placa_Free</strong>
+        </div>
+        <span>📶</span>
+      </div>
+
+      <div class="wifi-row" style="margin-bottom:14px;">
+        <div>
+          <div style="font-size:0.72rem; color:var(--ink-secondary);" data-i18n="wifiPassLabel">Contraseña</div>
+          <strong id="wifiPassDisplay" style="color:var(--terracotta);">saplaca2026</strong>
+        </div>
+        <span>🔑</span>
+      </div>
+
+      <button type="button" class="btn-block btn-terracotta" id="copyWifiBtn" onclick="copyWifiPassword()" data-i18n="wifiCopyBtn">
+        📋 Copiar contraseña
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Carrito -->
+  <div class="modal-bg" id="cartOverlay" onclick="if(event.target===this) closeCartSheet()">
+    <div class="modal-sheet">
+      <div class="sheet-head">
+        <h2 class="serif" style="font-size:1.55rem; color:var(--terracotta);" data-i18n="cartTitle">Tu Pedido</h2>
+        <button type="button" class="x-btn" onclick="closeCartSheet()">✕</button>
+      </div>
+
+      <div class="mode-tabs">
+        <button type="button" class="mode-tab selected" id="btnModePickup" onclick="setDeliveryMode('pickup')" data-i18n="modePickup">
+          🛍️ Recoger en tienda
+        </button>
+        <button type="button" class="mode-tab" id="btnModeDelivery" onclick="setDeliveryMode('delivery')" data-i18n="modeDelivery">
+          🛵 A domicilio
+        </button>
+      </div>
+
+      <div id="cartLinesContainer"></div>
+
+      <input type="text" id="orderExtraNotes" class="note-box" placeholder="Nota o dirección (ej. leche de avena, mesa 4...)" />
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 0;">
+        <span style="color:var(--ink-secondary);" data-i18n="estTotal">Total estimado</span>
+        <strong class="serif" style="font-size:1.65rem; color:var(--terracotta);" id="sheetTotal">0,00 €</strong>
+      </div>
+
+      <button type="button" class="btn-block btn-wa" onclick="checkoutWhatsapp()" data-i18n="sendWaOrder">
+        📲 Enviar Pedido por WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const CONFIG = {
+      name: "Cafè Sa Plaça",
+      whatsapp: "34600000000",
+      wifiSsid: "Cafe_Sa_Placa_Free",
+      wifiPass: "saplaca2026",
+      heroImage: "cafe-especialidad.jpg"
+    };
+
+    const I18N = {
+      es: {
+        openUntil: "Abierto · Hasta las {h} h",
+        closedOpens: "Cerrado · Abre 07:00 h",
+        heroMap: "Plaça Major, 12 · Cómo llegar",
+        heroBio: "Café de especialidad recién tostado, ensaimadas artesanas del día, llonguets calientes y cocas mallorquinas.",
+        btnOpenMenu: "Ver Carta Digital y Pedir",
+        btnOpenMenuTag: "Carta →",
+        btnWifi: "Wi-Fi Gratis",
+        btnReviews: "Reseñas",
+        backHome: "Inicio",
+        galleryTitle: "Nuestras Especialidades",
+        gallerySwipe: "Desliza →",
+        menuMainTitle: "Nuestra Carta",
+        tapToOrderHint: "Toca un precio para pedir",
+        allergenBtn: "🌾 Alérgenos",
+        allergenBtnActive: "🌾 Alérgenos ({n})",
+        allergenHelp: "Selecciona los alérgenos a evitar:",
+        clearBtn: "Limpiar",
+        avoidPrefix: "🚫 Sin ",
+        emptyMenu: "No hay platos disponibles con los filtros seleccionados.",
+        reviewEyebrow: "Tu opinión nos ayuda",
+        reviewTitle: "¿Has disfrutado tu visita?",
+        reviewSubtitle: "Déjanos tu valoración en Google o escríbenos por WhatsApp si quieres comentarnos cualquier detalle.",
+        reviewGoogleBtn: "⭐ Dejar una reseña en Google",
+        reviewDirectWaBtn: "💬 Sugerencia directa por WhatsApp",
+        hoursTitle: "Horario",
+        daysMonFri: "Lunes a Viernes",
+        daysSat: "Sábados",
+        daysSun: "Domingos",
+        contactTitle: "Contacto",
+        lblAddress: "Dirección",
+        viewOrderBtn: "Ver pedido WhatsApp",
+        wifiModalTitle: "Wi-Fi Clientes",
+        wifiModalSub: "Selecciona nuestra red en los ajustes de tu móvil y pega la contraseña:",
+        wifiNetLabel: "Red Wi-Fi",
+        wifiPassLabel: "Contraseña",
+        wifiCopyBtn: "📋 Copiar contraseña",
+        wifiCopiedBtn: "✓ ¡Contraseña copiada!",
+        cartTitle: "Tu Pedido",
+        modePickup: "🛍️ Recoger en tienda",
+        modeDelivery: "🛵 A domicilio",
+        notesPlaceholder: "Nota o dirección (ej. leche de avena, mesa 4...)",
+        estTotal: "Total estimado",
+        sendWaOrder: "📲 Enviar Pedido por WhatsApp",
+        sizes: { "Unidad": "Pedir", "Taza": "Taza", "Grande": "Grande", "Porción": "Porción" }
+      },
+      en: {
+        openUntil: "Open · Until {h}",
+        closedOpens: "Closed · Opens 07:00",
+        heroMap: "Plaça Major, 12 · Directions",
+        heroBio: "Freshly roasted specialty coffee, daily handmade ensaimadas, warm Mallorcan llonguets and traditional flatbreads.",
+        btnOpenMenu: "Digital Menu & Order",
+        btnOpenMenuTag: "Menu →",
+        btnWifi: "Free Wi-Fi",
+        btnReviews: "Reviews",
+        backHome: "Home",
+        galleryTitle: "Our Specialties",
+        gallerySwipe: "Swipe →",
+        menuMainTitle: "Our Menu",
+        tapToOrderHint: "Tap any price to order",
+        allergenBtn: "🌾 Allergens",
+        allergenBtnActive: "🌾 Allergens ({n})",
+        allergenHelp: "Select allergens to exclude:",
+        clearBtn: "Clear",
+        avoidPrefix: "🚫 No ",
+        emptyMenu: "No dishes match the selected allergen filters.",
+        reviewEyebrow: "Your feedback matters",
+        reviewTitle: "Enjoyed your visit?",
+        reviewSubtitle: "Leave us a review on Google or message us directly on WhatsApp with any suggestion.",
+        reviewGoogleBtn: "⭐ Leave a Google Review",
+        reviewDirectWaBtn: "💬 Direct feedback via WhatsApp",
+        hoursTitle: "Opening Hours",
+        daysMonFri: "Monday to Friday",
+        daysSat: "Saturdays",
+        daysSun: "Sundays",
+        contactTitle: "Contact",
+        lblAddress: "Address",
+        viewOrderBtn: "View WhatsApp Order",
+        wifiModalTitle: "Guest Wi-Fi",
+        wifiModalSub: "Select our network in your phone Wi-Fi settings and paste the password:",
+        wifiNetLabel: "Network Name",
+        wifiPassLabel: "Password",
+        wifiCopyBtn: "📋 Copy Password",
+        wifiCopiedBtn: "✓ Password Copied!",
+        cartTitle: "Your Order",
+        modePickup: "🛍️ Store Pickup",
+        modeDelivery: "🛵 Local Delivery",
+        notesPlaceholder: "Notes or address (e.g. oat milk, table 4...)",
+        estTotal: "Estimated Total",
+        sendWaOrder: "📲 Send Order via WhatsApp",
+        sizes: { "Unidad": "Add", "Taza": "Regular", "Grande": "Large", "Porción": "Slice" }
+      }
+    };
+
+    const ALLERGENS = [
+      { id: "gluten", icon: "🌾", es: "Gluten", en: "Gluten" },
+      { id: "lacteos", icon: "🥛", es: "Lácteos", en: "Dairy" },
+      { id: "huevo", icon: "🥚", es: "Huevo", en: "Egg" },
+      { id: "frutos", icon: "🌰", es: "Frutos secos", en: "Nuts" }
+    ];
+
+    const GALLERY_ITEMS = [
+      { es: "Ensaimada Artesana", en: "Artisan Ensaimada", url: "ensaimada-crema.jpg" },
+      { es: "Café de Especialidad", en: "Specialty Latte", url: "cafe-especialidad.jpg" },
+      { es: "Llonguet Sobrassada y Mahón", en: "Sobrassada & Mahón Llonguet", url: "llonguet-sobrassada.jpg" },
+      { es: "Tostada Aguacate y Huevo", en: "Avocado & Egg Toast", url: "tostada-aguacate.jpg" },
+      { es: "Coca de Trampó Casera", en: "Homemade Trampó Coca", url: "coca-trampo.jpg" }
+    ];
+
+    const MENU_CATEGORIES = [
+      {
+        id: "cafes",
+        titleEs: "Cafés de Especialidad",
+        titleEn: "Specialty Coffee",
+        noteEs: "Tueste natural · Opción bebida vegetal",
+        noteEn: "Fresh roast · Plant milk available",
+        items: [
+          { id: "flat_white", nameEs: "Flat White", nameEn: "Flat White", descEs: "Doble espresso con leche cremada fina", descEn: "Double espresso with silky microfoam", allergens: ["lacteos"], prices: [{ label: "Taza", amount: 2.60 }, { label: "Grande", amount: 3.20 }] },
+          { id: "cappuccino", nameEs: "Cappuccino Artesano", nameEn: "Artisan Cappuccino", descEs: "Espresso 100% arábica y crema aterciopelada", descEn: "100% Arabica espresso & velvety foam", allergens: ["lacteos"], prices: [{ label: "Taza", amount: 2.50 }] },
+          { id: "iced_latte", nameEs: "Cold Brew & Tonic", nameEn: "Cold Brew & Tonic", descEs: "Extracción en frío de 18 h con tónica y naranja", descEn: "18h cold brew with tonic & orange twist", allergens: [], prices: [{ label: "Unidad", amount: 3.50 }] }
+        ]
+      },
+      {
+        id: "horno",
+        titleEs: "Horno y Repostería",
+        titleEn: "Bakery & Pastries",
+        noteEs: "Horneado cada mañana",
+        noteEn: "Baked fresh every morning",
+        items: [
+          { id: "ensaimada_lisa", nameEs: "Ensaimada Individual Lisa", nameEn: "Plain Individual Ensaimada", descEs: "Masa madre fermentada 24 h con azúcar glas", descEn: "24h fermented sourdough with powdered sugar", allergens: ["gluten", "huevo"], prices: [{ label: "Unidad", amount: 2.40 }] },
+          { id: "ensaimada_crema", nameEs: "Ensaimada de Crema Tostada", nameEn: "Burnt Cream Ensaimada", descEs: "Rellena de crema pastelera artesanal", descEn: "Filled with homemade custard cream", allergens: ["gluten", "huevo", "lacteos"], prices: [{ label: "Unidad", amount: 3.10 }] },
+          { id: "coca_trampo", nameEs: "Coca de Trampó Mallorquina", nameEn: "Mallorcan Trampó Flatbread", descEs: "Tomate, pimiento verde, cebolla y aceite de oliva", descEn: "Tomato, green pepper, onion & olive oil", allergens: ["gluten"], prices: [{ label: "Porción", amount: 3.40 }] }
+        ]
+      },
+      {
+        id: "salado",
+        titleEs: "Llonguets y Tostadas",
+        titleEn: "Llonguets & Sourdough Toasts",
+        noteEs: "Pan crujiente al momento",
+        noteEn: "Toasted to order",
+        items: [
+          { id: "llonguet_sobra", nameEs: "Llonguet de Sobrassada y Queso Mahón", nameEn: "Sobrassada & Mahón Cheese Llonguet", descEs: "Con un toque de miel de azahar", descEn: "With a touch of orange blossom honey", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.80 }] },
+          { id: "tostada_avo", nameEs: "Tostada de Aguacate y Huevo Poché", nameEn: "Avocado & Poached Egg Toast", descEs: "Sobre pan de masa madre, tomates cherry y semillas", descEn: "On sourdough bread, cherry tomatoes & seeds", allergens: ["gluten", "huevo"], prices: [{ label: "Unidad", amount: 6.50 }] }
+        ]
+      }
+    ];
+
+    let currentLang = "es";
+    let excludedAllergens = [];
+    let cart = [];
+    let deliveryMode = "pickup";
+    let isMenuOpen = false;
+
+    function eur(n) { return n.toFixed(2).replace(".", ",") + " €"; }
+
+    function openMenuView() {
+      isMenuOpen = true;
+      document.getElementById("homeView").classList.remove("active");
+      document.getElementById("menuView").classList.add("active");
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+
+    function closeMenuView() {
+      isMenuOpen = false;
+      document.getElementById("menuView").classList.remove("active");
+      document.getElementById("homeView").classList.add("active");
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-lang-btn]").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-lang-btn") === lang);
+      });
+      const t = I18N[lang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key]) el.textContent = t[key];
+      });
+      document.getElementById("orderExtraNotes").placeholder = t.notesPlaceholder;
+      refreshOpenClock();
+      renderGallery();
+      renderAllergenFilterPills();
+      renderMenu();
+      syncCartUI();
+    }
+
+    function refreshOpenClock() {
+      const now = new Date();
+      const day = now.getDay();
+      const mins = now.getHours() * 60 + now.getMinutes();
+      let openM = 7 * 60, closeM = 20 * 60;
+      if (day === 6) { openM = 7 * 60 + 30; closeM = 15 * 60; }
+      if (day === 0) { openM = 8 * 60; closeM = 14 * 60; }
+      const open = mins >= openM && mins < closeM;
+      const dot = document.getElementById("liveDot");
+      const txt = document.getElementById("liveStatusText");
+      const t = I18N[currentLang];
+      if (open) {
+        dot.classList.remove("closed");
+        const h = String(Math.floor(closeM / 60)).padStart(2, "0") + ":00";
+        txt.textContent = t.openUntil.replace("{h}", h);
+      } else {
+        dot.classList.add("closed");
+        txt.textContent = t.closedOpens;
+      }
+    }
+
+    function renderGallery() {
+      const strip = document.getElementById("galleryStrip");
+      strip.innerHTML = GALLERY_ITEMS.map(g => {
+        const title = currentLang === "es" ? g.es : g.en;
+        return `
+          <div class="dish-card" onclick="openMenuView()">
+            <img src="${g.url}" alt="${title}" />
+            <div class="dish-card-label">${title}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function toggleAllergenDrawer() {
+      document.getElementById("allergenDrawer").classList.toggle("open");
+    }
+
+    function renderAllergenFilterPills() {
+      const t = I18N[currentLang];
+      document.getElementById("allergenFilterPills").innerHTML = ALLERGENS.map(a => {
+        const isEx = excludedAllergens.includes(a.id);
+        const label = currentLang === "es" ? a.es : a.en;
+        return `<button type="button" class="al-chip ${isEx ? 'excluded' : ''}" onclick="toggleExcludeAllergen('${a.id}')">${isEx ? t.avoidPrefix : a.icon + ' '}${label}</button>`;
+      }).join("");
+      const btn = document.getElementById("allergenToggleBtn");
+      btn.classList.toggle("active", excludedAllergens.length > 0);
+      btn.textContent = excludedAllergens.length > 0 ? t.allergenBtnActive.replace("{n}", excludedAllergens.length) : t.allergenBtn;
+    }
+
+    function toggleExcludeAllergen(alId) {
+      excludedAllergens = excludedAllergens.includes(alId)
+        ? excludedAllergens.filter(x => x !== alId)
+        : [...excludedAllergens, alId];
+      renderAllergenFilterPills();
+      renderMenu();
+    }
+
+    function clearAllergenFilters() {
+      excludedAllergens = [];
+      renderAllergenFilterPills();
+      renderMenu();
+    }
+
+    function renderMenu() {
+      const t = I18N[currentLang];
+      const markup = MENU_CATEGORIES.map(cat => {
+        const items = cat.items.filter(it => !excludedAllergens.some(ex => (it.allergens || []).includes(ex)));
+        if (!items.length) return "";
+        const rows = items.map(it => {
+          const title = currentLang === "es" ? it.nameEs : it.nameEn;
+          const desc = currentLang === "es" ? it.descEs : it.descEn;
+          const btns = it.prices.map((p, idx) => `
+            <button type="button" class="price-btn" onclick="addDish('${cat.id}', '${it.id}', ${idx})">
+              <span class="price-size">${t.sizes[p.label] || p.label}</span>
+              <span>${eur(p.amount)}</span>
+            </button>
+          `).join("");
+          return `
+            <div class="item-line">
+              <div>
+                <div class="item-name">${title}</div>
+                <div class="item-desc">${desc}</div>
+              </div>
+              <div class="price-group">${btns}</div>
+            </div>
+          `;
+        }).join("");
+        return `
+          <section class="cat-card">
+            <div class="cat-header">
+              <h2 class="serif">${currentLang === "es" ? cat.titleEs : cat.titleEn}</h2>
+              <span class="cat-note">${currentLang === "es" ? cat.noteEs : cat.noteEn}</span>
+            </div>
+            ${rows}
+          </section>
+        `;
+      }).join("");
+      document.getElementById("menuSections").innerHTML = markup || `<div class="info-box" style="text-align:center;">${t.emptyMenu}</div>`;
+    }
+
+    function addDish(catId, itemId, priceIdx) {
+      const cat = MENU_CATEGORIES.find(c => c.id === catId);
+      const item = cat.items.find(i => i.id === itemId);
+      const p = item.prices[priceIdx];
+      const key = `${itemId}_${priceIdx}`;
+      const found = cart.find(c => c.key === key);
+      if (found) found.qty += 1;
+      else cart.push({ key, nameEs: item.nameEs, nameEn: item.nameEn, sizeEs: p.label, price: p.amount, qty: 1 });
+      syncCartUI();
+    }
+
+    function stepQty(key, delta) {
+      const idx = cart.findIndex(c => c.key === key);
+      if (idx === -1) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      syncCartUI();
+      if (!cart.length) closeCartSheet();
+    }
+
+    function syncCartUI() {
+      const t = I18N[currentLang];
+      const count = cart.reduce((s, c) => s + c.qty, 0);
+      const sum = cart.reduce((s, c) => s + c.qty * c.price, 0);
+      document.getElementById("cartCount").textContent = count;
+      document.getElementById("cartTotal").textContent = eur(sum);
+      document.getElementById("sheetTotal").textContent = eur(sum);
+      document.getElementById("floatingCart").classList.toggle("visible", count > 0);
+      document.getElementById("cartLinesContainer").innerHTML = cart.map(c => {
+        const title = currentLang === "es" ? c.nameEs : c.nameEn;
+        return `
+          <div class="cart-item">
+            <div><strong>${title}</strong><div style="font-size:0.75rem; color:var(--ink-secondary);">${eur(c.price)}</div></div>
+            <div class="qty-ctrl">
+              <button type="button" class="qty-btn" onclick="stepQty('${c.key}', -1)">-</button>
+              <strong>${c.qty}</strong>
+              <button type="button" class="qty-btn" onclick="stepQty('${c.key}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function setDeliveryMode(mode) {
+      deliveryMode = mode;
+      document.getElementById("btnModePickup").classList.toggle("selected", mode === "pickup");
+      document.getElementById("btnModeDelivery").classList.toggle("selected", mode === "delivery");
+    }
+
+    function openCartSheet() { syncCartUI(); document.getElementById("cartOverlay").classList.add("open"); }
+    function closeCartSheet() { document.getElementById("cartOverlay").classList.remove("open"); }
+
+    function checkoutWhatsapp() {
+      if (!cart.length) return;
+      const sum = cart.reduce((s, c) => s + c.qty * c.price, 0);
+      const notes = document.getElementById("orderExtraNotes").value.trim();
+      let text = `Hola *${CONFIG.name}*, me gustaría pedir:\n\n`;
+      cart.forEach(c => { text += `• ${c.qty}x ${c.nameEs} — ${eur(c.qty * c.price)}\n`; });
+      text += `\n*Total:* ${eur(sum)}\n*Entrega:* ${deliveryMode === "delivery" ? "A domicilio" : "Recoger en tienda"}`;
+      if (notes) text += `\n*Notas:* ${notes}`;
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+    }
+
+    function openWifiModal() {
+      document.getElementById("wifiSsidDisplay").textContent = CONFIG.wifiSsid;
+      document.getElementById("wifiPassDisplay").textContent = CONFIG.wifiPass;
+      document.getElementById("copyWifiBtn").textContent = I18N[currentLang].wifiCopyBtn;
+      document.getElementById("wifiOverlay").classList.add("open");
+    }
+    function closeWifiModal() { document.getElementById("wifiOverlay").classList.remove("open"); }
+
+    function copyWifiPassword() {
+      const btn = document.getElementById("copyWifiBtn");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(CONFIG.wifiPass);
+      }
+      btn.textContent = I18N[currentLang].wifiCopiedBtn;
+      setTimeout(() => { btn.textContent = I18N[currentLang].wifiCopyBtn; }, 2200);
+    }
+
+    function openDirectFeedbackWa() {
+      const msg = `Hola *${CONFIG.name}*, os escribo desde vuestra web para comentaros una sugerencia:`;
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+    }
+
+    document.getElementById("heroCoverImg").src = CONFIG.heroImage;
+    setLang("es");
+    setInterval(refreshOpenClock, 60000);
+  </script>
+</body>
+</html>

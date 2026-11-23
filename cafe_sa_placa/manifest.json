@@ -1,0 +1,24 @@
+{
+  "name": "Cafè Sa Plaça",
+  "short_name": "Cafè Sa Plaça",
+  "description": "Cafetería de especialidad, ensaimadas artesanas, llonguets y pedidos por WhatsApp.",
+  "start_url": "/cafe_sa_placa/",
+  "scope": "/cafe_sa_placa/",
+  "display": "standalone",
+  "background_color": "#faf6f0",
+  "theme_color": "#1f1a17",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
