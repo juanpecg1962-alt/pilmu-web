@@ -239,14 +239,15 @@
       opacity: 0.75;
     }
 
-    /* Tarjeta Wi-Fi desplegable */
+    /* Tarjeta Wi-Fi desplegable justo bajo su botón */
     .wifi-drawer {
       display: none;
       background: var(--bg-surface);
       border: 1px solid var(--gold-border);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-      margin-bottom: 16px;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: -2px;
+      margin-bottom: 4px;
       text-align: center;
     }
 
@@ -579,6 +580,13 @@
       margin-top: 2px;
     }
 
+    .dish-action-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
     .price-pill {
       background: var(--gold-soft);
       border: 1px solid var(--gold-border);
@@ -597,6 +605,36 @@
       background: var(--gold);
       color: #14110e;
       transform: scale(0.95);
+    }
+
+    .price-pill.has-items {
+      background: rgba(212, 168, 83, 0.24);
+      border-color: var(--gold);
+    }
+
+    .minus-pill {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.14s ease, border-color 0.14s ease, transform 0.1s ease;
+    }
+
+    .minus-pill:active {
+      background: var(--gold-soft);
+      border-color: var(--gold-border);
+      color: var(--gold-bright);
+      transform: scale(0.94);
     }
 
     /* Barra flotante de pedido */
@@ -816,24 +854,6 @@
           <span class="action-arrow">▾</span>
         </button>
 
-        <a class="action-btn" href="https://www.google.com/maps/search/?api=1&query=Cafeteria+Fleming+Manacor" target="_blank" rel="noopener">
-          <span class="action-left">
-            <span class="action-icon">⭐</span>
-            <span data-i18n="btnReviewTop">Dejar una reseña en Google</span>
-          </span>
-          <span class="action-arrow">↗</span>
-        </a>
-
-        <a class="action-btn" href="https://wa.me/34665075934?text=Hola%2C%20te%20escribo%20desde%20la%20muestra%20digital%20de%20Cafeter%C3%ADa%20Fleming" target="_blank" rel="noopener">
-          <span class="action-left">
-            <span class="action-icon">💬</span>
-            <span data-i18n="btnWhatsappTop">Contactar por WhatsApp</span>
-          </span>
-          <span class="action-arrow">↗</span>
-        </a>
-      </div>
-    </section>
-
     <!-- Cajón Wi-Fi en 1 toque -->
     <section class="wifi-drawer" id="wifiDrawer">
       <span class="eyebrow" data-i18n="wifiEyebrow">Conexión gratuita</span>
@@ -852,6 +872,19 @@
         📋 Copiar contraseña Wi-Fi
       </button>
     </section>
+
+        <a class="action-btn" href="https://www.google.com/maps/search/?api=1&query=Cafeteria+Fleming+Manacor" target="_blank" rel="noopener">
+          <span class="action-left">
+            <span class="action-icon">⭐</span>
+            <span data-i18n="btnReviewTop">Dejar una reseña en Google</span>
+          </span>
+          <span class="action-arrow">↗</span>
+        </a>
+
+      </div>
+    </section>
+
+
 
     <!-- Galería de Especialidades con FOTOS -->
     <section class="section-card">
@@ -906,8 +939,8 @@
           ⭐ Dejar una reseña en Google
         </a>
 
-        <a href="https://wa.me/34665075934?text=Hola%2C%20os%20env%C3%ADo%20una%20consulta%20o%20sugerencia%20desde%20la%20web%20de%20Cafeter%C3%ADa%20Fleming%3A" target="_blank" rel="noopener" class="cta-full cta-subtle-wa" data-i18n="reviewDirectWaBtn">
-          💬 Enviar mensaje por WhatsApp
+        <a href="https://wa.me/34665075934?text=Hola%2C%20os%20env%C3%ADo%20una%20sugerencia%20desde%20la%20web%20de%20Cafeter%C3%ADa%20Fleming%3A" target="_blank" rel="noopener" class="cta-full cta-subtle-wa" data-i18n="reviewDirectWaBtn">
+          💡 Enviar sugerencia por WhatsApp
         </a>
       </div>
     </section>
@@ -1133,7 +1166,7 @@
         reviewTitle: "¿Qué tal tu visita a Cafetería Fleming?",
         reviewSubtitle: "Comparte tu valoración en Google o escríbenos directamente por WhatsApp.",
         reviewGoogleBtn: "⭐ Dejar una reseña en Google",
-        reviewDirectWaBtn: "💬 Enviar mensaje por WhatsApp",
+        reviewDirectWaBtn: "💡 Enviar sugerencia por WhatsApp",
         infoEyebrow: "Información del local",
         infoTitle: "Ubicación y Contacto",
         lblAddress: "Dirección",
@@ -1181,7 +1214,7 @@
         reviewTitle: "How was your visit to Cafetería Fleming?",
         reviewSubtitle: "Share your review on Google or message us directly via WhatsApp.",
         reviewGoogleBtn: "⭐ Leave a review on Google",
-        reviewDirectWaBtn: "💬 Send message via WhatsApp",
+        reviewDirectWaBtn: "💡 Send a suggestion via WhatsApp",
         infoEyebrow: "Venue information",
         infoTitle: "Location & Contact",
         lblAddress: "Address",
@@ -1389,6 +1422,9 @@
           const icons = item.allergens.map(al => allergenMap[al] || "").join(" ");
           const qtyInCart = cart[item.id] || 0;
           const badge = qtyInCart > 0 ? ` (${qtyInCart})` : "";
+          const minusBtn = qtyInCart > 0
+            ? `<button type="button" class="minus-pill" aria-label="Restar unidad" onclick="changeQty('${item.id}', -1)">−</button>`
+            : "";
           return `
             <div class="dish-row">
               <div class="dish-info">
@@ -1398,7 +1434,10 @@
                 </div>
                 <div class="dish-desc">${desc}</div>
               </div>
-              <button type="button" class="price-pill" onclick="addToCart('${item.id}')">+ ${formatEur(item.price)}${badge}</button>
+              <div class="dish-action-group">
+                ${minusBtn}
+                <button type="button" class="price-pill ${qtyInCart > 0 ? "has-items" : ""}" onclick="addToCart('${item.id}')">+ ${formatEur(item.price)}${badge}</button>
+              </div>
             </div>
           `;
         }).join("");
