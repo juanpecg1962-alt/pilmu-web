@@ -63,7 +63,7 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
     }
 
-    /* Barra superior flotante */
+    /* Barra superior flotante (solo selector de idioma arriba a la derecha) */
     .navbar {
       position: fixed;
       top: 0;
@@ -72,44 +72,13 @@
       z-index: 50;
       padding: 12px 16px;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(13,13,15,0.94), rgba(13,13,15,0));
       pointer-events: none;
     }
 
     .navbar > * {
       pointer-events: auto;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--glass);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid var(--border-subtle);
-      padding: 6px 13px;
-      border-radius: 999px;
-      font-size: 0.77rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 10px #22c55e;
-      flex-shrink: 0;
-    }
-
-    .dot.closed {
-      background: var(--terracotta);
-      box-shadow: 0 0 10px var(--terracotta);
     }
 
     /* Selector de idioma píldora doble con ambas banderas SVG */
@@ -123,7 +92,7 @@
       border-radius: 999px;
       padding: 3px;
       gap: 2px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
     }
 
     .lang-opt {
@@ -133,9 +102,10 @@
       background: transparent;
       border: none;
       color: var(--text-secondary);
-      padding: 4px 10px;
+      padding: 5px 11px;
       border-radius: 999px;
-      font-size: 0.74rem;
+      font-family: inherit;
+      font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -168,7 +138,7 @@
     /* Portada Hero */
     .hero {
       position: relative;
-      padding: 82px 18px 24px;
+      padding: 68px 18px 24px;
       overflow: hidden;
     }
 
@@ -574,6 +544,7 @@
       color: var(--text-primary);
       padding: 7px 13px;
       border-radius: 999px;
+      font-family: inherit;
       font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
@@ -594,6 +565,7 @@
       color: var(--text-primary);
       padding: 7px 12px;
       border-radius: 999px;
+      font-family: inherit;
       font-size: 0.79rem;
       font-weight: 600;
       cursor: pointer;
@@ -634,6 +606,7 @@
       color: var(--text-secondary);
       padding: 5px 11px;
       border-radius: 999px;
+      font-family: inherit;
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
@@ -1086,14 +1059,8 @@
 
   <!-- ================= VISTA 1: PORTADA PRINCIPAL ================= -->
   <div id="coverView">
-    <!-- Barra superior flotante -->
+    <!-- Barra superior flotante solo con selector de idioma -->
     <nav class="navbar">
-      <div class="status-badge">
-        <span class="dot" id="liveDot"></span>
-        <span id="liveStatusText">Comprobando horario...</span>
-      </div>
-
-      <!-- Píldora doble con ambas banderas SVG visibles -->
       <div class="lang-pill-double" role="group" aria-label="Selector de idioma">
         <button type="button" class="lang-opt active" data-lang-btn="es" onclick="setLang('es')">
           <svg class="flag-svg" viewBox="0 0 24 16" aria-hidden="true">
@@ -1377,8 +1344,6 @@
 
     const I18N = {
       es: {
-        openUntil: "Abierto · Hasta las {h} h",
-        closedOpens: "Cerrado · Abre 06:00 h",
         heroMap: "Ronda Felanitx, 65 · Cómo llegar",
         heroBio: "Variados tradicionales, pa amb oli, trampó, bocadillos recién hechos y hamburguesas. Para disfrutar aquí, recoger o a domicilio.",
         btnOpenMenu: "Ver Carta Digital y Pedir",
@@ -1396,9 +1361,7 @@
         reviewSubtitle: "Déjanos tu valoración en Google o envíanos una sugerencia directa por WhatsApp.",
         reviewGoogleBtn: "⭐ Dejar reseña en Google",
         reviewSuggestionBtn: "💬 Enviar sugerencia por WhatsApp",
-        suggestionWaText: "Hola *Bar Es Cau*, os escribo desde vuestra carta digital para compartir una sugerencia:
-
-",
+        suggestionWaText: "Hola *Bar Es Cau*, os escribo desde vuestra carta digital para compartir una sugerencia:\n\n",
         hoursTitle: "Horario",
         daysMonFri: "Lunes a Viernes",
         daysSat: "Sábados",
@@ -1442,8 +1405,6 @@
         }
       },
       en: {
-        openUntil: "Open · Until {h}",
-        closedOpens: "Closed · Opens 06:00",
         heroMap: "Ronda Felanitx, 65 · Directions",
         heroBio: "Traditional Mallorcan tapas (variados), pa amb oli, trampó, freshly made sandwiches & burgers. Dine-in, takeaway or delivery.",
         btnOpenMenu: "View Digital Menu & Order",
@@ -1461,9 +1422,7 @@
         reviewSubtitle: "Leave us a review on Google or send a direct suggestion via WhatsApp.",
         reviewGoogleBtn: "⭐ Leave a review on Google",
         reviewSuggestionBtn: "💬 Send a suggestion on WhatsApp",
-        suggestionWaText: "Hello *Bar Es Cau*, I'm writing from your digital menu to share a suggestion:
-
-",
+        suggestionWaText: "Hello *Bar Es Cau*, I'm writing from your digital menu to share a suggestion:\n\n",
         hoursTitle: "Opening Hours",
         daysMonFri: "Monday to Friday",
         daysSat: "Saturdays",
@@ -1606,23 +1565,23 @@
         noteEs: "17 especialidades tradicionales",
         noteEn: "17 traditional varieties",
         items: [
-          { id: "p1", nameEs: "Pa amb Oli Jamón", nameEn: "Pa amb Oli · Cured Ham", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p2", nameEs: "Pa amb Oli Queso", nameEn: "Pa amb Oli · Cheese", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p3", nameEs: "Pa amb Oli Atún", nameEn: "Pa amb Oli · Tuna", waPrefix: true, allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p4", nameEs: "Pa amb Oli Sardinillas picantes", nameEn: "Pa amb Oli · Spicy Baby Sardines", waPrefix: true, allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p5", nameEs: "Pa amb Oli Anchoas", nameEn: "Pa amb Oli · Anchovies", waPrefix: true, allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p6", nameEs: "Pa amb Oli Anchoas con queso", nameEn: "Pa amb Oli · Anchovies & Cheese", waPrefix: true, allergens: ["gluten", "pescado", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p7", nameEs: "Pa amb Oli Pollo", nameEn: "Pa amb Oli · Grilled Chicken", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p8", nameEs: "Pa amb Oli Pollo queso", nameEn: "Pa amb Oli · Chicken & Cheese", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p9", nameEs: "Pa amb Oli Pollo queso bacon", nameEn: "Pa amb Oli · Chicken, Cheese & Bacon", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
-          { id: "p10", nameEs: "Pa amb Oli Lomo", nameEn: "Pa amb Oli · Pork Loin", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p11", nameEs: "Pa amb Oli Lomo queso", nameEn: "Pa amb Oli · Pork Loin & Cheese", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p12", nameEs: "Pa amb Oli Lomo queso bacon", nameEn: "Pa amb Oli · Pork Loin, Cheese & Bacon", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
-          { id: "p13", nameEs: "Pa amb Oli Salchichas", nameEn: "Pa amb Oli · Sausages", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p14", nameEs: "Pa amb Oli Panceta", nameEn: "Pa amb Oli · Crispy Pork Belly", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p15", nameEs: "Pa amb Oli Camaiot", nameEn: "Pa amb Oli · Traditional Mallorcan Camaiot", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p16", nameEs: "Pa amb Oli Tortilla", nameEn: "Pa amb Oli · Spanish Omelette", waPrefix: true, allergens: ["gluten", "huevo"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p17", nameEs: "Pa amb Oli Pinchos", nameEn: "Pa amb Oli · Marinated Pork Skewers", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] }
+          { id: "p1", nameEs: "Pa amb Oli Jamón", nameEn: "Pa amb Oli · Cured Ham", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p2", nameEs: "Pa amb Oli Queso", nameEn: "Pa amb Oli · Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p3", nameEs: "Pa amb Oli Atún", nameEn: "Pa amb Oli · Tuna", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p4", nameEs: "Pa amb Oli Sardinillas picantes", nameEn: "Pa amb Oli · Spicy Baby Sardines", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p5", nameEs: "Pa amb Oli Anchoas", nameEn: "Pa amb Oli · Anchovies", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p6", nameEs: "Pa amb Oli Anchoas con queso", nameEn: "Pa amb Oli · Anchovies & Cheese", allergens: ["gluten", "pescado", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p7", nameEs: "Pa amb Oli Pollo", nameEn: "Pa amb Oli · Grilled Chicken", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p8", nameEs: "Pa amb Oli Pollo queso", nameEn: "Pa amb Oli · Chicken & Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p9", nameEs: "Pa amb Oli Pollo queso bacon", nameEn: "Pa amb Oli · Chicken, Cheese & Bacon", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
+          { id: "p10", nameEs: "Pa amb Oli Lomo", nameEn: "Pa amb Oli · Pork Loin", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p11", nameEs: "Pa amb Oli Lomo queso", nameEn: "Pa amb Oli · Pork Loin & Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p12", nameEs: "Pa amb Oli Lomo queso bacon", nameEn: "Pa amb Oli · Pork Loin, Cheese & Bacon", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
+          { id: "p13", nameEs: "Pa amb Oli Salchichas", nameEn: "Pa amb Oli · Sausages", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p14", nameEs: "Pa amb Oli Panceta", nameEn: "Pa amb Oli · Crispy Pork Belly", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p15", nameEs: "Pa amb Oli Camaiot", nameEn: "Pa amb Oli · Traditional Mallorcan Camaiot", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p16", nameEs: "Pa amb Oli Tortilla", nameEn: "Pa amb Oli · Spanish Omelette", allergens: ["gluten", "huevo"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p17", nameEs: "Pa amb Oli Pinchos", nameEn: "Pa amb Oli · Marinated Pork Skewers", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] }
         ]
       },
       {
@@ -1712,7 +1671,7 @@
     let currentLang = "es";
     let excludedAllergens = [];
     let cart = [];
-    let deliveryMode = "table"; // 'table' | 'pickup' | 'delivery'
+    let deliveryMode = "table";
 
     function eur(n) {
       return n.toFixed(2).replace(".", ",") + " €";
@@ -1761,37 +1720,11 @@
       document.getElementById("variadosNoticeBox").innerHTML = t.variadosNoticeHtml;
       document.getElementById("orderExtraNotes").placeholder = t.notesPlaceholder;
 
-      refreshOpenClock();
       renderGallery();
       renderAllergenFilterPills();
       renderMenu();
       renderLocationSubpanel();
       syncCartUI();
-    }
-
-    // Horario en tiempo real
-    function refreshOpenClock() {
-      const now = new Date();
-      const day = now.getDay();
-      const mins = now.getHours() * 60 + now.getMinutes();
-      const openM = 6 * 60;
-      let closeM = 15 * 60;
-      if (day === 6) closeM = 14 * 60;
-      if (day === 0) closeM = 12 * 60;
-
-      const open = mins >= openM && mins < closeM;
-      const dot = document.getElementById("liveDot");
-      const txt = document.getElementById("liveStatusText");
-      const t = I18N[currentLang];
-
-      if (open) {
-        dot.classList.remove("closed");
-        const h = String(Math.floor(closeM / 60)).padStart(2, "0") + ":00";
-        txt.textContent = t.openUntil.replace("{h}", h);
-      } else {
-        dot.classList.add("closed");
-        txt.textContent = t.closedOpens;
-      }
     }
 
     // Wi-Fi Clientes desplegable en su sitio
@@ -2068,7 +2001,7 @@
         <button
           type="button"
           class="quick-chip ${currentVal === label ? 'active' : ''}"
-          onclick="selectQuickLocation('${label.replace(/'/g, "\'")}')"
+          onclick="selectQuickLocation('${label.replace(/'/g, "\\'")}')"
         >${label}</button>
       `).join("");
     }
@@ -2099,25 +2032,18 @@
       if (deliveryMode === "pickup") modeLabel = "Para llevar / recoger en barra";
       if (deliveryMode === "delivery") modeLabel = "Reparto a domicilio";
 
-      let text = `Hola *${CONFIG.name}*, me gustaría hacer este pedido:
-
-`;
+      let text = `Hola *${CONFIG.name}*, me gustaría hacer este pedido:\n\n`;
       cart.forEach(c => {
         const tag = c.sizeEs !== "Unidad" ? ` (${c.sizeEs})` : "";
-        text += `• ${c.qty}x ${c.nameEs}${tag} — ${eur(c.qty * c.price)}
-`;
+        text += `• ${c.qty}x ${c.nameEs}${tag} — ${eur(c.qty * c.price)}\n`;
       });
-      text += `
-*Total estimado:* ${eur(sum)}`;
-      text += `
-*Modalidad:* ${modeLabel}`;
+      text += `\n*Total estimado:* ${eur(sum)}`;
+      text += `\n*Modalidad:* ${modeLabel}`;
       if (locDetail) {
         const detailTitle = deliveryMode === "table" ? "Mesa / Ubicación" : (deliveryMode === "pickup" ? "Recogida" : "Dirección");
-        text += `
-*${detailTitle}:* ${locDetail}`;
+        text += `\n*${detailTitle}:* ${locDetail}`;
       }
-      if (notes) text += `
-*Observaciones:* ${notes}`;
+      if (notes) text += `\n*Observaciones:* ${notes}`;
 
       window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
     }
@@ -2128,7 +2054,6 @@
     heroImg.src = CONFIG.heroImage;
 
     setLang("es");
-    setInterval(refreshOpenClock, 60000);
   </script>
 </body>
 </html>
