@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Cafetería Fleming · Manacor | Carta Digital</title>
-  <meta name="description" content="Carta digital bilingüe, desayunos, llonguets, pa amb oli, Wi-Fi y reseñas de Cafetería Fleming en Manacor." />
+  <meta name="description" content="Carta digital interactiva, pedidos por WhatsApp, Wi-Fi y reseñas de Cafetería Fleming en Manacor." />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon-192.png" type="image/png" />
@@ -26,7 +26,7 @@
       --gold: #d4a359;
       --gold-bright: #e6ba73;
       --gold-soft: rgba(212, 163, 89, 0.14);
-      --gold-border: rgba(212, 163, 89, 0.32);
+      --gold-border: rgba(212, 163, 89, 0.34);
       --text-primary: #faf6ef;
       --text-secondary: #b8afa3;
       --border-subtle: rgba(255, 255, 255, 0.08);
@@ -51,7 +51,7 @@
 
     .serif { font-family: var(--font-serif); }
 
-    /* Franja discreta de vista previa comercial */
+    /* Franja superior discreta de muestra */
     .demo-strip {
       background: rgba(212, 163, 89, 0.16);
       border-bottom: 1px solid var(--gold-border);
@@ -60,7 +60,6 @@
       font-weight: 600;
       text-align: center;
       padding: 7px 12px;
-      letter-spacing: 0.01em;
     }
 
     .app-shell {
@@ -161,7 +160,6 @@
       font-weight: 700;
       line-height: 1.05;
       color: var(--text-primary);
-      letter-spacing: -0.01em;
     }
 
     .biz-tagline {
@@ -268,7 +266,7 @@
       align-items: center;
     }
 
-    /* Especialidades / Desayunos */
+    /* Especialidades */
     .section-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
@@ -349,8 +347,8 @@
     }
 
     .cta-subtle-wa {
-      background: rgba(37, 211, 102, 0.12);
-      border: 1px solid rgba(37, 211, 102, 0.35);
+      background: rgba(37, 211, 102, 0.14);
+      border: 1px solid rgba(37, 211, 102, 0.38);
       color: #d8f3dc;
     }
 
@@ -379,7 +377,7 @@
       background: var(--bg-base);
       z-index: 50;
       overflow-y: auto;
-      padding-bottom: 96px;
+      padding-bottom: 100px;
     }
 
     .menu-view.open { display: block; }
@@ -388,7 +386,7 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(18, 16, 14, 0.94);
+      background: rgba(18, 16, 14, 0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-subtle);
       padding: 12px 16px;
@@ -431,6 +429,16 @@
       max-width: 520px;
       margin: 0 auto;
       padding: 14px 16px;
+    }
+
+    .menu-tip-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
     }
 
     .allergen-panel {
@@ -518,16 +526,17 @@
       font-family: inherit;
       font-size: 0.82rem;
       font-weight: 800;
-      padding: 6px 11px;
+      padding: 7px 12px;
       border-radius: 10px;
       cursor: pointer;
       white-space: nowrap;
-      transition: background 0.14s ease;
+      transition: background 0.14s ease, transform 0.1s ease;
     }
 
     .price-pill:active {
       background: var(--gold);
       color: #14110e;
+      transform: scale(0.95);
     }
 
     /* Barra flotante de pedido */
@@ -542,13 +551,13 @@
       background: var(--wa-green);
       color: var(--wa-dark);
       border-radius: 16px;
-      padding: 12px 16px;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+      padding: 14px 18px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
       z-index: 60;
       align-items: center;
       justify-content: space-between;
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.94rem;
       cursor: pointer;
     }
 
@@ -559,7 +568,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.78);
       z-index: 70;
       align-items: flex-end;
       justify-content: center;
@@ -583,9 +592,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 0;
+      padding: 9px 0;
       border-bottom: 1px solid var(--border-subtle);
-      font-size: 0.86rem;
+      font-size: 0.88rem;
     }
 
     .qty-controls {
@@ -595,14 +604,26 @@
     }
 
     .qty-btn {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: 8px;
       border: 1px solid var(--border-subtle);
       background: var(--bg-elevated);
       color: #fff;
       font-weight: 800;
       cursor: pointer;
+    }
+
+    .note-input {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.84rem;
+      padding: 10px 12px;
+      margin-top: 10px;
     }
 
     footer {
@@ -620,7 +641,7 @@
 
   <!-- Franja de vista previa comercial -->
   <div class="demo-strip" data-i18n="demoBanner">
-    ✨ Vista previa personalizada · Carta y precios de muestra pendientes de confirmar con Cafetería Fleming
+    ✨ Muestra interactiva · Productos y precios simulados · Pedidos conectados al 665 075 934
   </div>
 
   <!-- PORTADA PRINCIPAL -->
@@ -642,7 +663,7 @@
         <img src="logo.png" alt="Cafetería Fleming Manacor" />
       </div>
       <h1 class="biz-name">Cafetería Fleming</h1>
-      <p class="biz-tagline" data-i18n="tagline">Cafés de especialidad, ensaimadas, llonguets y pa amb oli en Manacor</p>
+      <p class="biz-tagline" data-i18n="tagline">Cafés, ensaimadas, llonguets y pa amb oli en Manacor</p>
       <a class="address-link" href="https://www.google.com/maps/search/?api=1&query=Cafeteria+Fleming+Manacor" target="_blank" rel="noopener">
         📍 <span data-i18n="addressLabel">Carrer d'Alexander Fleming · Manacor</span>
       </a>
@@ -673,10 +694,10 @@
           <span class="action-arrow">↗</span>
         </a>
 
-        <a class="action-btn" href="https://www.google.com/maps/search/?api=1&query=Cafeteria+Fleming+Manacor" target="_blank" rel="noopener">
+        <a class="action-btn" href="https://wa.me/34665075934?text=Hola%2C%20te%20escribo%20desde%20la%20muestra%20digital%20de%20Cafeter%C3%ADa%20Fleming" target="_blank" rel="noopener">
           <span class="action-left">
-            <span class="action-icon">📍</span>
-            <span data-i18n="btnLocation">Cómo llegar al local</span>
+            <span class="action-icon">💬</span>
+            <span data-i18n="btnWhatsappTop">Contactar por WhatsApp</span>
           </span>
           <span class="action-arrow">↗</span>
         </a>
@@ -704,39 +725,39 @@
 
     <!-- Especialidades rápidas (al tocar abren la carta) -->
     <section class="section-card">
-      <span class="eyebrow" data-i18n="specEyebrow">Nuestras especialidades</span>
-      <h2 class="serif" style="font-size:1.65rem; margin-top:2px;" data-i18n="specTitle">Para empezar bien el día</h2>
+      <span class="eyebrow" data-i18n="specEyebrow">Carta simulada de ejemplo</span>
+      <h2 class="serif" style="font-size:1.65rem; margin-top:2px;" data-i18n="specTitle">Toca para probar la carta</h2>
 
       <div class="highlights-grid">
         <div class="highlight-tile" onclick="openMenuView()">
           <span class="highlight-emoji">☕</span>
           <div class="highlight-title" data-i18n="hl1Title">Cafés y Desayunos</div>
-          <div class="highlight-sub" data-i18n="hl1Sub">Recién molido y repostería del día</div>
+          <div class="highlight-sub" data-i18n="hl1Sub">Espresso, cortado, café con leche...</div>
         </div>
         <div class="highlight-tile" onclick="openMenuView()">
           <span class="highlight-emoji">🥐</span>
-          <div class="highlight-title" data-i18n="hl2Title">Ensaimadas y Cocas</div>
-          <div class="highlight-sub" data-i18n="hl2Sub">Tradición mallorquina artesanal</div>
+          <div class="highlight-title" data-i18n="hl2Title">Ensaimadas y Bollería</div>
+          <div class="highlight-sub" data-i18n="hl2Sub">Lisa, crema, croissant y coca</div>
         </div>
         <div class="highlight-tile" onclick="openMenuView()">
           <span class="highlight-emoji">🥖</span>
-          <div class="highlight-title" data-i18n="hl3Title">Llonguets Calientes</div>
-          <div class="highlight-sub" data-i18n="hl3Sub">Camaiot, sobrasada, tortilla y más</div>
+          <div class="highlight-title" data-i18n="hl3Title">Llonguets y Bocadillos</div>
+          <div class="highlight-sub" data-i18n="hl3Sub">Camaiot, sobrasada, tortilla...</div>
         </div>
         <div class="highlight-tile" onclick="openMenuView()">
           <span class="highlight-emoji">🍅</span>
-          <div class="highlight-title" data-i18n="hl4Title">Pa amb Oli</div>
-          <div class="highlight-sub" data-i18n="hl4Sub">Pan payés, tomate de ramellet y aceite</div>
+          <div class="highlight-title" data-i18n="hl4Title">Pa amb Oli y Bebidas</div>
+          <div class="highlight-sub" data-i18n="hl4Sub">Jamón, queso, atún y zumos</div>
         </div>
       </div>
     </section>
 
-    <!-- Sección de Reseñas (Conforme a políticas de Google) -->
+    <!-- Sección de Reseñas -->
     <section class="review-card" id="seccion-resenas">
       <span class="eyebrow" data-i18n="reviewEyebrow">Tu opinión nos importa</span>
       <h2 class="serif" style="font-size:1.75rem; margin-top:4px;" data-i18n="reviewTitle">¿Qué tal tu visita a Cafetería Fleming?</h2>
       <p style="color:var(--text-secondary); font-size:0.84rem; max-width:400px; margin:6px auto 0;" data-i18n="reviewSubtitle">
-        Comparte tu valoración en Google o escríbenos directamente si quieres comentarnos algo.
+        Comparte tu valoración en Google o escríbenos directamente por WhatsApp.
       </p>
 
       <div class="review-actions">
@@ -744,28 +765,28 @@
           ⭐ Dejar una reseña en Google
         </a>
 
-        <button type="button" class="cta-full cta-subtle-wa" onclick="openDirectFeedbackWa()" data-i18n="reviewDirectWaBtn">
-          💬 Sugerencia o consulta por WhatsApp
-        </button>
+        <a href="https://wa.me/34665075934?text=Hola%2C%20os%20env%C3%ADo%20una%20consulta%20o%20sugerencia%20desde%20la%20web%20de%20Cafeter%C3%ADa%20Fleming%3A" target="_blank" rel="noopener" class="cta-full cta-subtle-wa" data-i18n="reviewDirectWaBtn">
+          💬 Enviar mensaje por WhatsApp
+        </a>
       </div>
     </section>
 
     <!-- Información del establecimiento -->
     <section class="section-card">
       <span class="eyebrow" data-i18n="infoEyebrow">Información del local</span>
-      <h2 class="serif" style="font-size:1.6rem; margin:2px 0 8px;" data-i18n="infoTitle">Horarios y Ubicación</h2>
+      <h2 class="serif" style="font-size:1.6rem; margin:2px 0 8px;" data-i18n="infoTitle">Ubicación y Contacto</h2>
 
       <div class="detail-line">
         <span data-i18n="lblAddress">Dirección</span>
         <strong>Carrer d'Alexander Fleming, Manacor</strong>
       </div>
       <div class="detail-line">
-        <span data-i18n="lblHours">Horario habitual</span>
-        <strong data-i18n="valHours">Consultar horario oficial del local</strong>
+        <span data-i18n="lblWhatsapp">WhatsApp de prueba</span>
+        <strong><a href="https://wa.me/34665075934" target="_blank" rel="noopener" style="color:var(--gold-bright); text-decoration:none;">665 075 934</a></strong>
       </div>
       <div class="detail-line">
-        <span data-i18n="lblService">Servicio</span>
-        <strong data-i18n="valService">Sala, terraza y pedidos para recoger</strong>
+        <span data-i18n="lblService">Modalidad</span>
+        <strong data-i18n="valService">Carta digital, sala y pedidos WhatsApp</strong>
       </div>
     </section>
 
@@ -792,6 +813,10 @@
     </div>
 
     <div class="menu-body">
+      <div class="menu-tip-box" data-i18n="menuTip">
+        💡 <strong>Productos y precios simulados:</strong> pulsa sobre cualquier precio dorado para añadirlo al carrito y probar el envío del pedido al WhatsApp <strong>665 075 934</strong>.
+      </div>
+
       <div class="allergen-panel" id="allergenPanel">
         <div style="font-size:0.78rem; color:var(--text-secondary);" data-i18n="allergenHint">
           Pulsa un alérgeno para ocultar los platos que lo contienen:
@@ -805,40 +830,41 @@
 
   <!-- Barra flotante de carrito -->
   <div class="cart-bar" id="cartBar" onclick="openCartModal()">
-    <span id="cartSummaryText">🛒 0 artículos</span>
-    <span id="cartTotalText">0,00 € →</span>
+    <span id="cartSummaryText">🛒 0 productos</span>
+    <span id="cartTotalText">Ver pedido →</span>
   </div>
 
   <!-- Modal de pedido por WhatsApp -->
   <div class="modal-backdrop" id="cartModal" onclick="if(event.target===this) closeCartModal()">
     <div class="modal-sheet">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <h3 class="serif" style="font-size:1.6rem;" data-i18n="cartTitle">Tu pedido para recoger</h3>
+        <h3 class="serif" style="font-size:1.6rem;" data-i18n="cartTitle">Tu pedido de prueba</h3>
         <button type="button" class="back-btn" onclick="closeCartModal()">✕</button>
       </div>
 
-      <p style="font-size:0.76rem; color:var(--gold-bright); background:var(--gold-soft); padding:8px 10px; border-radius:10px; margin-bottom:10px;" data-i18n="cartDemoNote">
-        Nota de demostración: al pulsar enviar se abrirá un mensaje de prueba en WhatsApp.
+      <p style="font-size:0.78rem; color:var(--gold-bright); background:var(--gold-soft); padding:8px 10px; border-radius:10px; margin-bottom:10px;" data-i18n="cartDemoNote">
+        Este pedido simulado se enviará por WhatsApp al <strong>665 075 934</strong> para que puedas enseñárselo en vivo al cliente.
       </p>
 
       <div id="cartItemsList"></div>
 
-      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem; margin:14px 0;">
-        <span data-i18n="cartTotalLbl">Total estimado</span>
+      <input type="text" id="orderNoteInput" class="note-input" placeholder="Ej: Mesa 4 / Para recoger a las 10:30..." />
+
+      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.05rem; margin:14px 0;">
+        <span data-i18n="cartTotalLbl">Total simulado</span>
         <span id="modalTotalAmount" style="color:var(--gold-bright);">0,00 €</span>
       </div>
 
-      <button type="button" class="cta-full" style="max-width:100%; background:var(--wa-green); color:var(--wa-dark);" onclick="sendOrderWhatsapp()" data-i18n="sendWaBtn">
+      <a id="waSendLink" href="https://wa.me/34665075934" target="_blank" rel="noopener" class="cta-full" style="max-width:100%; background:var(--wa-green); color:var(--wa-dark);" data-i18n="sendWaBtn">
         📲 Enviar pedido por WhatsApp
-      </button>
+      </a>
     </div>
   </div>
 
   <script>
     const CONFIG = {
       name: "Cafetería Fleming",
-      // Número de demostración de pilmu; sustituir por el WhatsApp real del local cuando lo confirmen
-      whatsappDemo: "34665075934",
+      whatsapp: "34665075934",
       wifiSsid: "Cafeteria_Fleming",
       wifiPass: "fleming2026"
     };
@@ -852,50 +878,50 @@
 
     const MENU_DATA = [
       {
-        catEs: "Cafés e Infusiones",
-        catEn: "Coffee & Teas",
+        catEs: "Cafés e Infusiones (Simulado)",
+        catEn: "Coffee & Teas (Sample)",
         items: [
-          { id: "c1", es: "Café solo / Espresso", en: "Espresso", descEs: "Café recién molido", descEn: "Freshly ground coffee", price: 1.40, allergens: [] },
-          { id: "c2", es: "Cortado", en: "Cortado (Espresso with a dash of milk)", descEs: "Con leche entera, sin lactosa o vegetal", descEn: "Whole, lactose-free or plant milk", price: 1.50, allergens: ["lacteos"] },
+          { id: "c1", es: "Café solo / Espresso", en: "Espresso", descEs: "Tueste natural recién molido", descEn: "Freshly ground natural roast", price: 1.40, allergens: [] },
+          { id: "c2", es: "Cortado", en: "Cortado (Espresso with milk)", descEs: "Con leche entera, sin lactosa o avena", descEn: "Whole, lactose-free or oat milk", price: 1.50, allergens: ["lacteos"] },
           { id: "c3", es: "Café con leche", en: "White Coffee / Latte", descEs: "Taza grande cremosa", descEn: "Large creamy cup", price: 1.70, allergens: ["lacteos"] },
           { id: "c4", es: "Café Americano", en: "Americano", descEs: "Suave y largo", descEn: "Smooth long black coffee", price: 1.60, allergens: [] },
-          { id: "c5", es: "Infusiones variadas", en: "Herbal Teas", descEs: "Manzanilla, poleo menta, tila o té negro", descEn: "Chamomile, mint, linden or black tea", price: 1.50, allergens: [] }
+          { id: "c5", es: "Infusiones variadas", en: "Herbal Teas", descEs: "Manzanilla, menta poleo, tila o té", descEn: "Chamomile, mint, linden or tea", price: 1.50, allergens: [] }
         ]
       },
       {
-        catEs: "Ensaimadas y Repostería",
-        catEn: "Ensaimadas & Pastries",
+        catEs: "Ensaimadas y Bollería (Simulado)",
+        catEn: "Ensaimadas & Pastries (Sample)",
         items: [
           { id: "p1", es: "Ensaimada lisa", en: "Plain Mallorcan Ensaimada", descEs: "Horneada cada mañana", descEn: "Baked fresh every morning", price: 1.80, allergens: ["gluten", "huevo"] },
-          { id: "p2", es: "Ensaimada de crema o cabello", en: "Custard or Pumpkin Jam Ensaimada", descEs: "Rellena artesanal", descEn: "Traditional filled pastry", price: 2.30, allergens: ["gluten", "lacteos", "huevo"] },
-          { id: "p3", es: "Croissant de mantequilla", en: "Butter Croissant", descEs: "Crujiente recién horneado", descEn: "Flaky freshly baked croissant", price: 1.80, allergens: ["gluten", "lacteos", "huevo"] },
-          { id: "p4", es: "Coca de patata", en: "Valldemossa Potato Bun", descEs: "Esponjosa con azúcar glas", descEn: "Soft sweet potato bun", price: 1.70, allergens: ["gluten", "huevo"] }
+          { id: "p2", es: "Ensaimada de crema", en: "Custard Filled Ensaimada", descEs: "Elaboración tradicional", descEn: "Traditional filled pastry", price: 2.30, allergens: ["gluten", "lacteos", "huevo"] },
+          { id: "p3", es: "Croissant de mantequilla", en: "Butter Croissant", descEs: "Crujiente recién hecho", descEn: "Flaky freshly baked croissant", price: 1.80, allergens: ["gluten", "lacteos", "huevo"] },
+          { id: "p4", es: "Coca de patata", en: "Sweet Potato Bun", descEs: "Esponjosa con azúcar glas", descEn: "Soft sweet potato bun", price: 1.70, allergens: ["gluten", "huevo"] }
         ]
       },
       {
-        catEs: "Llonguets y Bocadillos",
-        catEn: "Mallorcan Rolls & Sandwiches",
+        catEs: "Llonguets y Bocadillos (Simulado)",
+        catEn: "Mallorcan Rolls & Sandwiches (Sample)",
         items: [
-          { id: "b1", es: "Llonguet de jamón serrano y queso", en: "Serrano Ham & Cheese Llonguet", descEs: "Pan típico mallorquín tostado", descEn: "Toasted traditional Mallorcan roll", price: 3.80, allergens: ["gluten", "lacteos"] },
-          { id: "b2", es: "Llonguet de camaiot y queso", en: "Mallorcan Camaiot & Cheese Roll", descEs: "Embutido tradicional de Mallorca", descEn: "Traditional Mallorcan pork sausage & cheese", price: 3.90, allergens: ["gluten", "lacteos"] },
-          { id: "b3", es: "Llonguet de sobrasada fundida", en: "Melted Sobrasada Llonguet", descEs: "Con queso fundido", descEn: "With melted cheese", price: 3.90, allergens: ["gluten", "lacteos"] },
+          { id: "b1", es: "Llonguet de jamón y queso", en: "Ham & Cheese Llonguet", descEs: "Pan típico mallorquín tostado", descEn: "Toasted traditional Mallorcan roll", price: 3.80, allergens: ["gluten", "lacteos"] },
+          { id: "b2", es: "Llonguet de camaiot y queso", en: "Camaiot & Cheese Llonguet", descEs: "Embutido mallorquín fundido", descEn: "Traditional Mallorcan sausage & cheese", price: 3.90, allergens: ["gluten", "lacteos"] },
+          { id: "b3", es: "Llonguet de sobrasada", en: "Sobrasada Llonguet", descEs: "Con queso fundido", descEn: "With melted cheese", price: 3.90, allergens: ["gluten", "lacteos"] },
           { id: "b4", es: "Bocadillo de tortilla española", en: "Spanish Omelette Sandwich", descEs: "Tortilla de patata casera", descEn: "Homemade potato omelette", price: 4.00, allergens: ["gluten", "huevo"] },
-          { id: "b5", es: "Bocadillo de lomo con queso", en: "Pork Loin & Cheese Sandwich", descEs: "A la plancha recién hecho", descEn: "Freshly grilled", price: 4.50, allergens: ["gluten", "lacteos"] }
+          { id: "b5", es: "Bocadillo de lomo con queso", en: "Pork Loin & Cheese Sandwich", descEs: "A la plancha al momento", descEn: "Freshly grilled", price: 4.50, allergens: ["gluten", "lacteos"] }
         ]
       },
       {
-        catEs: "Pa amb Oli",
-        catEn: "Mallorcan Pa amb Oli",
+        catEs: "Pa amb Oli (Simulado)",
+        catEn: "Mallorcan Pa amb Oli (Sample)",
         items: [
-          { id: "o1", es: "Pa amb oli de jamón serrano", en: "Serrano Ham Pa amb Oli", descEs: "Pan payés, tomate de ramellet y aceite de oliva", descEn: "Rustic bread, local tomato & olive oil", price: 5.50, allergens: ["gluten"] },
-          { id: "o2", es: "Pa amb oli de queso mahonés", en: "Mahon Cheese Pa amb Oli", descEs: "Queso semi-curado de Menorca", descEn: "Semi-cured Balearic cheese", price: 5.50, allergens: ["gluten", "lacteos"] },
-          { id: "o3", es: "Pa amb oli de atún y trampó", en: "Tuna & Mallorcan Salad Pa amb Oli", descEs: "Con ensalada fresca de tomate, pimiento y cebolla", descEn: "Topped with fresh tomato & pepper salad", price: 5.80, allergens: ["gluten", "pescado"] },
-          { id: "o4", es: "Pa amb oli mixto (jamón y queso)", en: "Mixed Ham & Cheese Pa amb Oli", descEs: "Acompañado de aceitunas", descEn: "Served with local olives", price: 6.20, allergens: ["gluten", "lacteos"] }
+          { id: "o1", es: "Pa amb oli de jamón serrano", en: "Serrano Ham Pa amb Oli", descEs: "Pan payés, tomate y aceite de oliva", descEn: "Rustic bread, tomato & olive oil", price: 5.50, allergens: ["gluten"] },
+          { id: "o2", es: "Pa amb oli de queso mahonés", en: "Mahon Cheese Pa amb Oli", descEs: "Queso semi-curado", descEn: "Semi-cured Balearic cheese", price: 5.50, allergens: ["gluten", "lacteos"] },
+          { id: "o3", es: "Pa amb oli de atún y trampó", en: "Tuna & Trampó Pa amb Oli", descEs: "Con ensalada fresca mallorquina", descEn: "Topped with fresh tomato & pepper salad", price: 5.80, allergens: ["gluten", "pescado"] },
+          { id: "o4", es: "Pa amb oli mixto", en: "Mixed Ham & Cheese Pa amb Oli", descEs: "Jamón, queso y aceitunas", descEn: "Ham, cheese & local olives", price: 6.20, allergens: ["gluten", "lacteos"] }
         ]
       },
       {
-        catEs: "Refrescos, Zumos y Cervezas",
-        catEn: "Soft Drinks, Juices & Beers",
+        catEs: "Refrescos, Zumos y Cervezas (Simulado)",
+        catEn: "Soft Drinks, Juices & Beers (Sample)",
         items: [
           { id: "d1", es: "Zumo de naranja natural", en: "Freshly Squeezed Orange Juice", descEs: "Exprimido al momento", descEn: "Squeezed to order", price: 2.60, allergens: [] },
           { id: "d2", es: "Agua mineral (50 cl)", en: "Mineral Water (500 ml)", descEs: "Con o sin gas", descEn: "Still or sparkling", price: 1.50, allergens: [] },
@@ -907,96 +933,94 @@
 
     const I18N = {
       es: {
-        demoBanner: "✨ Vista previa personalizada · Carta y precios de muestra pendientes de confirmar con Cafetería Fleming",
+        demoBanner: "✨ Muestra interactiva · Productos y precios simulados · Pedidos conectados al 665 075 934",
         statusText: "Desayunos, Cafés y Pa amb Oli",
-        tagline: "Cafés de especialidad, ensaimadas, llonguets y pa amb oli en Manacor",
+        tagline: "Cafés, ensaimadas, llonguets y pa amb oli en Manacor",
         addressLabel: "Carrer d'Alexander Fleming · Manacor",
         btnMenu: "Ver Carta Digital y Pedir",
         btnWifi: "Wi-Fi Clientes",
         btnReviewTop: "Dejar una reseña en Google",
-        btnLocation: "Cómo llegar al local",
+        btnWhatsappTop: "Contactar por WhatsApp",
         wifiEyebrow: "Conexión gratuita",
         wifiTitle: "Wi-Fi para clientes",
         wifiNetLbl: "Red Wi-Fi",
         wifiPassLbl: "Contraseña",
         wifiCopyBtn: "📋 Copiar contraseña Wi-Fi",
         wifiCopied: "✅ ¡Contraseña copiada!",
-        specEyebrow: "Nuestras especialidades",
-        specTitle: "Para empezar bien el día",
+        specEyebrow: "Carta simulada de ejemplo",
+        specTitle: "Toca para probar la carta",
         hl1Title: "Cafés y Desayunos",
-        hl1Sub: "Recién molido y repostería del día",
-        hl2Title: "Ensaimadas y Cocas",
-        hl2Sub: "Tradición mallorquina artesanal",
-        hl3Title: "Llonguets Calientes",
-        hl3Sub: "Camaiot, sobrasada, tortilla y más",
-        hl4Title: "Pa amb Oli",
-        hl4Sub: "Pan payés, tomate de ramellet y aceite",
+        hl1Sub: "Espresso, cortado, café con leche...",
+        hl2Title: "Ensaimadas y Bollería",
+        hl2Sub: "Lisa, crema, croissant y coca",
+        hl3Title: "Llonguets y Bocadillos",
+        hl3Sub: "Camaiot, sobrasada, tortilla...",
+        hl4Title: "Pa amb Oli y Bebidas",
+        hl4Sub: "Jamón, queso, atún y zumos",
         reviewEyebrow: "Tu opinión nos importa",
         reviewTitle: "¿Qué tal tu visita a Cafetería Fleming?",
-        reviewSubtitle: "Comparte tu valoración en Google o escríbenos directamente si quieres comentarnos algo.",
+        reviewSubtitle: "Comparte tu valoración en Google o escríbenos directamente por WhatsApp.",
         reviewGoogleBtn: "⭐ Dejar una reseña en Google",
-        reviewDirectWaBtn: "💬 Sugerencia o consulta por WhatsApp",
+        reviewDirectWaBtn: "💬 Enviar mensaje por WhatsApp",
         infoEyebrow: "Información del local",
-        infoTitle: "Horarios y Ubicación",
+        infoTitle: "Ubicación y Contacto",
         lblAddress: "Dirección",
-        lblHours: "Horario habitual",
-        valHours: "Consultar horario oficial del local",
-        lblService: "Servicio",
-        valService: "Sala, terraza y pedidos para recoger",
+        lblWhatsapp: "WhatsApp de prueba",
+        lblService: "Modalidad",
+        valService: "Carta digital, sala y pedidos WhatsApp",
         footerDemo: "Muestra digital creada por",
         backBtn: "← Inicio",
         allergenBtn: "🌾 Alérgenos",
         allergenHint: "Pulsa un alérgeno para ocultar los platos que lo contienen:",
-        cartTitle: "Tu pedido para recoger",
-        cartDemoNote: "Nota de demostración: al pulsar enviar se abrirá un mensaje de prueba en WhatsApp.",
-        cartTotalLbl: "Total estimado",
-        sendWaBtn: "📲 Enviar pedido por WhatsApp"
+        cartTitle: "Tu pedido de prueba",
+        cartTotalLbl: "Total simulado",
+        sendWaBtn: "📲 Enviar pedido por WhatsApp",
+        notePlaceholder: "Ej: Mesa 4 / Para recoger a las 10:30..."
       },
       en: {
-        demoBanner: "✨ Personalized preview · Sample menu & prices pending confirmation with Cafetería Fleming",
+        demoBanner: "✨ Interactive preview · Simulated items & prices · Orders linked to 665 075 934",
         statusText: "Breakfast, Coffee & Pa amb Oli",
-        tagline: "Specialty coffee, ensaimadas, Mallorcan rolls & pa amb oli in Manacor",
+        tagline: "Coffee, ensaimadas, Mallorcan rolls & pa amb oli in Manacor",
         addressLabel: "Carrer d'Alexander Fleming · Manacor",
         btnMenu: "View Digital Menu & Order",
         btnWifi: "Guest Wi-Fi",
         btnReviewTop: "Leave a Google review",
-        btnLocation: "Get directions",
+        btnWhatsappTop: "Contact via WhatsApp",
         wifiEyebrow: "Free connection",
         wifiTitle: "Guest Wi-Fi",
         wifiNetLbl: "Wi-Fi Network",
         wifiPassLbl: "Password",
         wifiCopyBtn: "📋 Copy Wi-Fi password",
         wifiCopied: "✅ Password copied!",
-        specEyebrow: "Our specialties",
-        specTitle: "Start your day right",
+        specEyebrow: "Sample simulated menu",
+        specTitle: "Tap to test the digital menu",
         hl1Title: "Coffee & Breakfast",
-        hl1Sub: "Freshly ground coffee & morning bakes",
+        hl1Sub: "Espresso, cortado, white coffee...",
         hl2Title: "Ensaimadas & Pastries",
-        hl2Sub: "Artisanal Mallorcan tradition",
-        hl3Title: "Warm Llonguets",
-        hl3Sub: "Camaiot, sobrasada, omelette & more",
-        hl4Title: "Pa amb Oli",
-        hl4Sub: "Rustic bread, local tomato & olive oil",
+        hl2Sub: "Plain, custard, croissant & coca",
+        hl3Title: "Llonguets & Sandwiches",
+        hl3Sub: "Camaiot, sobrasada, omelette...",
+        hl4Title: "Pa amb Oli & Drinks",
+        hl4Sub: "Ham, cheese, tuna & fresh juices",
         reviewEyebrow: "We value your feedback",
         reviewTitle: "How was your visit to Cafetería Fleming?",
-        reviewSubtitle: "Share your review on Google or message us directly if you'd like to tell us anything.",
+        reviewSubtitle: "Share your review on Google or message us directly via WhatsApp.",
         reviewGoogleBtn: "⭐ Leave a review on Google",
-        reviewDirectWaBtn: "💬 Suggestion or question via WhatsApp",
+        reviewDirectWaBtn: "💬 Send message via WhatsApp",
         infoEyebrow: "Venue information",
-        infoTitle: "Hours & Location",
+        infoTitle: "Location & Contact",
         lblAddress: "Address",
-        lblHours: "Opening hours",
-        valHours: "Check official venue schedule",
-        lblService: "Service",
-        valService: "Indoor seating, terrace & takeaway",
+        lblWhatsapp: "Test WhatsApp",
+        lblService: "Features",
+        valService: "Digital menu, table & WhatsApp orders",
         footerDemo: "Digital preview created by",
         backBtn: "← Home",
         allergenBtn: "🌾 Allergens",
         allergenHint: "Tap an allergen to hide dishes containing it:",
-        cartTitle: "Your takeaway order",
-        cartDemoNote: "Preview note: tapping send will open a sample test message in WhatsApp.",
-        cartTotalLbl: "Estimated total",
-        sendWaBtn: "📲 Send order via WhatsApp"
+        cartTitle: "Your test order",
+        cartTotalLbl: "Simulated total",
+        sendWaBtn: "📲 Send order via WhatsApp",
+        notePlaceholder: "E.g. Table 4 / Takeaway at 10:30..."
       }
     };
 
@@ -1011,8 +1035,14 @@
     function setLang(lang) {
       currentLang = lang;
       document.documentElement.lang = lang;
-      ["btnEs", "btnEsMenu"].forEach(id => document.getElementById(id).classList.toggle("active", lang === "es"));
-      ["btnEn", "btnEnMenu"].forEach(id => document.getElementById(id).classList.toggle("active", lang === "en"));
+      ["btnEs", "btnEsMenu"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle("active", lang === "es");
+      });
+      ["btnEn", "btnEnMenu"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle("active", lang === "en");
+      });
 
       const dict = I18N[lang];
       document.querySelectorAll("[data-i18n]").forEach(el => {
@@ -1020,9 +1050,15 @@
         if (dict[key]) el.textContent = dict[key];
       });
 
+      const noteInput = document.getElementById("orderNoteInput");
+      if (noteInput) noteInput.placeholder = dict.notePlaceholder;
+
       renderAllergenChips();
       renderMenu();
       updateCartUI();
+      if (document.getElementById("cartModal").classList.contains("open")) {
+        renderCartModal();
+      }
     }
 
     function toggleWifiDrawer() {
@@ -1030,7 +1066,9 @@
     }
 
     function copyWifiPassword() {
-      navigator.clipboard.writeText(CONFIG.wifiPass).catch(() => {});
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(CONFIG.wifiPass).catch(() => {});
+      }
       const btn = document.getElementById("copyWifiBtn");
       btn.textContent = I18N[currentLang].wifiCopied;
       setTimeout(() => {
@@ -1043,10 +1081,12 @@
       view.classList.add("open");
       view.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-      history.pushState({ menuOpen: true }, "");
+      if (!history.state || !history.state.menuOpen) {
+        history.pushState({ menuOpen: true }, "");
+      }
     }
 
-    function closeMenuView(fromPopState = false) {
+    function closeMenuView(fromPopState) {
       const view = document.getElementById("menuView");
       if (!view.classList.contains("open")) return;
       view.classList.remove("open");
@@ -1094,6 +1134,8 @@
           const name = currentLang === "es" ? item.es : item.en;
           const desc = currentLang === "es" ? item.descEs : item.descEn;
           const icons = item.allergens.map(al => allergenMap[al] || "").join(" ");
+          const qtyInCart = cart[item.id] || 0;
+          const badge = qtyInCart > 0 ? ` (${qtyInCart})` : "";
           return `
             <div class="dish-row">
               <div class="dish-info">
@@ -1103,7 +1145,7 @@
                 </div>
                 <div class="dish-desc">${desc}</div>
               </div>
-              <button type="button" class="price-pill" onclick="addToCart('${item.id}')">+ ${formatEur(item.price)}</button>
+              <button type="button" class="price-pill" onclick="addToCart('${item.id}')">+ ${formatEur(item.price)}${badge}</button>
             </div>
           `;
         }).join("");
@@ -1122,6 +1164,7 @@
 
     function addToCart(id) {
       cart[id] = (cart[id] || 0) + 1;
+      renderMenu();
       updateCartUI();
     }
 
@@ -1129,6 +1172,7 @@
       if (!cart[id]) return;
       cart[id] += delta;
       if (cart[id] <= 0) delete cart[id];
+      renderMenu();
       updateCartUI();
       renderCartModal();
     }
@@ -1148,8 +1192,8 @@
       if (totalQty > 0) {
         bar.classList.add("visible");
         const label = currentLang === "es"
-          ? `🛒 ${totalQty} ${totalQty === 1 ? "producto" : "productos"}`
-          : `🛒 ${totalQty} ${totalQty === 1 ? "item" : "items"}`;
+          ? `🛒 ${totalQty} ${totalQty === 1 ? "producto" : "productos"} · Ver pedido`
+          : `🛒 ${totalQty} ${totalQty === 1 ? "item" : "items"} · View order`;
         document.getElementById("cartSummaryText").textContent = label;
         document.getElementById("cartTotalText").textContent = `${formatEur(totalPrice)} →`;
       } else {
@@ -1165,6 +1209,22 @@
 
     function closeCartModal() {
       document.getElementById("cartModal").classList.remove("open");
+    }
+
+    function buildWhatsappUrl(total) {
+      const lines = Object.entries(cart).map(([id, qty]) => {
+        const item = findItemById(id);
+        if (!item) return "";
+        const sub = item.price * qty;
+        return `• ${qty}x ${item.es} (${formatEur(sub)})`;
+      }).filter(Boolean);
+
+      const noteEl = document.getElementById("orderNoteInput");
+      const note = noteEl ? noteEl.value.trim() : "";
+      const noteLine = note ? `\n*Nota:* ${note}` : "";
+
+      const msg = `Hola, esto es una *prueba de pedido* desde la muestra digital de *${CONFIG.name}*:\n\n${lines.join("\n")}${noteLine}\n\n*Total simulado:* ${formatEur(total)}`;
+      return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
     }
 
     function renderCartModal() {
@@ -1190,35 +1250,19 @@
           </div>
         `;
       }).join("");
+
       document.getElementById("modalTotalAmount").textContent = formatEur(total);
+      const waLink = document.getElementById("waSendLink");
+      if (waLink) {
+        waLink.href = buildWhatsappUrl(total);
+      }
     }
 
-    function sendOrderWhatsapp() {
-      let total = 0;
-      const lines = Object.entries(cart).map(([id, qty]) => {
-        const item = findItemById(id);
-        if (!item) return "";
-        const sub = item.price * qty;
-        total += sub;
-        // Siempre en español para evitar confusiones en barra
-        return `• ${qty}x ${item.es} (${formatEur(sub)})`;
-      }).filter(Boolean);
-
-      const msg = `Hola, esto es una *prueba de pedido* desde la muestra digital de *${CONFIG.name}*:
-
-${lines.join("
-")}
-
-*Total estimado:* ${formatEur(total)}`;
-      window.open(`https://wa.me/${CONFIG.whatsappDemo}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
-    }
-
-    function openDirectFeedbackWa() {
-      const msg = currentLang === "es"
-        ? `Hola, escribo desde la vista previa de *${CONFIG.name}*:`
-        : `Hello, I'm messaging from the *${CONFIG.name}* preview:`;
-      window.open(`https://wa.me/${CONFIG.whatsappDemo}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
-    }
+    document.getElementById("orderNoteInput").addEventListener("input", () => {
+      if (document.getElementById("cartModal").classList.contains("open")) {
+        renderCartModal();
+      }
+    });
 
     // Inicializar
     renderAllergenChips();
