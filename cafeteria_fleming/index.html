@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Cafetería Fleming · Manacor | Carta Digital</title>
-  <meta name="description" content="Carta digital interactiva, pedidos por WhatsApp, Wi-Fi y reseñas de Cafetería Fleming en Manacor." />
+  <meta name="description" content="Carta digital interactiva, pedidos en cafetería, para llevar o a domicilio por WhatsApp, Wi-Fi y reseñas de Cafetería Fleming en Manacor." />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon-192.png" type="image/png" />
@@ -65,7 +65,7 @@
     .app-shell {
       max-width: 520px;
       margin: 0 auto;
-      padding: 14px 16px 40px;
+      padding: 14px 16px 44px;
     }
 
     /* Barra superior */
@@ -123,27 +123,28 @@
       color: #14110e;
     }
 
-    /* Tarjeta principal de portada */
+    /* Tarjeta principal de portada con foto de ambiente */
     .hero-card {
       position: relative;
-      background: radial-gradient(circle at 50% 18%, rgba(212, 163, 89, 0.18), transparent 58%),
-                  linear-gradient(170deg, var(--bg-surface) 0%, #141210 100%);
+      overflow: hidden;
+      background: linear-gradient(175deg, rgba(27, 24, 21, 0.80) 0%, rgba(18, 16, 14, 0.96) 72%),
+                  url('cafe-ensaimada.jpg') center/cover no-repeat;
       border: 1px solid var(--gold-border);
       border-radius: var(--radius-lg);
       padding: 26px 18px 22px;
       text-align: center;
       margin-bottom: 16px;
-      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5);
     }
 
     .logo-wrap {
-      width: 92px;
-      height: 92px;
-      margin: 0 auto 14px;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 12px;
       border-radius: 50%;
       padding: 3px;
       background: linear-gradient(135deg, var(--gold-bright), rgba(212, 163, 89, 0.25));
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
     }
 
     .logo-wrap img {
@@ -156,15 +157,16 @@
 
     .biz-name {
       font-family: var(--font-serif);
-      font-size: 2.2rem;
+      font-size: 2.25rem;
       font-weight: 700;
       line-height: 1.05;
       color: var(--text-primary);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
     }
 
     .biz-tagline {
       font-size: 0.84rem;
-      color: var(--text-secondary);
+      color: #dfd6c9;
       margin-top: 6px;
     }
 
@@ -175,12 +177,13 @@
       margin-top: 10px;
       padding: 5px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
+      background: rgba(18, 16, 14, 0.75);
+      border: 1px solid var(--gold-border);
       color: var(--gold-bright);
       text-decoration: none;
       font-size: 0.78rem;
       font-weight: 600;
+      backdrop-filter: blur(6px);
     }
 
     /* 4 Botones principales apilados en vertical (uno por línea) */
@@ -204,8 +207,9 @@
       text-decoration: none;
       cursor: pointer;
       border: 1px solid var(--border-subtle);
-      background: var(--bg-elevated);
+      background: rgba(37, 33, 29, 0.92);
       color: var(--text-primary);
+      backdrop-filter: blur(8px);
       transition: transform 0.14s ease, border-color 0.14s ease;
     }
 
@@ -215,7 +219,7 @@
       background: linear-gradient(135deg, var(--gold-bright), var(--gold));
       color: #16120c;
       border-color: transparent;
-      box-shadow: 0 10px 24px rgba(212, 163, 89, 0.25);
+      box-shadow: 0 10px 24px rgba(212, 163, 89, 0.28);
     }
 
     .action-left {
@@ -266,7 +270,7 @@
       align-items: center;
     }
 
-    /* Especialidades */
+    /* Galería de Especialidades con FOTOS */
     .section-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
@@ -284,27 +288,52 @@
       font-weight: 700;
     }
 
-    .highlights-grid {
+    .photo-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       margin-top: 14px;
     }
 
-    .highlight-tile {
+    .photo-card {
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 14px 12px;
+      border-radius: 15px;
+      overflow: hidden;
       text-align: left;
       cursor: pointer;
-      transition: border-color 0.15s ease;
+      transition: transform 0.14s ease, border-color 0.15s ease;
+      display: flex;
+      flex-direction: column;
     }
 
-    .highlight-tile:hover { border-color: var(--gold-border); }
-    .highlight-emoji { font-size: 1.5rem; margin-bottom: 6px; display: block; }
-    .highlight-title { font-size: 0.86rem; font-weight: 700; color: var(--text-primary); }
-    .highlight-sub { font-size: 0.74rem; color: var(--text-secondary); margin-top: 2px; }
+    .photo-card:hover { border-color: var(--gold-border); }
+    .photo-card:active { transform: scale(0.98); }
+
+    .photo-card-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: #2a2520;
+    }
+
+    .photo-card-body {
+      padding: 10px 11px 12px;
+    }
+
+    .photo-card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+
+    .photo-card-sub {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
 
     /* Bloque de Reseñas */
     .review-card {
@@ -377,7 +406,7 @@
       background: var(--bg-base);
       z-index: 50;
       overflow-y: auto;
-      padding-bottom: 100px;
+      padding-bottom: 105px;
     }
 
     .menu-view.open { display: block; }
@@ -478,11 +507,42 @@
       text-decoration: line-through;
     }
 
+    .cat-banner {
+      position: relative;
+      height: 94px;
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 20px 0 8px;
+      border: 1px solid var(--gold-border);
+      display: flex;
+      align-items: flex-end;
+      padding: 10px 14px;
+    }
+
+    .cat-banner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.5);
+    }
+
+    .cat-banner-title {
+      position: relative;
+      z-index: 2;
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+    }
+
     .cat-heading {
       font-family: var(--font-serif);
       font-size: 1.55rem;
       color: var(--gold-bright);
-      margin: 18px 0 8px;
+      margin: 20px 0 8px;
       padding-bottom: 4px;
       border-bottom: 1px solid var(--gold-border);
     }
@@ -552,7 +612,7 @@
       color: var(--wa-dark);
       border-radius: 16px;
       padding: 14px 18px;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.65);
       z-index: 60;
       align-items: center;
       justify-content: space-between;
@@ -563,12 +623,12 @@
 
     .cart-bar.visible { display: flex; }
 
-    /* Modal de confirmación de pedido */
+    /* Modal de confirmación de pedido con 3 modalidades */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.78);
+      background: rgba(0, 0, 0, 0.8);
       z-index: 70;
       align-items: flex-end;
       justify-content: center;
@@ -584,8 +644,79 @@
       border: 1px solid var(--gold-border);
       border-radius: 22px;
       padding: 20px 18px;
-      max-height: 85vh;
+      max-height: 88vh;
       overflow-y: auto;
+    }
+
+    .mode-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin: 10px 0;
+    }
+
+    .mode-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      border-radius: 12px;
+      padding: 9px 6px;
+      font-family: inherit;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.14s ease;
+    }
+
+    .mode-btn.active {
+      background: var(--gold-soft);
+      border-color: var(--gold);
+      color: var(--gold-bright);
+    }
+
+    .mode-detail-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+
+    .mode-detail-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      margin-bottom: 6px;
+    }
+
+    .quick-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+
+    .quick-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .quick-pill:hover {
+      border-color: var(--gold-border);
+      color: var(--gold-bright);
     }
 
     .cart-item-row {
@@ -616,14 +747,13 @@
 
     .note-input {
       width: 100%;
-      background: var(--bg-elevated);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      border-radius: 12px;
+      border-radius: 10px;
       color: var(--text-primary);
       font-family: inherit;
-      font-size: 0.84rem;
-      padding: 10px 12px;
-      margin-top: 10px;
+      font-size: 0.83rem;
+      padding: 9px 11px;
     }
 
     footer {
@@ -649,7 +779,7 @@
     <div class="top-bar">
       <div class="status-pill">
         <span class="status-dot"></span>
-        <span data-i18n="statusText">Desayunos, Cafés y Pa amb Oli</span>
+        <span data-i18n="statusText">Local · Para llevar · A domicilio</span>
       </div>
 
       <div class="lang-toggle" role="group" aria-label="Idioma">
@@ -723,31 +853,42 @@
       </button>
     </section>
 
-    <!-- Especialidades rápidas (al tocar abren la carta) -->
+    <!-- Galería de Especialidades con FOTOS -->
     <section class="section-card">
-      <span class="eyebrow" data-i18n="specEyebrow">Carta simulada de ejemplo</span>
-      <h2 class="serif" style="font-size:1.65rem; margin-top:2px;" data-i18n="specTitle">Toca para probar la carta</h2>
+      <span class="eyebrow" data-i18n="specEyebrow">Especialidades de muestra</span>
+      <h2 class="serif" style="font-size:1.65rem; margin-top:2px;" data-i18n="specTitle">Toca una foto para abrir la carta</h2>
 
-      <div class="highlights-grid">
-        <div class="highlight-tile" onclick="openMenuView()">
-          <span class="highlight-emoji">☕</span>
-          <div class="highlight-title" data-i18n="hl1Title">Cafés y Desayunos</div>
-          <div class="highlight-sub" data-i18n="hl1Sub">Espresso, cortado, café con leche...</div>
+      <div class="photo-grid">
+        <div class="photo-card" onclick="openMenuView('cat-cafes')">
+          <img class="photo-card-img" src="cafe-ensaimada.jpg" alt="Cafés y Ensaimadas" />
+          <div class="photo-card-body">
+            <div class="photo-card-title" data-i18n="hl1Title">Cafés y Ensaimadas</div>
+            <div class="photo-card-sub" data-i18n="hl1Sub">Cortado, café con leche, lisa o crema</div>
+          </div>
         </div>
-        <div class="highlight-tile" onclick="openMenuView()">
-          <span class="highlight-emoji">🥐</span>
-          <div class="highlight-title" data-i18n="hl2Title">Ensaimadas y Bollería</div>
-          <div class="highlight-sub" data-i18n="hl2Sub">Lisa, crema, croissant y coca</div>
+
+        <div class="photo-card" onclick="openMenuView('cat-llonguets')">
+          <img class="photo-card-img" src="llonguet-jamon.jpg" alt="Llonguets y Bocadillos" />
+          <div class="photo-card-body">
+            <div class="photo-card-title" data-i18n="hl3Title">Llonguets y Bocadillos</div>
+            <div class="photo-card-sub" data-i18n="hl3Sub">Jamón y queso, camaiot, sobrasada</div>
+          </div>
         </div>
-        <div class="highlight-tile" onclick="openMenuView()">
-          <span class="highlight-emoji">🥖</span>
-          <div class="highlight-title" data-i18n="hl3Title">Llonguets y Bocadillos</div>
-          <div class="highlight-sub" data-i18n="hl3Sub">Camaiot, sobrasada, tortilla...</div>
+
+        <div class="photo-card" onclick="openMenuView('cat-paamboli')">
+          <img class="photo-card-img" src="pa-amb-oli.jpg" alt="Pa amb Oli Mallorquín" />
+          <div class="photo-card-body">
+            <div class="photo-card-title" data-i18n="hl4Title">Pa amb Oli Mallorquín</div>
+            <div class="photo-card-sub" data-i18n="hl4Sub">Jamón serrano, queso mahonés, atún</div>
+          </div>
         </div>
-        <div class="highlight-tile" onclick="openMenuView()">
-          <span class="highlight-emoji">🍅</span>
-          <div class="highlight-title" data-i18n="hl4Title">Pa amb Oli y Bebidas</div>
-          <div class="highlight-sub" data-i18n="hl4Sub">Jamón, queso, atún y zumos</div>
+
+        <div class="photo-card" onclick="openMenuView('cat-bolleria')">
+          <img class="photo-card-img" src="reposteria-desayuno.jpg" alt="Bollería y Zumos" />
+          <div class="photo-card-body">
+            <div class="photo-card-title" data-i18n="hl2Title">Bollería y Zumos</div>
+            <div class="photo-card-sub" data-i18n="hl2Sub">Croissant, coca de patata y zumo</div>
+          </div>
         </div>
       </div>
     </section>
@@ -785,8 +926,8 @@
         <strong><a href="https://wa.me/34665075934" target="_blank" rel="noopener" style="color:var(--gold-bright); text-decoration:none;">665 075 934</a></strong>
       </div>
       <div class="detail-line">
-        <span data-i18n="lblService">Modalidad</span>
-        <strong data-i18n="valService">Carta digital, sala y pedidos WhatsApp</strong>
+        <span data-i18n="lblService">Modalidades activas</span>
+        <strong data-i18n="valService">Tomar en local, para llevar y domicilio</strong>
       </div>
     </section>
 
@@ -814,7 +955,7 @@
 
     <div class="menu-body">
       <div class="menu-tip-box" data-i18n="menuTip">
-        💡 <strong>Productos y precios simulados:</strong> pulsa sobre cualquier precio dorado para añadirlo al carrito y probar el envío del pedido al WhatsApp <strong>665 075 934</strong>.
+        💡 <strong>Productos y precios simulados:</strong> pulsa sobre cualquier precio dorado para añadirlo al carrito. Dentro del pedido podrás elegir <strong>En cafetería</strong>, <strong>Para llevar</strong> o <strong>A domicilio</strong>.
       </div>
 
       <div class="allergen-panel" id="allergenPanel">
@@ -834,21 +975,42 @@
     <span id="cartTotalText">Ver pedido →</span>
   </div>
 
-  <!-- Modal de pedido por WhatsApp -->
+  <!-- Modal de pedido por WhatsApp con las 3 modalidades -->
   <div class="modal-backdrop" id="cartModal" onclick="if(event.target===this) closeCartModal()">
     <div class="modal-sheet">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h3 class="serif" style="font-size:1.6rem;" data-i18n="cartTitle">Tu pedido de prueba</h3>
         <button type="button" class="back-btn" onclick="closeCartModal()">✕</button>
       </div>
 
-      <p style="font-size:0.78rem; color:var(--gold-bright); background:var(--gold-soft); padding:8px 10px; border-radius:10px; margin-bottom:10px;" data-i18n="cartDemoNote">
-        Este pedido simulado se enviará por WhatsApp al <strong>665 075 934</strong> para que puedas enseñárselo en vivo al cliente.
-      </p>
+      <!-- Selector de 3 modalidades: Tomar en cafetería / Para llevar / A domicilio -->
+      <div class="mode-selector" role="group" aria-label="Modalidad de pedido">
+        <button type="button" class="mode-btn active" id="modeLocal" onclick="setOrderMode('local')">
+          <span style="font-size:1.15rem;">🪑</span>
+          <span data-i18n="modeLocalLbl">En cafetería</span>
+        </button>
+        <button type="button" class="mode-btn" id="modeTakeaway" onclick="setOrderMode('takeaway')">
+          <span style="font-size:1.15rem;">🛍️</span>
+          <span data-i18n="modeTakeawayLbl">Para llevar</span>
+        </button>
+        <button type="button" class="mode-btn" id="modeDelivery" onclick="setOrderMode('delivery')">
+          <span style="font-size:1.15rem;">🛵</span>
+          <span data-i18n="modeDeliveryLbl">A domicilio</span>
+        </button>
+      </div>
+
+      <!-- Campo dinámico según la modalidad elegida -->
+      <div class="mode-detail-box" id="modeDetailBox">
+        <label class="mode-detail-label" id="modeDetailLabel" for="modeDetailInput">🪑 Número de mesa o barra:</label>
+        <div class="quick-pills" id="modeQuickPills"></div>
+        <input type="text" id="modeDetailInput" class="note-input" placeholder="Ej: Mesa 4" />
+      </div>
 
       <div id="cartItemsList"></div>
 
-      <input type="text" id="orderNoteInput" class="note-input" placeholder="Ej: Mesa 4 / Para recoger a las 10:30..." />
+      <div style="margin-top:10px;">
+        <input type="text" id="orderNoteInput" class="note-input" placeholder="Observaciones (ej: café templado, sin cebolla...)" />
+      </div>
 
       <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.05rem; margin:14px 0;">
         <span data-i18n="cartTotalLbl">Total simulado</span>
@@ -878,6 +1040,8 @@
 
     const MENU_DATA = [
       {
+        anchor: "cat-cafes",
+        banner: "cafe-ensaimada.jpg",
         catEs: "Cafés e Infusiones (Simulado)",
         catEn: "Coffee & Teas (Sample)",
         items: [
@@ -889,6 +1053,8 @@
         ]
       },
       {
+        anchor: "cat-bolleria",
+        banner: "reposteria-desayuno.jpg",
         catEs: "Ensaimadas y Bollería (Simulado)",
         catEn: "Ensaimadas & Pastries (Sample)",
         items: [
@@ -899,6 +1065,8 @@
         ]
       },
       {
+        anchor: "cat-llonguets",
+        banner: "llonguet-jamon.jpg",
         catEs: "Llonguets y Bocadillos (Simulado)",
         catEn: "Mallorcan Rolls & Sandwiches (Sample)",
         items: [
@@ -910,6 +1078,8 @@
         ]
       },
       {
+        anchor: "cat-paamboli",
+        banner: "pa-amb-oli.jpg",
         catEs: "Pa amb Oli (Simulado)",
         catEn: "Mallorcan Pa amb Oli (Sample)",
         items: [
@@ -920,6 +1090,8 @@
         ]
       },
       {
+        anchor: "cat-bebidas",
+        banner: "",
         catEs: "Refrescos, Zumos y Cervezas (Simulado)",
         catEn: "Soft Drinks, Juices & Beers (Sample)",
         items: [
@@ -934,7 +1106,7 @@
     const I18N = {
       es: {
         demoBanner: "✨ Muestra interactiva · Productos y precios simulados · Pedidos conectados al 665 075 934",
-        statusText: "Desayunos, Cafés y Pa amb Oli",
+        statusText: "Local · Para llevar · A domicilio",
         tagline: "Cafés, ensaimadas, llonguets y pa amb oli en Manacor",
         addressLabel: "Carrer d'Alexander Fleming · Manacor",
         btnMenu: "Ver Carta Digital y Pedir",
@@ -947,16 +1119,16 @@
         wifiPassLbl: "Contraseña",
         wifiCopyBtn: "📋 Copiar contraseña Wi-Fi",
         wifiCopied: "✅ ¡Contraseña copiada!",
-        specEyebrow: "Carta simulada de ejemplo",
-        specTitle: "Toca para probar la carta",
-        hl1Title: "Cafés y Desayunos",
-        hl1Sub: "Espresso, cortado, café con leche...",
-        hl2Title: "Ensaimadas y Bollería",
-        hl2Sub: "Lisa, crema, croissant y coca",
+        specEyebrow: "Especialidades de muestra",
+        specTitle: "Toca una foto para abrir la carta",
+        hl1Title: "Cafés y Ensaimadas",
+        hl1Sub: "Cortado, café con leche, lisa o crema",
+        hl2Title: "Bollería y Zumos",
+        hl2Sub: "Croissant, coca de patata y zumo",
         hl3Title: "Llonguets y Bocadillos",
-        hl3Sub: "Camaiot, sobrasada, tortilla...",
-        hl4Title: "Pa amb Oli y Bebidas",
-        hl4Sub: "Jamón, queso, atún y zumos",
+        hl3Sub: "Jamón y queso, camaiot, sobrasada",
+        hl4Title: "Pa amb Oli Mallorquín",
+        hl4Sub: "Jamón serrano, queso mahonés, atún",
         reviewEyebrow: "Tu opinión nos importa",
         reviewTitle: "¿Qué tal tu visita a Cafetería Fleming?",
         reviewSubtitle: "Comparte tu valoración en Google o escríbenos directamente por WhatsApp.",
@@ -966,20 +1138,23 @@
         infoTitle: "Ubicación y Contacto",
         lblAddress: "Dirección",
         lblWhatsapp: "WhatsApp de prueba",
-        lblService: "Modalidad",
-        valService: "Carta digital, sala y pedidos WhatsApp",
+        lblService: "Modalidades activas",
+        valService: "Tomar en local, para llevar y domicilio",
         footerDemo: "Muestra digital creada por",
         backBtn: "← Inicio",
         allergenBtn: "🌾 Alérgenos",
         allergenHint: "Pulsa un alérgeno para ocultar los platos que lo contienen:",
         cartTitle: "Tu pedido de prueba",
+        modeLocalLbl: "En cafetería",
+        modeTakeawayLbl: "Para llevar",
+        modeDeliveryLbl: "A domicilio",
         cartTotalLbl: "Total simulado",
         sendWaBtn: "📲 Enviar pedido por WhatsApp",
-        notePlaceholder: "Ej: Mesa 4 / Para recoger a las 10:30..."
+        notePlaceholder: "Observaciones (ej: café templado, sin cebolla...)"
       },
       en: {
         demoBanner: "✨ Interactive preview · Simulated items & prices · Orders linked to 665 075 934",
-        statusText: "Breakfast, Coffee & Pa amb Oli",
+        statusText: "Dine-in · Takeaway · Delivery",
         tagline: "Coffee, ensaimadas, Mallorcan rolls & pa amb oli in Manacor",
         addressLabel: "Carrer d'Alexander Fleming · Manacor",
         btnMenu: "View Digital Menu & Order",
@@ -992,16 +1167,16 @@
         wifiPassLbl: "Password",
         wifiCopyBtn: "📋 Copy Wi-Fi password",
         wifiCopied: "✅ Password copied!",
-        specEyebrow: "Sample simulated menu",
-        specTitle: "Tap to test the digital menu",
-        hl1Title: "Coffee & Breakfast",
-        hl1Sub: "Espresso, cortado, white coffee...",
-        hl2Title: "Ensaimadas & Pastries",
-        hl2Sub: "Plain, custard, croissant & coca",
+        specEyebrow: "Sample specialties",
+        specTitle: "Tap a photo to open the menu",
+        hl1Title: "Coffee & Ensaimadas",
+        hl1Sub: "Cortado, latte, plain or custard",
+        hl2Title: "Pastries & Fresh Juices",
+        hl2Sub: "Croissant, potato bun & orange juice",
         hl3Title: "Llonguets & Sandwiches",
-        hl3Sub: "Camaiot, sobrasada, omelette...",
-        hl4Title: "Pa amb Oli & Drinks",
-        hl4Sub: "Ham, cheese, tuna & fresh juices",
+        hl3Sub: "Ham & cheese, camaiot, sobrasada",
+        hl4Title: "Mallorcan Pa amb Oli",
+        hl4Sub: "Serrano ham, Mahon cheese, tuna",
         reviewEyebrow: "We value your feedback",
         reviewTitle: "How was your visit to Cafetería Fleming?",
         reviewSubtitle: "Share your review on Google or message us directly via WhatsApp.",
@@ -1011,22 +1186,59 @@
         infoTitle: "Location & Contact",
         lblAddress: "Address",
         lblWhatsapp: "Test WhatsApp",
-        lblService: "Features",
-        valService: "Digital menu, table & WhatsApp orders",
+        lblService: "Active order modes",
+        valService: "Dine-in, takeaway & home delivery",
         footerDemo: "Digital preview created by",
         backBtn: "← Home",
         allergenBtn: "🌾 Allergens",
         allergenHint: "Tap an allergen to hide dishes containing it:",
         cartTitle: "Your test order",
+        modeLocalLbl: "Dine-in",
+        modeTakeawayLbl: "Takeaway",
+        modeDeliveryLbl: "Delivery",
         cartTotalLbl: "Simulated total",
         sendWaBtn: "📲 Send order via WhatsApp",
-        notePlaceholder: "E.g. Table 4 / Takeaway at 10:30..."
+        notePlaceholder: "Notes (e.g. warm coffee, no onion...)"
+      }
+    };
+
+    const ORDER_MODES = {
+      local: {
+        labelEs: "🪑 Número de mesa o barra:",
+        labelEn: "🪑 Table number or bar:",
+        placeholderEs: "Ej: Mesa 4",
+        placeholderEn: "E.g. Table 4",
+        pillsEs: ["Mesa 1", "Mesa 2", "Mesa 4", "Terraza", "Barra"],
+        pillsEn: ["Table 1", "Table 2", "Table 4", "Terrace", "Bar"],
+        waTitle: "🪑 Tomar en la cafetería",
+        waField: "Ubicación"
+      },
+      takeaway: {
+        labelEs: "🛍️ Hora aproximada de recogida:",
+        labelEn: "🛍️ Approximate pickup time:",
+        placeholderEs: "Ej: En 15 min / 10:30",
+        placeholderEn: "E.g. In 15 min / 10:30",
+        pillsEs: ["En 10 min", "En 15 min", "En 30 min", "A las 10:30"],
+        pillsEn: ["In 10 min", "In 15 min", "In 30 min", "At 10:30"],
+        waTitle: "🛍️ Para llevar (Recogida en local)",
+        waField: "Recogida"
+      },
+      delivery: {
+        labelEs: "🛵 Dirección de entrega en Manacor:",
+        labelEn: "🛵 Delivery address in Manacor:",
+        placeholderEs: "Ej: Carrer de..., nº 12, 1º A",
+        placeholderEn: "E.g. Carrer de..., 12, 1st floor",
+        pillsEs: ["Centro Manacor", "Zona Fleming", "Zona Na Camel·la"],
+        pillsEn: ["Manacor Center", "Fleming Area", "Na Camel·la Area"],
+        waTitle: "🛵 Envío a domicilio",
+        waField: "Dirección"
       }
     };
 
     let currentLang = "es";
     let excludedAllergens = new Set();
     let cart = {};
+    let currentOrderMode = "local";
 
     function formatEur(val) {
       return val.toFixed(2).replace(".", ",") + " €";
@@ -1053,12 +1265,41 @@
       const noteInput = document.getElementById("orderNoteInput");
       if (noteInput) noteInput.placeholder = dict.notePlaceholder;
 
+      renderOrderModeUI();
       renderAllergenChips();
       renderMenu();
       updateCartUI();
       if (document.getElementById("cartModal").classList.contains("open")) {
         renderCartModal();
       }
+    }
+
+    function setOrderMode(mode) {
+      currentOrderMode = mode;
+      document.getElementById("modeLocal").classList.toggle("active", mode === "local");
+      document.getElementById("modeTakeaway").classList.toggle("active", mode === "takeaway");
+      document.getElementById("modeDelivery").classList.toggle("active", mode === "delivery");
+      document.getElementById("modeDetailInput").value = "";
+      renderOrderModeUI();
+      if (document.getElementById("cartModal").classList.contains("open")) {
+        renderCartModal();
+      }
+    }
+
+    function selectQuickPill(text) {
+      const inp = document.getElementById("modeDetailInput");
+      inp.value = text;
+      renderCartModal();
+    }
+
+    function renderOrderModeUI() {
+      const cfg = ORDER_MODES[currentOrderMode];
+      document.getElementById("modeDetailLabel").textContent = currentLang === "es" ? cfg.labelEs : cfg.labelEn;
+      document.getElementById("modeDetailInput").placeholder = currentLang === "es" ? cfg.placeholderEs : cfg.placeholderEn;
+      const pills = currentLang === "es" ? cfg.pillsEs : cfg.pillsEn;
+      document.getElementById("modeQuickPills").innerHTML = pills.map(p =>
+        `<button type="button" class="quick-pill" onclick="selectQuickPill('${p}')">${p}</button>`
+      ).join("");
     }
 
     function toggleWifiDrawer() {
@@ -1076,13 +1317,21 @@
       }, 2200);
     }
 
-    function openMenuView() {
+    function openMenuView(anchorId) {
       const view = document.getElementById("menuView");
       view.classList.add("open");
       view.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
       if (!history.state || !history.state.menuOpen) {
         history.pushState({ menuOpen: true }, "");
+      }
+      if (anchorId) {
+        setTimeout(() => {
+          const target = document.getElementById(anchorId);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 60);
+      } else {
+        view.scrollTop = 0;
       }
     }
 
@@ -1130,6 +1379,10 @@
         if (visibleItems.length === 0) return "";
         const title = currentLang === "es" ? sec.catEs : sec.catEn;
 
+        const headerHtml = sec.banner
+          ? `<div id="${sec.anchor}" class="cat-banner"><img src="${sec.banner}" alt="${title}" /><h3 class="cat-banner-title">${title}</h3></div>`
+          : `<h3 id="${sec.anchor}" class="cat-heading">${title}</h3>`;
+
         const rowsHtml = visibleItems.map(item => {
           const name = currentLang === "es" ? item.es : item.en;
           const desc = currentLang === "es" ? item.descEs : item.descEn;
@@ -1150,7 +1403,7 @@
           `;
         }).join("");
 
-        return `<h3 class="cat-heading">${title}</h3>${rowsHtml}`;
+        return `${headerHtml}${rowsHtml}`;
       }).join("");
     }
 
@@ -1203,6 +1456,7 @@
     }
 
     function openCartModal() {
+      renderOrderModeUI();
       renderCartModal();
       document.getElementById("cartModal").classList.add("open");
     }
@@ -1219,11 +1473,15 @@
         return `• ${qty}x ${item.es} (${formatEur(sub)})`;
       }).filter(Boolean);
 
+      const modeCfg = ORDER_MODES[currentOrderMode];
+      const detailVal = (document.getElementById("modeDetailInput").value || "").trim();
+      const detailLine = detailVal ? `\n*${modeCfg.waField}:* ${detailVal}` : "";
+
       const noteEl = document.getElementById("orderNoteInput");
       const note = noteEl ? noteEl.value.trim() : "";
-      const noteLine = note ? `\n*Nota:* ${note}` : "";
+      const noteLine = note ? `\n*Observaciones:* ${note}` : "";
 
-      const msg = `Hola, esto es una *prueba de pedido* desde la muestra digital de *${CONFIG.name}*:\n\n${lines.join("\n")}${noteLine}\n\n*Total simulado:* ${formatEur(total)}`;
+      const msg = `Hola, esto es una *prueba de pedido* desde la muestra digital de *${CONFIG.name}*:\n\n*Modalidad:* ${modeCfg.waTitle}${detailLine}\n\n${lines.join("\n")}${noteLine}\n\n*Total simulado:* ${formatEur(total)}`;
       return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
     }
 
@@ -1264,7 +1522,14 @@
       }
     });
 
+    document.getElementById("modeDetailInput").addEventListener("input", () => {
+      if (document.getElementById("cartModal").classList.contains("open")) {
+        renderCartModal();
+      }
+    });
+
     // Inicializar
+    renderOrderModeUI();
     renderAllergenChips();
     renderMenu();
   </script>
