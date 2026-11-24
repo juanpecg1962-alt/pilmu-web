@@ -4,18 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>Bar Es Cau · Carta Digital y Pedidos</title>
-  <meta name="description" content="Variados tradicionales, pa amb oli con trampó, bocadillos recién hechos y hamburguesas en Ronda Felanitx, 65." />
+  <meta name="description" content="Variados tradicionales, pa amb oli, trampó, bocadillos recién hechos y hamburguesas en Ronda Felanitx, 65." />
 
-  <!-- Configuración de Aplicación (PWA / Pantalla Completa) -->
+  <!-- PWA / Pantalla Completa -->
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Bar Es Cau" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#141416" />
+  <meta name="theme-color" content="#0d0d0f" />
 
-  <!-- Iconos y Manifest propios de Bar Es Cau -->
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
-  <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
   <link rel="manifest" href="manifest.json" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,20 +22,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-canvas: #09090b;
-      --bg-surface: #131317;
-      --bg-elevated: #1b1b21;
-      --glass: rgba(19, 19, 23, 0.84);
+      --bg-canvas: #0d0d0f;
+      --bg-surface: #16161a;
+      --bg-elevated: #1f1f25;
+      --glass: rgba(22, 22, 26, 0.88);
       --gold: #d4af37;
-      --gold-light: #e8cb6b;
-      --gold-soft: rgba(212, 175, 55, 0.13);
-      --gold-border: rgba(212, 175, 55, 0.32);
+      --gold-light: #e7c862;
+      --gold-soft: rgba(212, 175, 55, 0.14);
+      --gold-border: rgba(212, 175, 55, 0.34);
       --terracotta: #c84b31;
       --whatsapp: #25d366;
       --text-primary: #f6f3ec;
-      --text-secondary: #9e9a91;
-      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-secondary: #a39f96;
+      --border-subtle: rgba(255, 255, 255, 0.09);
       --radius-lg: 22px;
+      --radius-md: 15px;
     }
 
     * {
@@ -55,7 +55,7 @@
       background-color: var(--bg-canvas);
       color: var(--text-primary);
       line-height: 1.5;
-      padding-bottom: 96px;
+      padding-bottom: 105px;
       overflow-x: hidden;
     }
 
@@ -63,33 +63,18 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
     }
 
-    /* Gestión de vistas (Portada vs Carta dedicada) */
-    .view-screen {
-      display: none;
-      animation: fadeScreen 0.25s ease;
-    }
-
-    .view-screen.active {
-      display: block;
-    }
-
-    @keyframes fadeScreen {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Barra superior flotante de Portada */
+    /* Barra superior flotante */
     .navbar {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 40;
+      z-index: 50;
       padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(9, 9, 11, 0.94), rgba(9, 9, 11, 0));
+      background: linear-gradient(to bottom, rgba(13,13,15,0.94), rgba(13,13,15,0));
       pointer-events: none;
     }
 
@@ -102,15 +87,15 @@
       align-items: center;
       gap: 8px;
       background: var(--glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-subtle);
       padding: 6px 13px;
       border-radius: 999px;
-      font-size: 0.76rem;
+      font-size: 0.77rem;
       font-weight: 600;
       color: var(--text-primary);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
     }
 
     .dot {
@@ -127,18 +112,24 @@
       box-shadow: 0 0 10px var(--terracotta);
     }
 
-    .lang-switch {
+    /* Selector de idioma píldora doble con ambas banderas SVG */
+    .lang-pill-double {
       display: inline-flex;
+      align-items: center;
       background: var(--glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--gold-border);
       border-radius: 999px;
       padding: 3px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      gap: 2px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
     }
 
-    .lang-btn {
+    .lang-opt {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       background: transparent;
       border: none;
       color: var(--text-secondary);
@@ -150,15 +141,34 @@
       transition: all 0.2s ease;
     }
 
-    .lang-btn.active {
+    .lang-opt.active {
       background: var(--gold);
-      color: #111113;
+      color: #121214;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
     }
 
-    /* Portada Hero escenográfica */
+    .flag-svg {
+      width: 15px;
+      height: 11px;
+      border-radius: 2px;
+      display: block;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+    }
+
+    /* Vista Portada */
+    #coverView {
+      display: block;
+    }
+
+    #coverView.hidden {
+      display: none;
+    }
+
+    /* Portada Hero */
     .hero {
       position: relative;
-      padding: 84px 18px 28px;
+      padding: 82px 18px 24px;
       overflow: hidden;
     }
 
@@ -168,35 +178,39 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.32) contrast(1.08);
-      transform: scale(1.03);
+      filter: brightness(0.35) contrast(1.06);
+      transform: scale(1.02);
     }
 
     .hero-gradient {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at 50% 24%, rgba(212, 175, 55, 0.16) 0%, transparent 52%),
-        linear-gradient(to bottom, rgba(9, 9, 11, 0.2) 0%, rgba(9, 9, 11, 0.76) 56%, var(--bg-canvas) 100%);
+      background: radial-gradient(circle at 50% 24%, rgba(212, 175, 55, 0.14), transparent 55%),
+        linear-gradient(
+          to bottom,
+          rgba(13, 13, 15, 0.25) 0%,
+          rgba(13, 13, 15, 0.78) 58%,
+          var(--bg-canvas) 100%
+        );
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 520px;
+      max-width: 540px;
       width: 100%;
       margin: 0 auto;
       text-align: center;
     }
 
     .avatar-ring {
-      width: 102px;
-      height: 102px;
+      width: 98px;
+      height: 98px;
       margin: 0 auto 14px;
       border-radius: 50%;
       padding: 3px;
-      background: linear-gradient(135deg, var(--gold-light), var(--gold), rgba(212, 175, 55, 0.2));
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65), 0 0 28px rgba(212, 175, 55, 0.18);
+      background: linear-gradient(135deg, var(--gold), rgba(212, 175, 55, 0.25));
+      box-shadow: 0 0 36px rgba(212, 175, 55, 0.22), 0 12px 28px rgba(0, 0, 0, 0.6);
     }
 
     .avatar-inner {
@@ -214,85 +228,54 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: scale(1.06);
     }
 
     .location-chip {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.72rem;
-      letter-spacing: 0.09em;
+      font-size: 0.73rem;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--gold-light);
+      color: var(--gold);
       font-weight: 700;
       text-decoration: none;
-      background: rgba(212, 175, 55, 0.1);
+      background: rgba(212, 175, 55, 0.12);
       border: 1px solid var(--gold-border);
-      padding: 5px 14px;
+      padding: 5px 13px;
       border-radius: 999px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .hero-title {
-      font-size: clamp(2.65rem, 7vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 3.3rem);
       font-weight: 700;
-      line-height: 1.02;
+      line-height: 1.05;
       color: #ffffff;
-      letter-spacing: 0.01em;
     }
 
     .hero-tagline {
-      max-width: 460px;
-      margin: 10px auto 24px;
-      color: #d4d0c7;
-      font-size: 0.92rem;
+      max-width: 470px;
+      margin: 8px auto 20px;
+      color: #d6d2c9;
+      font-size: 0.91rem;
     }
 
-    /* Botón Protagonista Dorado + 3 Accesos apilados en vertical */
+    /* Botonera principal apilada en vertical (sin duplicados de WhatsApp) */
     .vertical-actions {
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 10px;
       width: 100%;
       margin: 0 auto;
-    }
-
-    .hero-cta-gold {
-      width: 100%;
-      background: linear-gradient(135deg, #ebd075 0%, #d4af37 55%, #b89225 100%);
-      color: #111113;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      border-radius: 18px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 1.02rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 14px 30px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.45);
-      transition: transform 0.16s ease, box-shadow 0.2s ease;
-    }
-
-    .hero-cta-gold:active {
-      transform: scale(0.985);
-    }
-
-    .cta-sub-pill {
-      font-size: 0.72rem;
-      font-weight: 700;
-      background: rgba(17, 17, 19, 0.14);
-      padding: 4px 10px;
-      border-radius: 999px;
-      letter-spacing: 0.03em;
+      text-align: left;
     }
 
     .action-row-btn {
       width: 100%;
-      background: linear-gradient(180deg, rgba(26, 26, 32, 0.88), rgba(18, 18, 22, 0.92));
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: var(--glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-subtle);
       color: var(--text-primary);
       border-radius: 16px;
@@ -301,19 +284,29 @@
       align-items: center;
       justify-content: space-between;
       text-decoration: none;
+      font-family: inherit;
       font-size: 0.94rem;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
-      transition: transform 0.15s ease, border-color 0.2s ease;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+      transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
     }
 
     .action-row-btn:hover {
       border-color: var(--gold-border);
+      background: rgba(32, 32, 38, 0.95);
     }
 
     .action-row-btn:active {
       transform: scale(0.985);
+    }
+
+    .action-row-btn.gold-cta {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #121214;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 10px 26px rgba(212, 175, 55, 0.28);
     }
 
     .action-left {
@@ -322,37 +315,89 @@
       gap: 12px;
     }
 
-    .action-icon-box {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: var(--gold-soft);
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
+    .action-icon {
+      font-size: 1.2rem;
+      line-height: 1;
     }
 
     .action-arrow {
       font-size: 0.95rem;
-      color: var(--gold);
-      opacity: 0.85;
+      opacity: 0.8;
+      transition: transform 0.2s ease;
     }
 
-    /* Contenedor principal */
+    .action-row-btn.expanded .action-arrow {
+      transform: rotate(90deg);
+    }
+
+    /* Desplegable inline de Wi-Fi Clientes justo debajo del botón */
+    .wifi-inline-drawer {
+      display: none;
+      background: var(--bg-surface);
+      border: 1px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 15px 16px;
+      margin-top: -2px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+      animation: fadeSlideDown 0.2s ease;
+    }
+
+    .wifi-inline-drawer.open {
+      display: block;
+    }
+
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wifi-inline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 11px;
+    }
+
+    @media (max-width: 420px) {
+      .wifi-inline-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .wifi-inline-field {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 9px 12px;
+    }
+
+    .wifi-inline-label {
+      font-size: 0.69rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+
+    .wifi-inline-val {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      word-break: break-all;
+    }
+
+    /* Contenedor principal portada */
     .main-wrap {
-      max-width: 720px;
+      max-width: 740px;
       margin: 0 auto;
       padding: 0 16px;
     }
 
-    /* Galería fotográfica horizontal (clicable hacia la carta, sin botones encima) */
     .section-label-row {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin: 8px 0 12px;
+      margin: 10px 0 12px;
     }
 
     .section-heading {
@@ -362,19 +407,20 @@
     }
 
     .section-sub {
-      font-size: 0.78rem;
+      font-size: 0.79rem;
       color: var(--gold);
       font-weight: 500;
     }
 
+    /* Galería de productos (limpia, sin botones encima, clic abre la carta) */
     .gallery-strip {
       display: flex;
       gap: 12px;
       overflow-x: auto;
-      padding-bottom: 6px;
+      padding-bottom: 8px;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .gallery-strip::-webkit-scrollbar {
@@ -383,31 +429,22 @@
 
     .photo-card {
       position: relative;
-      flex: 0 0 215px;
-      height: 152px;
+      flex: 0 0 210px;
+      height: 150px;
       border-radius: 18px;
       overflow: hidden;
       scroll-snap-align: start;
       border: 1px solid var(--border-subtle);
       background: var(--bg-surface);
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.32);
       cursor: pointer;
-      transition: transform 0.16s ease, border-color 0.2s ease;
-    }
-
-    .photo-card:hover {
-      border-color: var(--gold-border);
-    }
-
-    .photo-card:active {
-      transform: scale(0.97);
     }
 
     .photo-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease;
+      transition: transform 0.35s ease;
     }
 
     .photo-card:hover img {
@@ -417,52 +454,56 @@
     .photo-caption {
       position: absolute;
       inset: auto 0 0 0;
-      padding: 24px 12px 10px;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.88), transparent);
+      padding: 26px 12px 10px;
+      background: linear-gradient(to top, rgba(0,0,0,0.88), transparent);
       font-size: 0.81rem;
       font-weight: 600;
       color: #fff;
+      line-height: 1.25;
     }
 
-    /* Bloque de Reseñas (Conforme a políticas de Google) */
+    /* Bloque de Reseñas y Sugerencias (conforme a Google) */
     .review-card {
-      background: linear-gradient(155deg, var(--bg-surface), #18181e);
+      background: linear-gradient(145deg, var(--bg-surface), #1b1b22);
       border: 1px solid var(--gold-border);
       border-radius: var(--radius-lg);
-      padding: 24px 18px;
-      margin-bottom: 18px;
+      padding: 22px 18px;
+      margin: 10px 0 20px;
       text-align: center;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
     }
 
     .eyebrow {
       display: inline-block;
       font-size: 0.7rem;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--gold);
       font-weight: 700;
     }
 
-    .review-actions {
+    .review-actions-stack {
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 10px;
-      margin-top: 16px;
+      max-width: 380px;
+      margin: 16px auto 0;
     }
 
-    .cta-subtle-wa {
-      background: rgba(37, 211, 102, 0.12);
-      border: 1px solid rgba(37, 211, 102, 0.35);
-      color: #d8f3dc;
+    .btn-suggestion {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
     }
 
-    /* Bloque de Horarios y Ubicación */
+    .btn-suggestion:hover {
+      border-color: var(--gold-border);
+    }
+
+    /* Horarios y Contacto */
     .details-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 18px;
     }
 
@@ -480,7 +521,7 @@
     }
 
     .detail-box h3 {
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       color: var(--gold);
       margin-bottom: 10px;
     }
@@ -490,7 +531,7 @@
       justify-content: space-between;
       font-size: 0.85rem;
       padding: 7px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
       gap: 10px;
     }
 
@@ -498,18 +539,29 @@
       border-bottom: none;
     }
 
-    /* =======================================================
-       VISTA DEDICADA DE LA CARTA (COMPACTA Y ESTILIZADA)
-       ======================================================= */
+    /* VISTA DEDICADA DE LA CARTA DIGITAL */
+    #menuView {
+      display: none;
+      min-height: 100vh;
+      background: var(--bg-canvas);
+      padding-top: 64px;
+    }
+
+    #menuView.active {
+      display: block;
+    }
+
     .menu-sticky-header {
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 42;
-      background: rgba(9, 9, 11, 0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      left: 0;
+      right: 0;
+      z-index: 55;
+      background: rgba(13, 13, 15, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 11px 16px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -518,35 +570,31 @@
 
     .back-home-btn {
       background: var(--bg-elevated);
-      border: 1px solid var(--gold-border);
-      color: var(--gold-light);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
       padding: 7px 13px;
       border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-size: 0.82rem;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
     }
 
-    .back-home-btn:active {
-      transform: scale(0.96);
-    }
-
     .menu-header-right {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
     }
 
     .allergen-toggle-btn {
-      background: var(--bg-elevated);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       color: var(--text-primary);
       padding: 7px 12px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.79rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
@@ -560,53 +608,13 @@
       color: var(--gold);
     }
 
-    .menu-view-body {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 14px 14px 20px;
-    }
-
-    .editorial-notice {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(200, 75, 49, 0.07));
-      border: 1px solid var(--gold-border);
-      border-radius: 16px;
-      padding: 11px 14px;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .notice-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: var(--gold-soft);
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.05rem;
-      flex-shrink: 0;
-    }
-
-    .notice-body {
-      font-size: 0.8rem;
-      line-height: 1.4;
-      color: #e4e0d8;
-    }
-
-    .notice-body strong {
-      color: var(--gold);
-    }
-
     .allergen-drawer {
       display: none;
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      border-radius: 15px;
-      padding: 12px;
-      margin-bottom: 14px;
+      border-radius: 16px;
+      padding: 13px;
+      margin: 10px 0 14px;
     }
 
     .allergen-drawer.open {
@@ -616,7 +624,7 @@
     .allergen-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 7px;
       margin-top: 8px;
     }
 
@@ -624,9 +632,9 @@
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
       color: var(--text-secondary);
-      padding: 5px 10px;
+      padding: 5px 11px;
       border-radius: 999px;
-      font-size: 0.74rem;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
     }
@@ -637,51 +645,83 @@
       color: #ffb8a8;
     }
 
-    /* Tarjetas de Carta Compactas */
+    .editorial-notice {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.11), rgba(200, 75, 49, 0.08));
+      border: 1px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin: 12px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .notice-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--gold-soft);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .notice-body {
+      font-size: 0.81rem;
+      color: #e4e0d8;
+      line-height: 1.4;
+    }
+
+    .notice-body strong {
+      color: var(--gold);
+    }
+
+    /* Secciones compactas de Carta por orden */
     .menu-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 18px;
-      padding: 14px 14px 10px;
-      margin-bottom: 13px;
+      padding: 16px 14px;
+      margin-bottom: 16px;
     }
 
     .menu-card-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.22);
-      padding-bottom: 7px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 9px;
       margin-bottom: 4px;
       gap: 8px;
       flex-wrap: wrap;
     }
 
     .menu-card-title {
-      font-size: 1.48rem;
+      font-size: 1.55rem;
       color: var(--gold);
       font-weight: 700;
-      line-height: 1.15;
     }
 
     .menu-card-note {
-      font-size: 0.73rem;
+      font-size: 0.75rem;
       color: var(--text-secondary);
     }
 
-    /* Fila compacta de plato */
     .dish-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 7px 0;
+      padding: 9px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.045);
       gap: 10px;
     }
 
     .dish-row:last-child {
       border-bottom: none;
-      padding-bottom: 2px;
+      padding-bottom: 0;
     }
 
     .dish-meta {
@@ -697,30 +737,26 @@
     }
 
     .dish-title {
-      font-size: 0.91rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--text-primary);
-      line-height: 1.28;
-    }
-
-    .inline-allergens {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 0.72rem;
-      opacity: 0.85;
     }
 
     .dish-sub {
-      font-size: 0.74rem;
+      font-size: 0.77rem;
       color: var(--text-secondary);
-      line-height: 1.25;
       margin-top: 1px;
     }
 
+    .al-inline-badge {
+      font-size: 0.74rem;
+      opacity: 0.85;
+    }
+
+    /* Controles de precio y suma/resta directa (- / qty / +) en la carta */
     .price-pills {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       flex-shrink: 0;
     }
 
@@ -728,14 +764,15 @@
       background: var(--bg-elevated);
       border: 1px solid var(--gold-border);
       color: var(--text-primary);
-      border-radius: 10px;
-      padding: 4px 9px;
+      border-radius: 11px;
+      padding: 5px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 60px;
+      min-width: 64px;
       cursor: pointer;
-      transition: all 0.14s ease;
+      font-family: inherit;
+      transition: all 0.15s ease;
     }
 
     .add-price-pill:hover {
@@ -744,22 +781,75 @@
     }
 
     .add-price-pill:active {
-      transform: scale(0.94);
+      transform: scale(0.95);
     }
 
     .pill-size {
-      font-size: 0.58rem;
+      font-size: 0.6rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: var(--gold);
       font-weight: 700;
-      line-height: 1.1;
     }
 
     .pill-amount {
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      line-height: 1.2;
+    }
+
+    .dish-stepper-box {
+      background: var(--gold-soft);
+      border: 1px solid var(--gold);
+      border-radius: 11px;
+      padding: 4px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 78px;
+    }
+
+    .stepper-top-info {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 2px;
+      white-space: nowrap;
+    }
+
+    .stepper-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-mini-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      border: none;
+      background: var(--gold);
+      color: #121214;
+      font-weight: 800;
+      font-size: 0.95rem;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-mini-btn.minus {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--gold-border);
+    }
+
+    .step-qty-val {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #fff;
+      min-width: 14px;
+      text-align: center;
     }
 
     /* Barra flotante del carrito */
@@ -769,17 +859,17 @@
       left: 50%;
       transform: translateX(-50%) translateY(150%);
       width: calc(100% - 26px);
-      max-width: 692px;
+      max-width: 714px;
       background: linear-gradient(135deg, #25d366, #1db954);
       color: #06210f;
-      border-radius: 16px;
-      padding: 13px 16px;
+      border-radius: 17px;
+      padding: 13px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-weight: 700;
-      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6);
-      z-index: 45;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.58);
+      z-index: 56;
       cursor: pointer;
       transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -791,20 +881,20 @@
     .cart-pill-count {
       background: #06210f;
       color: #fff;
-      padding: 2px 9px;
+      padding: 3px 10px;
       border-radius: 999px;
       font-size: 0.8rem;
-      margin-right: 7px;
+      margin-right: 8px;
     }
 
-    /* Modales (Wi-Fi y Carrito) */
+    /* Modal Carrito WhatsApp con 3 modalidades y selector de mesa */
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 60;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 65;
       display: none;
       align-items: flex-end;
       justify-content: center;
@@ -820,11 +910,11 @@
       border-top-left-radius: 26px;
       border-top-right-radius: 26px;
       width: 100%;
-      max-width: 540px;
+      max-width: 560px;
       padding: 22px 18px 28px;
-      max-height: 90vh;
+      max-height: 92vh;
       overflow-y: auto;
-      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.65);
     }
 
     .sheet-top {
@@ -845,29 +935,10 @@
       font-size: 1rem;
     }
 
-    /* Tarjeta Wi-Fi (sin QR, copia en un toque) */
-    .wifi-card-box {
-      background: var(--bg-elevated);
-      border: 1px solid var(--gold-border);
-      border-radius: 20px;
-      padding: 18px;
-    }
-
-    .wifi-cred-row {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 11px 14px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .mode-switch {
+    .mode-switch-3 {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
       margin-bottom: 12px;
     }
 
@@ -875,14 +946,50 @@
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
       color: var(--text-secondary);
-      padding: 9px;
+      padding: 9px 6px;
       border-radius: 12px;
-      font-size: 0.84rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.25;
+    }
+
+    .mode-btn.selected {
+      border-color: var(--gold);
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .location-subpanel {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 11px 12px;
+      margin-bottom: 12px;
+    }
+
+    .quick-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 9px;
+    }
+
+    .quick-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
     }
 
-    .mode-btn.selected {
+    .quick-chip.active {
       border-color: var(--gold);
       background: var(--gold-soft);
       color: var(--gold);
@@ -892,7 +999,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 0;
+      padding: 9px 0;
       border-bottom: 1px solid var(--border-subtle);
       gap: 10px;
     }
@@ -916,13 +1023,13 @@
 
     .notes-input {
       width: 100%;
-      background: var(--bg-elevated);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       color: var(--text-primary);
-      padding: 11px 13px;
-      border-radius: 13px;
-      font-size: 0.88rem;
-      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.86rem;
       outline: none;
     }
 
@@ -937,17 +1044,18 @@
       color: #ffb6a6;
       padding: 9px 12px;
       border-radius: 12px;
-      font-size: 0.8rem;
-      margin-bottom: 10px;
+      font-size: 0.79rem;
+      margin-bottom: 12px;
     }
 
     .cta-full {
       width: 100%;
-      padding: 13px;
+      padding: 13px 16px;
       border-radius: 14px;
       border: none;
+      font-family: inherit;
       font-weight: 700;
-      font-size: 0.94rem;
+      font-size: 0.93rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -970,40 +1078,56 @@
       text-align: center;
       color: var(--text-secondary);
       font-size: 0.76rem;
-      margin: 18px 0 8px;
+      margin: 20px 0 8px;
     }
   </style>
 </head>
 <body>
 
-  <!-- =========================================================
-       PANTALLA 1: PORTADA BOUTIQUE
-       ========================================================= -->
-  <div id="homeView" class="view-screen active">
+  <!-- ================= VISTA 1: PORTADA PRINCIPAL ================= -->
+  <div id="coverView">
+    <!-- Barra superior flotante -->
     <nav class="navbar">
       <div class="status-badge">
         <span class="dot" id="liveDot"></span>
         <span id="liveStatusText">Comprobando horario...</span>
       </div>
 
-      <div class="lang-switch" role="group" aria-label="Selector de idioma">
-        <button type="button" class="lang-btn active" data-lang-btn="es" onclick="setLang('es')">ES</button>
-        <button type="button" class="lang-btn" data-lang-btn="en" onclick="setLang('en')">EN</button>
+      <!-- Píldora doble con ambas banderas SVG visibles -->
+      <div class="lang-pill-double" role="group" aria-label="Selector de idioma">
+        <button type="button" class="lang-opt active" data-lang-btn="es" onclick="setLang('es')">
+          <svg class="flag-svg" viewBox="0 0 24 16" aria-hidden="true">
+            <rect width="24" height="16" fill="#AA151B"/>
+            <rect y="4" width="24" height="8" fill="#F1BF00"/>
+          </svg>
+          <span>ES</span>
+        </button>
+        <button type="button" class="lang-opt" data-lang-btn="en" onclick="setLang('en')">
+          <svg class="flag-svg" viewBox="0 0 24 16" aria-hidden="true">
+            <rect width="24" height="16" fill="#012169"/>
+            <path d="M0,0 L24,16 M24,0 L0,16" stroke="#FFFFFF" stroke-width="3"/>
+            <path d="M0,0 L24,16 M24,0 L0,16" stroke="#C8102E" stroke-width="1.6"/>
+            <path d="M12,0 V16 M0,8 H24" stroke="#FFFFFF" stroke-width="5"/>
+            <path d="M12,0 V16 M0,8 H24" stroke="#C8102E" stroke-width="3"/>
+          </svg>
+          <span>EN</span>
+        </button>
       </div>
     </nav>
 
+    <!-- Portada Hero -->
     <header class="hero">
-      <img class="hero-bg" id="heroBgImg" alt="Ambiente Bar Es Cau" />
+      <img class="hero-bg" id="heroBgImg" alt="Variados Bar Es Cau" />
       <div class="hero-gradient"></div>
 
       <div class="hero-content">
         <div class="avatar-ring">
           <div class="avatar-inner">
-            <img src="logo.png" alt="Logo Bar Es Cau" onerror="this.onerror=null; this.src='icon-192.png';" />
+            <img src="logo.png" alt="Logo Bar Es Cau" onerror="this.style.display='none'" />
           </div>
         </div>
 
-        <a class="location-chip" href="https://maps.google.com/?q=Ronda+Felanitx+65" target="_blank" rel="noopener">
+        <a class="location-chip" href="https://maps.google.com/?q=Bar+Es+Cau+Ronda+Felanitx+65" target="_blank" rel="noopener">
           📍 <span data-i18n="heroMap">Ronda Felanitx, 65 · Cómo llegar</span>
         </a>
         <h1 class="hero-title serif">Bar Es Cau</h1>
@@ -1011,27 +1135,44 @@
           Variados tradicionales, pa amb oli, trampó, bocadillos recién hechos y hamburguesas. Para disfrutar aquí, recoger o a domicilio.
         </p>
 
-        <!-- Botón Protagonista Dorado + 3 Accesos apilados en vertical -->
+        <!-- Botonera limpia sin duplicados de WhatsApp -->
         <div class="vertical-actions">
-          <button type="button" class="hero-cta-gold" onclick="openMenuView()">
+          <button type="button" class="action-row-btn gold-cta" onclick="openMenuView()">
             <span class="action-left">
-              <span style="font-size:1.25rem;">📖</span>
+              <span class="action-icon">📖</span>
               <span data-i18n="btnOpenMenu">Ver Carta Digital y Pedir</span>
-            </span>
-            <span class="cta-sub-pill" data-i18n="btnOpenMenuTag">Carta →</span>
-          </button>
-
-          <button type="button" class="action-row-btn" onclick="openWifiModal()">
-            <span class="action-left">
-              <span class="action-icon-box">📶</span>
-              <span data-i18n="btnWifi">Wi-Fi Clientes</span>
             </span>
             <span class="action-arrow">→</span>
           </button>
 
+          <button type="button" class="action-row-btn" id="wifiToggleBtn" onclick="toggleWifiDrawer()">
+            <span class="action-left">
+              <span class="action-icon">📶</span>
+              <span data-i18n="btnWifi">Wi-Fi Clientes</span>
+            </span>
+            <span class="action-arrow">›</span>
+          </button>
+
+          <!-- Wi-Fi desplegable justo debajo del botón dentro de la lista -->
+          <div class="wifi-inline-drawer" id="wifiInlineDrawer">
+            <div class="wifi-inline-grid">
+              <div class="wifi-inline-field">
+                <div class="wifi-inline-label" data-i18n="wifiNetLabel">Red Wi-Fi</div>
+                <div class="wifi-inline-val" id="wifiSsidDisplay">Bar_Es_Cau_Clientes</div>
+              </div>
+              <div class="wifi-inline-field">
+                <div class="wifi-inline-label" data-i18n="wifiPassLabel">Contraseña</div>
+                <div class="wifi-inline-val" id="wifiPassDisplay" style="color:var(--gold);">escau2026</div>
+              </div>
+            </div>
+            <button type="button" class="cta-full cta-gold" id="copyWifiBtn" onclick="copyWifiPassword()" data-i18n="wifiCopyBtn">
+              📋 Copiar contraseña
+            </button>
+          </div>
+
           <a class="action-row-btn" href="https://www.instagram.com/bar_es_cau/" target="_blank" rel="noopener">
             <span class="action-left">
-              <span class="action-icon-box">📸</span>
+              <span class="action-icon">📸</span>
               <span data-i18n="btnInstagram">Síguenos en Instagram</span>
             </span>
             <span class="action-arrow">↗</span>
@@ -1039,7 +1180,7 @@
 
           <a class="action-row-btn" href="#seccion-resenas">
             <span class="action-left">
-              <span class="action-icon-box">⭐</span>
+              <span class="action-icon">⭐</span>
               <span data-i18n="btnReviews">Dejar una reseña</span>
             </span>
             <span class="action-arrow">↓</span>
@@ -1049,28 +1190,27 @@
     </header>
 
     <main class="main-wrap">
-      <!-- Galería Visual de Especialidades (limpia y clicable hacia la Carta Digital) -->
+      <!-- Galería de especialidades (clic abre la Carta Digital) -->
       <div class="section-label-row">
         <h2 class="section-heading serif" data-i18n="galleryTitle">Nuestras Especialidades</h2>
-        <span class="section-sub" data-i18n="gallerySwipe">Desliza para ver →</span>
+        <span class="section-sub" data-i18n="gallerySwipe">Toca para ver la carta →</span>
       </div>
       <div class="gallery-strip" id="galleryStrip"></div>
 
-      <!-- Sección de Reseñas (Acceso directo para todos los clientes) -->
+      <!-- Reseñas en Google y Sugerencias por WhatsApp -->
       <section class="review-card" id="seccion-resenas">
-        <span class="eyebrow" data-i18n="reviewEyebrow">Tu opinión nos importa</span>
-        <h2 class="serif" style="font-size:1.85rem; margin-top:4px;" data-i18n="reviewTitle">¿Qué tal tu experiencia en Bar Es Cau?</h2>
+        <span class="eyebrow" data-i18n="reviewEyebrow">Tu opinión nos ayuda</span>
+        <h2 class="serif" style="font-size:1.75rem; margin-top:4px;" data-i18n="reviewTitle">¿Has disfrutado en Bar Es Cau?</h2>
         <p style="color:var(--text-secondary); font-size:0.85rem; max-width:430px; margin:6px auto 0;" data-i18n="reviewSubtitle">
-          Comparte tu valoración en Google o escríbenos directamente si quieres comentarnos algo.
+          Déjanos tu valoración en Google o envíanos una sugerencia directa por WhatsApp.
         </p>
 
-        <div class="review-actions">
-          <a href="https://search.google.com/local/writereview?placeid=ChIJaZ1rPglJlhIRVXGWaEU8epY" target="_blank" rel="noopener" class="cta-full cta-gold" style="max-width:340px;" data-i18n="reviewGoogleBtn">
-            ⭐ Dejar una reseña en Google
+        <div class="review-actions-stack">
+          <a href="https://maps.google.com/?q=Bar+Es+Cau+Ronda+Felanitx+65" target="_blank" rel="noopener" class="cta-full cta-gold" data-i18n="reviewGoogleBtn">
+            ⭐ Dejar reseña en Google
           </a>
-
-          <button type="button" class="cta-full cta-subtle-wa" style="max-width:340px;" onclick="openDirectFeedbackWa()" data-i18n="reviewDirectWaBtn">
-            💬 Sugerencia o incidencia por WhatsApp
+          <button type="button" class="cta-full btn-suggestion" onclick="openSuggestionWhatsapp()" data-i18n="reviewSuggestionBtn">
+            💬 Enviar sugerencia por WhatsApp
           </button>
         </div>
       </section>
@@ -1093,19 +1233,18 @@
         </div>
       </section>
 
-      <p class="footer-sign" data-i18n="footerHomeSign">
-        Bar Es Cau · Ronda Felanitx, 65
+      <p class="footer-sign" data-i18n="footerSign">
+        Bar Es Cau · Ronda Felanitx, 65 · Carta digital interactiva.
       </p>
     </main>
   </div>
 
-  <!-- =========================================================
-       PANTALLA 2: CARTA DIGITAL DEDICADA Y COMPACTA
-       ========================================================= -->
-  <div id="menuView" class="view-screen">
+  <!-- ================= VISTA 2: CARTA DIGITAL DEDICADA ================= -->
+  <div id="menuView">
     <div class="menu-sticky-header">
       <button type="button" class="back-home-btn" onclick="closeMenuView()">
-        ← <span data-i18n="backHome">Inicio</span>
+        <span>←</span>
+        <span data-i18n="backHome">Inicio</span>
       </button>
 
       <div class="menu-header-right">
@@ -1113,19 +1252,30 @@
           🌾 Alérgenos
         </button>
 
-        <div class="lang-switch" role="group" aria-label="Selector de idioma">
-          <button type="button" class="lang-btn active" data-lang-btn="es" onclick="setLang('es')">ES</button>
-          <button type="button" class="lang-btn" data-lang-btn="en" onclick="setLang('en')">EN</button>
+        <!-- Misma píldora doble con ambas banderas SVG visibles -->
+        <div class="lang-pill-double" role="group" aria-label="Selector de idioma">
+          <button type="button" class="lang-opt active" data-lang-btn="es" onclick="setLang('es')">
+            <svg class="flag-svg" viewBox="0 0 24 16" aria-hidden="true">
+              <rect width="24" height="16" fill="#AA151B"/>
+              <rect y="4" width="24" height="8" fill="#F1BF00"/>
+            </svg>
+            <span>ES</span>
+          </button>
+          <button type="button" class="lang-opt" data-lang-btn="en" onclick="setLang('en')">
+            <svg class="flag-svg" viewBox="0 0 24 16" aria-hidden="true">
+              <rect width="24" height="16" fill="#012169"/>
+              <path d="M0,0 L24,16 M24,0 L0,16" stroke="#FFFFFF" stroke-width="3"/>
+              <path d="M0,0 L24,16 M24,0 L0,16" stroke="#C8102E" stroke-width="1.6"/>
+              <path d="M12,0 V16 M0,8 H24" stroke="#FFFFFF" stroke-width="5"/>
+              <path d="M12,0 V16 M0,8 H24" stroke="#C8102E" stroke-width="3"/>
+            </svg>
+            <span>EN</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="menu-view-body">
-      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
-        <h1 class="serif" style="font-size:2rem; color:#fff;" data-i18n="menuMainTitle">Nuestra Carta</h1>
-        <span style="font-size:0.74rem; color:var(--text-secondary);" data-i18n="tapToOrderHint">Toca un precio para pedir</span>
-      </div>
-
+    <div class="main-wrap">
       <!-- Aviso editorial Variados -->
       <div class="editorial-notice">
         <div class="notice-icon">🥘</div>
@@ -1135,71 +1285,31 @@
       <!-- Filtro desplegable de Alérgenos -->
       <div class="allergen-drawer" id="allergenDrawer">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-          <span style="font-size:0.77rem; color:var(--text-secondary);" data-i18n="allergenHelp">
+          <span style="font-size:0.78rem; color:var(--text-secondary);" data-i18n="allergenHelp">
             Toca los alérgenos que deseas evitar en la carta:
           </span>
-          <button type="button" style="background:var(--bg-elevated); border:1px solid var(--border-subtle); color:var(--text-secondary); padding:3px 9px; border-radius:8px; font-size:0.72rem; cursor:pointer;" onclick="clearAllergenFilters()" data-i18n="clearBtn">
+          <button type="button" style="background:var(--bg-elevated); border:1px solid var(--border-subtle); color:var(--text-secondary); padding:4px 10px; border-radius:8px; font-size:0.73rem; cursor:pointer;" onclick="clearAllergenFilters()" data-i18n="clearBtn">
             Limpiar
           </button>
         </div>
         <div class="allergen-pills" id="allergenFilterPills"></div>
       </div>
 
-      <!-- Listado compacto de la Carta por orden -->
+      <!-- Listado continuo de la Carta por orden (sin buscador ni pestañas) -->
       <div id="menuSections"></div>
-
-      <p class="footer-sign" data-i18n="footerSign">
-        Bar Es Cau · Toca cualquier precio de la carta para preparar tu pedido por WhatsApp.
-      </p>
     </div>
   </div>
 
-  <!-- Barra flotante de pedido (visible en cualquier pantalla si hay productos) -->
+  <!-- Barra flotante de pedido -->
   <div class="floating-cart" id="floatingCart" onclick="openCartSheet()">
     <div>
       <span class="cart-pill-count" id="cartCount">0</span>
       <span data-i18n="viewOrderBtn">Ver pedido WhatsApp</span>
     </div>
-    <span style="font-size:1.05rem;" id="cartTotal">0,00 €</span>
+    <span style="font-size:1.08rem;" id="cartTotal">0,00 €</span>
   </div>
 
-  <!-- Modal Wi-Fi (sin QR, copia en un toque) -->
-  <div class="overlay" id="wifiOverlay" onclick="if(event.target===this) closeWifiModal()">
-    <div class="sheet">
-      <div class="sheet-top">
-        <h2 class="serif" style="font-size:1.65rem; color:var(--gold);" data-i18n="wifiModalTitle">Wi-Fi Clientes</h2>
-        <button type="button" class="close-circle" onclick="closeWifiModal()">✕</button>
-      </div>
-
-      <div class="wifi-card-box">
-        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:14px;" data-i18n="wifiModalSub">
-          Conéctate gratis seleccionando nuestra red en los ajustes Wi-Fi de tu móvil:
-        </p>
-
-        <div class="wifi-cred-row">
-          <div>
-            <div style="font-size:0.71rem; color:var(--text-secondary);" data-i18n="wifiNetLabel">Nombre de la red</div>
-            <strong id="wifiSsidDisplay" style="font-size:0.98rem;">Bar_Es_Cau_Clientes</strong>
-          </div>
-          <span style="font-size:1.15rem;">📶</span>
-        </div>
-
-        <div class="wifi-cred-row" style="margin-bottom:16px;">
-          <div>
-            <div style="font-size:0.71rem; color:var(--text-secondary);" data-i18n="wifiPassLabel">Contraseña</div>
-            <strong id="wifiPassDisplay" style="font-size:1.02rem; letter-spacing:0.04em; color:var(--gold);">escau2026</strong>
-          </div>
-          <span style="font-size:1.05rem;">🔑</span>
-        </div>
-
-        <button type="button" class="cta-full cta-gold" id="copyWifiBtn" onclick="copyWifiPassword()" data-i18n="wifiCopyBtn">
-          📋 Copiar contraseña
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Carrito WhatsApp -->
+  <!-- Modal Carrito WhatsApp con 3 modalidades y selector de número de mesa -->
   <div class="overlay" id="cartOverlay" onclick="if(event.target===this) closeCartSheet()">
     <div class="sheet">
       <div class="sheet-top">
@@ -1207,13 +1317,28 @@
         <button type="button" class="close-circle" onclick="closeCartSheet()">✕</button>
       </div>
 
-      <div class="mode-switch">
-        <button type="button" class="mode-btn selected" id="btnModePickup" onclick="setDeliveryMode('pickup')" data-i18n="modePickup">
-          🛍️ Recoger en el bar
+      <!-- 3 modalidades: En el local (con mesa), Para llevar, A domicilio -->
+      <div class="mode-switch-3">
+        <button type="button" class="mode-btn selected" id="btnModeTable" onclick="setDeliveryMode('table')" data-i18n="modeTable">
+          🪑 En el local
+        </button>
+        <button type="button" class="mode-btn" id="btnModePickup" onclick="setDeliveryMode('pickup')" data-i18n="modePickup">
+          🛍️ Para llevar
         </button>
         <button type="button" class="mode-btn" id="btnModeDelivery" onclick="setDeliveryMode('delivery')" data-i18n="modeDelivery">
           🛵 A domicilio
         </button>
+      </div>
+
+      <!-- Subpanel dinámico según modalidad -->
+      <div class="location-subpanel">
+        <div class="quick-chips-row" id="quickLocationChips"></div>
+        <input
+          type="text"
+          id="locationDetailInput"
+          class="notes-input"
+          placeholder="Número de mesa o ubicación (ej. Mesa 4, Terraza...)"
+        />
       </div>
 
       <div class="alert-min" id="minOrderAlert" data-i18n="minOrderWarn">
@@ -1226,10 +1351,11 @@
         type="text"
         id="orderExtraNotes"
         class="notes-input"
-        placeholder="Dirección de entrega o nota (ej. pan tostado, hora de recogida...)"
+        style="margin-top:12px;"
+        placeholder="Observaciones (ej. pan tostado, sin cebolla...)"
       />
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0 14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 0 14px;">
         <span style="color:var(--text-secondary);" data-i18n="estTotal">Total estimado</span>
         <strong class="serif" style="font-size:1.8rem; color:var(--gold);" id="sheetTotal">0,00 €</strong>
       </div>
@@ -1241,7 +1367,6 @@
   </div>
 
   <script>
-    // Configuración principal del establecimiento
     const CONFIG = {
       name: "Bar Es Cau",
       whatsapp: "34665075934",
@@ -1250,7 +1375,6 @@
       heroImage: "variado-ensaladilla.jpg"
     };
 
-    // Diccionario Español / Inglés
     const I18N = {
       es: {
         openUntil: "Abierto · Hasta las {h} h",
@@ -1258,27 +1382,23 @@
         heroMap: "Ronda Felanitx, 65 · Cómo llegar",
         heroBio: "Variados tradicionales, pa amb oli, trampó, bocadillos recién hechos y hamburguesas. Para disfrutar aquí, recoger o a domicilio.",
         btnOpenMenu: "Ver Carta Digital y Pedir",
-        btnOpenMenuTag: "Carta →",
         btnWifi: "Wi-Fi Clientes",
+        wifiNetLabel: "Red Wi-Fi",
+        wifiPassLabel: "Contraseña",
+        wifiCopyBtn: "📋 Copiar contraseña",
+        wifiCopiedBtn: "✓ ¡Contraseña copiada!",
         btnInstagram: "Síguenos en Instagram",
         btnReviews: "Dejar una reseña",
-        backHome: "Inicio",
-        tapToOrderHint: "Toca un precio para pedir",
         galleryTitle: "Nuestras Especialidades",
-        gallerySwipe: "Desliza para ver →",
-        variadosNoticeHtml: "<strong>Variados a domicilio (Jueves a Domingo):</strong> recogida de pedidos hasta las <strong>11:00 h</strong> y reparto hasta las <strong>14:30 h</strong>. Pedido mínimo <strong>15,00 €</strong>.",
-        menuMainTitle: "Nuestra Carta",
-        allergenBtn: "🌾 Alérgenos",
-        allergenBtnActive: "🌾 Alérgenos ({n})",
-        allergenHelp: "Toca los alérgenos que deseas evitar en la carta:",
-        clearBtn: "Limpiar",
-        avoidPrefix: "🚫 Sin ",
-        emptyMenu: "No hay platos disponibles con los filtros de alérgenos seleccionados.",
-        reviewEyebrow: "Tu opinión nos importa",
-        reviewTitle: "¿Qué tal tu experiencia en Bar Es Cau?",
-        reviewSubtitle: "Comparte tu valoración en Google o escríbenos directamente si quieres comentarnos algo.",
-        reviewGoogleBtn: "⭐ Dejar una reseña en Google",
-        reviewDirectWaBtn: "💬 Sugerencia o incidencia por WhatsApp",
+        gallerySwipe: "Toca para ver la carta →",
+        reviewEyebrow: "Tu opinión nos ayuda",
+        reviewTitle: "¿Has disfrutado en Bar Es Cau?",
+        reviewSubtitle: "Déjanos tu valoración en Google o envíanos una sugerencia directa por WhatsApp.",
+        reviewGoogleBtn: "⭐ Dejar reseña en Google",
+        reviewSuggestionBtn: "💬 Enviar sugerencia por WhatsApp",
+        suggestionWaText: "Hola *Bar Es Cau*, os escribo desde vuestra carta digital para compartir una sugerencia:
+
+",
         hoursTitle: "Horario",
         daysMonFri: "Lunes a Viernes",
         daysSat: "Sábados",
@@ -1287,20 +1407,28 @@
         contactTitle: "Contacto y Local",
         lblAddress: "Dirección",
         lblMobile: "WhatsApp / Móvil",
-        footerHomeSign: "Bar Es Cau · Ronda Felanitx, 65",
-        footerSign: "Bar Es Cau · Toca cualquier precio de la carta para preparar tu pedido por WhatsApp.",
+        footerSign: "Bar Es Cau · Ronda Felanitx, 65 · Carta digital interactiva.",
+        backHome: "Inicio",
+        variadosNoticeHtml: "<strong>Variados a domicilio (Jueves a Domingo):</strong> recogida de pedidos hasta las <strong>11:00 h</strong> y reparto hasta las <strong>14:30 h</strong>. Pedido mínimo <strong>15,00 €</strong>.",
+        allergenBtn: "🌾 Alérgenos",
+        allergenBtnActive: "🌾 Alérgenos ({n})",
+        allergenHelp: "Toca los alérgenos que deseas evitar en la carta:",
+        clearBtn: "Limpiar",
+        avoidPrefix: "🚫 Sin ",
+        emptyMenu: "No hay platos disponibles con los filtros de alérgenos seleccionados.",
         viewOrderBtn: "Ver pedido WhatsApp",
-        wifiModalTitle: "Wi-Fi Clientes",
-        wifiModalSub: "Conéctate gratis seleccionando nuestra red en los ajustes Wi-Fi de tu móvil:",
-        wifiNetLabel: "Nombre de la red",
-        wifiPassLabel: "Contraseña",
-        wifiCopyBtn: "📋 Copiar contraseña",
-        wifiCopiedBtn: "✓ ¡Contraseña copiada!",
         cartTitle: "Tu Pedido",
-        modePickup: "🛍️ Recoger en el bar",
+        modeTable: "🪑 En el local",
+        modePickup: "🛍️ Para llevar",
         modeDelivery: "🛵 A domicilio",
+        tableChips: ["Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4", "Mesa 5", "Terraza", "Barra"],
+        pickupChips: ["En 10 min", "En 15 min", "En 30 min", "A las 11:00"],
+        deliveryChips: ["Centro Manacor", "Ronda Felanitx", "Zona Na Camel·la"],
+        tablePlaceholder: "Número de mesa o ubicación (ej. Mesa 4, Terraza...)",
+        pickupPlaceholder: "Hora aproximada de recogida (ej. A las 10:30...)",
+        deliveryPlaceholder: "Dirección completa de entrega (calle, número, piso...)",
         minOrderWarn: "⚠️ El reparto a domicilio de Variados tiene un pedido mínimo de 15,00 € (pedidos hasta las 11:00 h).",
-        notesPlaceholder: "Dirección de entrega o nota (ej. pan tostado, hora de recogida...)",
+        notesPlaceholder: "Observaciones (ej. pan tostado, sin cebolla...)",
         estTotal: "Total estimado",
         sendWaOrder: "📲 Enviar Pedido por WhatsApp",
         sizes: {
@@ -1319,27 +1447,23 @@
         heroMap: "Ronda Felanitx, 65 · Directions",
         heroBio: "Traditional Mallorcan tapas (variados), pa amb oli, trampó, freshly made sandwiches & burgers. Dine-in, takeaway or delivery.",
         btnOpenMenu: "View Digital Menu & Order",
-        btnOpenMenuTag: "Menu →",
         btnWifi: "Guest Wi-Fi",
+        wifiNetLabel: "Wi-Fi Network",
+        wifiPassLabel: "Password",
+        wifiCopyBtn: "📋 Copy password",
+        wifiCopiedBtn: "✓ Password copied!",
         btnInstagram: "Follow us on Instagram",
         btnReviews: "Leave a review",
-        backHome: "Home",
-        tapToOrderHint: "Tap any price to order",
         galleryTitle: "Our Specialties",
-        gallerySwipe: "Swipe to explore →",
-        variadosNoticeHtml: "<strong>Home delivery for Variados (Thu–Sun):</strong> orders taken until <strong>11:00 AM</strong>, delivered until <strong>2:30 PM</strong>. Minimum order <strong>€15.00</strong>.",
-        menuMainTitle: "Our Menu",
-        allergenBtn: "🌾 Allergens",
-        allergenBtnActive: "🌾 Allergens ({n})",
-        allergenHelp: "Tap the allergens you want to avoid on the menu:",
-        clearBtn: "Clear",
-        avoidPrefix: "🚫 No ",
-        emptyMenu: "No dishes match the selected allergen filters.",
+        gallerySwipe: "Tap to view menu →",
         reviewEyebrow: "We value your feedback",
-        reviewTitle: "How was your experience at Bar Es Cau?",
-        reviewSubtitle: "Share your review on Google or message us directly if you'd like to tell us anything.",
+        reviewTitle: "Enjoyed your visit to Bar Es Cau?",
+        reviewSubtitle: "Leave us a review on Google or send a direct suggestion via WhatsApp.",
         reviewGoogleBtn: "⭐ Leave a review on Google",
-        reviewDirectWaBtn: "💬 Suggestion or issue via WhatsApp",
+        reviewSuggestionBtn: "💬 Send a suggestion on WhatsApp",
+        suggestionWaText: "Hello *Bar Es Cau*, I'm writing from your digital menu to share a suggestion:
+
+",
         hoursTitle: "Opening Hours",
         daysMonFri: "Monday to Friday",
         daysSat: "Saturdays",
@@ -1348,20 +1472,28 @@
         contactTitle: "Contact & Location",
         lblAddress: "Address",
         lblMobile: "WhatsApp / Mobile",
-        footerHomeSign: "Bar Es Cau · Ronda Felanitx, 65",
-        footerSign: "Bar Es Cau · Tap any price on the menu to build your WhatsApp order.",
+        footerSign: "Bar Es Cau · Ronda Felanitx, 65 · Interactive digital menu.",
+        backHome: "Home",
+        variadosNoticeHtml: "<strong>Home delivery for Variados (Thu–Sun):</strong> orders taken until <strong>11:00 AM</strong>, delivered until <strong>2:30 PM</strong>. Minimum order <strong>€15.00</strong>.",
+        allergenBtn: "🌾 Allergens",
+        allergenBtnActive: "🌾 Allergens ({n})",
+        allergenHelp: "Tap the allergens you want to avoid on the menu:",
+        clearBtn: "Clear",
+        avoidPrefix: "🚫 No ",
+        emptyMenu: "No dishes match the selected allergen filters.",
         viewOrderBtn: "View WhatsApp order",
-        wifiModalTitle: "Guest Wi-Fi",
-        wifiModalSub: "Connect for free by selecting our network in your phone's Wi-Fi settings:",
-        wifiNetLabel: "Network name",
-        wifiPassLabel: "Password",
-        wifiCopyBtn: "📋 Copy password",
-        wifiCopiedBtn: "✓ Password copied!",
         cartTitle: "Your Order",
-        modePickup: "🛍️ Pick up at the bar",
-        modeDelivery: "🛵 Home delivery",
+        modeTable: "🪑 At the table",
+        modePickup: "🛍️ Takeaway",
+        modeDelivery: "🛵 Delivery",
+        tableChips: ["Table 1", "Table 2", "Table 3", "Table 4", "Table 5", "Terrace", "Bar"],
+        pickupChips: ["In 10 min", "In 15 min", "In 30 min", "At 11:00"],
+        deliveryChips: ["Manacor Center", "Ronda Felanitx", "Na Camel·la Area"],
+        tablePlaceholder: "Table number or spot (e.g. Table 4, Terrace...)",
+        pickupPlaceholder: "Approximate pickup time (e.g. At 10:30...)",
+        deliveryPlaceholder: "Full delivery address (street, number, floor...)",
         minOrderWarn: "⚠️ Home delivery for Variados requires a €15.00 minimum order (orders until 11:00 AM).",
-        notesPlaceholder: "Delivery address or note (e.g. toasted bread, pickup time...)",
+        notesPlaceholder: "Notes (e.g. toasted bread, no onion...)",
         estTotal: "Estimated total",
         sendWaOrder: "📲 Send Order via WhatsApp",
         sizes: {
@@ -1396,13 +1528,13 @@
         <rect width="600" height="400" fill="url(#g)"/>
         <circle cx="300" cy="180" r="84" fill="none" stroke="#d4af37" stroke-width="2" stroke-opacity="0.45"/>
         <circle cx="300" cy="180" r="62" fill="#d4af37" fill-opacity="0.12"/>
-        <text x="300" y="188" text-anchor="middle" fill="#d4af37" font-family="Georgia, serif" font-size="26" font-weight="bold">${title}</text>
+        <text x="300" y="188" text-anchor="middle" fill="#d4af37" font-family="Georgia, serif" font-size="24" font-weight="bold">${title}</text>
         <text x="300" y="325" text-anchor="middle" fill="#a39f96" font-family="sans-serif" font-size="14" letter-spacing="3">BAR ES CAU</text>
       </svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
     }
 
-    // Galería exclusiva de productos reales de Bar Es Cau
+    // Galería exclusiva de productos reales de Bar Es Cau (clic abre la carta)
     const GALLERY_ITEMS = [
       {
         es: "Variado Completo con Ensaladilla",
@@ -1470,27 +1602,27 @@
       {
         id: "paamboli",
         titleEs: "Pa amb Oli",
-        titleEn: "Traditional Mallorcan Pa amb Oli",
-        noteEs: "Pan payés con tomate y aceite de oliva",
-        noteEn: "Rustic bread rubbed with tomato & olive oil",
+        titleEn: "Mallorcan Bread with Olive Oil & Tomato (Pa amb Oli)",
+        noteEs: "17 especialidades tradicionales",
+        noteEn: "17 traditional varieties",
         items: [
-          { id: "p1", nameEs: "Jamón", nameEn: "Cured Ham", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p2", nameEs: "Queso", nameEn: "Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p3", nameEs: "Atún", nameEn: "Tuna", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p4", nameEs: "Sardinillas picantes", nameEn: "Spicy Small Sardines", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p5", nameEs: "Anchoas", nameEn: "Anchovies", allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
-          { id: "p6", nameEs: "Anchoas con queso", nameEn: "Anchovies with Cheese", allergens: ["gluten", "pescado", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p7", nameEs: "Pollo", nameEn: "Grilled Chicken", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p8", nameEs: "Pollo queso", nameEn: "Chicken & Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p9", nameEs: "Pollo queso bacon", nameEn: "Chicken, Cheese & Bacon", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
-          { id: "p10", nameEs: "Lomo", nameEn: "Grilled Pork Loin", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p11", nameEs: "Lomo queso", nameEn: "Pork Loin & Cheese", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p12", nameEs: "Lomo queso bacon", nameEn: "Pork Loin, Cheese & Bacon", allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
-          { id: "p13", nameEs: "Salchichas", nameEn: "Sausages", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p14", nameEs: "Panceta", nameEn: "Crispy Pork Belly", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p15", nameEs: "Camaiot", nameEn: "Camaiot (Traditional Mallorcan Cold Cut)", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p16", nameEs: "Tortilla", nameEn: "Spanish Omelette", allergens: ["gluten", "huevo"], prices: [{ label: "Unidad", amount: 3.50 }] },
-          { id: "p17", nameEs: "Pinchos", nameEn: "Marinated Pork Skewers", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] }
+          { id: "p1", nameEs: "Pa amb Oli Jamón", nameEn: "Pa amb Oli · Cured Ham", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p2", nameEs: "Pa amb Oli Queso", nameEn: "Pa amb Oli · Cheese", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p3", nameEs: "Pa amb Oli Atún", nameEn: "Pa amb Oli · Tuna", waPrefix: true, allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p4", nameEs: "Pa amb Oli Sardinillas picantes", nameEn: "Pa amb Oli · Spicy Baby Sardines", waPrefix: true, allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p5", nameEs: "Pa amb Oli Anchoas", nameEn: "Pa amb Oli · Anchovies", waPrefix: true, allergens: ["gluten", "pescado"], prices: [{ label: "Unidad", amount: 3.00 }] },
+          { id: "p6", nameEs: "Pa amb Oli Anchoas con queso", nameEn: "Pa amb Oli · Anchovies & Cheese", waPrefix: true, allergens: ["gluten", "pescado", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p7", nameEs: "Pa amb Oli Pollo", nameEn: "Pa amb Oli · Grilled Chicken", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p8", nameEs: "Pa amb Oli Pollo queso", nameEn: "Pa amb Oli · Chicken & Cheese", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p9", nameEs: "Pa amb Oli Pollo queso bacon", nameEn: "Pa amb Oli · Chicken, Cheese & Bacon", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
+          { id: "p10", nameEs: "Pa amb Oli Lomo", nameEn: "Pa amb Oli · Pork Loin", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p11", nameEs: "Pa amb Oli Lomo queso", nameEn: "Pa amb Oli · Pork Loin & Cheese", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p12", nameEs: "Pa amb Oli Lomo queso bacon", nameEn: "Pa amb Oli · Pork Loin, Cheese & Bacon", waPrefix: true, allergens: ["gluten", "lacteos"], prices: [{ label: "Unidad", amount: 4.00 }] },
+          { id: "p13", nameEs: "Pa amb Oli Salchichas", nameEn: "Pa amb Oli · Sausages", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p14", nameEs: "Pa amb Oli Panceta", nameEn: "Pa amb Oli · Crispy Pork Belly", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p15", nameEs: "Pa amb Oli Camaiot", nameEn: "Pa amb Oli · Traditional Mallorcan Camaiot", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p16", nameEs: "Pa amb Oli Tortilla", nameEn: "Pa amb Oli · Spanish Omelette", waPrefix: true, allergens: ["gluten", "huevo"], prices: [{ label: "Unidad", amount: 3.50 }] },
+          { id: "p17", nameEs: "Pa amb Oli Pinchos", nameEn: "Pa amb Oli · Marinated Pork Skewers", waPrefix: true, allergens: ["gluten"], prices: [{ label: "Unidad", amount: 3.50 }] }
         ]
       },
       {
@@ -1518,7 +1650,7 @@
         id: "hamburguesas",
         titleEs: "Hamburguesas",
         titleEn: "Burgers",
-        noteEs: "En el local o para llevar",
+        noteEs: "Terraza o para llevar",
         noteEn: "Dine-in or takeaway",
         items: [
           { id: "h1", nameEs: "Hamburguesa", nameEn: "Classic Burger", allergens: ["gluten"], prices: [{ label: "Unidad", amount: 2.50 }] },
@@ -1580,39 +1712,34 @@
     let currentLang = "es";
     let excludedAllergens = [];
     let cart = [];
-    let deliveryMode = "pickup";
-    let isMenuOpen = false;
+    let deliveryMode = "table"; // 'table' | 'pickup' | 'delivery'
 
     function eur(n) {
       return n.toFixed(2).replace(".", ",") + " €";
     }
 
-    // Navegación entre Portada y Carta dedicada (con soporte botón Atrás del móvil)
-    function openMenuView(fromPopState = false) {
-      isMenuOpen = true;
-      document.getElementById("homeView").classList.remove("active");
+    // Navegación Portada <-> Carta Digital con soporte botón Atrás
+    function openMenuView(pushHistory = true) {
+      document.getElementById("coverView").classList.add("hidden");
       document.getElementById("menuView").classList.add("active");
-      window.scrollTo({ top: 0, behavior: "instant" });
-      if (!fromPopState && window.history && window.history.pushState) {
+      window.scrollTo(0, 0);
+      if (pushHistory && window.history && window.history.pushState) {
         window.history.pushState({ view: "menu" }, "", "#carta");
       }
     }
 
     function closeMenuView(fromPopState = false) {
-      isMenuOpen = false;
       document.getElementById("menuView").classList.remove("active");
-      document.getElementById("homeView").classList.add("active");
-      window.scrollTo({ top: 0, behavior: "instant" });
-      if (!fromPopState && window.location.hash === "#carta" && window.history && window.history.back) {
+      document.getElementById("coverView").classList.remove("hidden");
+      window.scrollTo(0, 0);
+      if (!fromPopState && window.location.hash === "#carta" && window.history) {
         window.history.back();
       }
     }
 
     window.addEventListener("popstate", () => {
-      if (isMenuOpen && window.location.hash !== "#carta") {
+      if (document.getElementById("menuView").classList.contains("active")) {
         closeMenuView(true);
-      } else if (!isMenuOpen && window.location.hash === "#carta") {
-        openMenuView(true);
       }
     });
 
@@ -1620,6 +1747,7 @@
     function setLang(lang) {
       currentLang = lang;
       document.documentElement.lang = lang;
+
       document.querySelectorAll("[data-lang-btn]").forEach(btn => {
         btn.classList.toggle("active", btn.getAttribute("data-lang-btn") === lang);
       });
@@ -1637,6 +1765,7 @@
       renderGallery();
       renderAllergenFilterPills();
       renderMenu();
+      renderLocationSubpanel();
       syncCartUI();
     }
 
@@ -1665,18 +1794,52 @@
       }
     }
 
-    // Galería deslizante de productos (al hacer clic lleva a la Carta Digital, sin botones encima)
+    // Wi-Fi Clientes desplegable en su sitio
+    function toggleWifiDrawer() {
+      const drawer = document.getElementById("wifiInlineDrawer");
+      const btn = document.getElementById("wifiToggleBtn");
+      const isOpen = drawer.classList.toggle("open");
+      btn.classList.toggle("expanded", isOpen);
+      document.getElementById("wifiSsidDisplay").textContent = CONFIG.wifiSsid;
+      document.getElementById("wifiPassDisplay").textContent = CONFIG.wifiPass;
+    }
+
+    function copyWifiPassword() {
+      const btn = document.getElementById("copyWifiBtn");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(CONFIG.wifiPass);
+      } else {
+        const temp = document.createElement("textarea");
+        temp.value = CONFIG.wifiPass;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+      }
+      btn.textContent = I18N[currentLang].wifiCopiedBtn;
+      setTimeout(() => {
+        btn.textContent = I18N[currentLang].wifiCopyBtn;
+      }, 2200);
+    }
+
+    // Galería limpia (tocar foto abre la Carta Digital)
     function renderGallery() {
       const strip = document.getElementById("galleryStrip");
       strip.innerHTML = GALLERY_ITEMS.map(g => {
         const title = currentLang === "es" ? g.es : g.en;
         return `
-          <div class="photo-card" role="button" tabindex="0" onclick="openMenuView()" onkeydown="if(event.key==='Enter'||event.key===' ') openMenuView()">
-            <img src="${g.url}" alt="${title}" onerror="this.src=makeFallbackArt('${title}')" />
+          <div class="photo-card" onclick="openMenuView()">
+            <img src="${g.url}" alt="${title}" onerror="this.src=makeFallbackArt('${title.replace(/'/g, '')}')" />
             <div class="photo-caption">${title}</div>
           </div>
         `;
       }).join("");
+    }
+
+    // Sugerencias directas por WhatsApp
+    function openSuggestionWhatsapp() {
+      const msg = I18N[currentLang].suggestionWaText;
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
     }
 
     // Filtro de Alérgenos
@@ -1720,7 +1883,12 @@
       renderMenu();
     }
 
-    // Carta compacta continua por orden
+    function getCartQty(key) {
+      const found = cart.find(c => c.key === key);
+      return found ? found.qty : 0;
+    }
+
+    // Carta continua por orden con botones directos + y - en cada fila
     function renderMenu() {
       const container = document.getElementById("menuSections");
       const t = I18N[currentLang];
@@ -1736,21 +1904,40 @@
           const title = currentLang === "es" ? it.nameEs : it.nameEn;
           const desc = currentLang === "es" ? it.descEs : it.descEn;
 
-          const btns = it.prices.map((p, idx) => `
-            <button
-              type="button"
-              class="add-price-pill"
-              onclick="addDish('${cat.id}', '${it.id}', ${idx})"
-            >
-              <span class="pill-size">${t.sizes[p.label] || p.label}</span>
-              <span class="pill-amount">${eur(p.amount)}</span>
-            </button>
-          `).join("");
+          const btns = it.prices.map((p, idx) => {
+            const key = `${it.id}_${idx}`;
+            const qty = getCartQty(key);
+            const sizeLabel = t.sizes[p.label] || p.label;
+
+            if (qty > 0) {
+              return `
+                <div class="dish-stepper-box">
+                  <div class="stepper-top-info">${p.label !== "Unidad" ? sizeLabel + " · " : ""}${eur(p.amount)}</div>
+                  <div class="stepper-controls">
+                    <button type="button" class="step-mini-btn minus" aria-label="Restar" onclick="stepQty('${key}', -1)">−</button>
+                    <span class="step-qty-val">${qty}</span>
+                    <button type="button" class="step-mini-btn" aria-label="Sumar" onclick="addDish('${cat.id}', '${it.id}', ${idx})">+</button>
+                  </div>
+                </div>
+              `;
+            }
+
+            return `
+              <button
+                type="button"
+                class="add-price-pill"
+                onclick="addDish('${cat.id}', '${it.id}', ${idx})"
+              >
+                <span class="pill-size">${sizeLabel}</span>
+                <span class="pill-amount">${eur(p.amount)}</span>
+              </button>
+            `;
+          }).join("");
 
           const alIcons = (it.allergens || []).map(alId => {
             const info = ALLERGENS.find(a => a.id === alId);
             const alName = info ? (currentLang === "es" ? info.es : info.en) : "";
-            return info ? `<span title="${alName}">${info.icon}</span>` : "";
+            return info ? `<span class="al-inline-badge" title="${alName}">${info.icon}</span>` : "";
           }).join("");
 
           return `
@@ -1758,7 +1945,7 @@
               <div class="dish-meta">
                 <div class="dish-title-line">
                   <span class="dish-title">${title}</span>
-                  ${alIcons ? `<span class="inline-allergens">${alIcons}</span>` : ''}
+                  ${alIcons}
                 </div>
                 ${desc ? `<div class="dish-sub">${desc}</div>` : ''}
               </div>
@@ -1770,7 +1957,7 @@
         return `
           <section class="menu-card">
             <div class="menu-card-header">
-              <h2 class="menu-card-title serif">${currentLang === "es" ? cat.titleEs : cat.titleEn}</h2>
+              <h3 class="menu-card-title serif">${currentLang === "es" ? cat.titleEs : cat.titleEn}</h3>
               <span class="menu-card-note">${currentLang === "es" ? cat.noteEs : cat.noteEn}</span>
             </div>
             ${rows}
@@ -1781,30 +1968,27 @@
       container.innerHTML = markup || `<div class="detail-box" style="text-align:center; color:var(--text-secondary);">${t.emptyMenu}</div>`;
     }
 
-    // Carrito y pedido por WhatsApp (mantiene nombres en español claros para la barra)
+    // Carrito y pedido por WhatsApp
     function addDish(catId, itemId, priceIdx) {
       const cat = MENU_CATEGORIES.find(c => c.id === catId);
       const item = cat.items.find(i => i.id === itemId);
       const p = item.prices[priceIdx];
       const key = `${itemId}_${priceIdx}`;
       const found = cart.find(c => c.key === key);
-
-      const fullNameEs = catId === "paamboli" ? `Pa amb Oli de ${item.nameEs}` : item.nameEs;
-      const fullNameEn = catId === "paamboli" ? `Pa amb Oli: ${item.nameEn}` : item.nameEn;
-
       if (found) {
         found.qty += 1;
       } else {
         cart.push({
           key,
           catId,
-          nameEs: fullNameEs,
-          nameEn: fullNameEn,
+          nameEs: item.nameEs,
+          nameEn: item.nameEn,
           sizeEs: p.label,
           price: p.amount,
           qty: 1
         });
       }
+      renderMenu();
       syncCartUI();
     }
 
@@ -1813,6 +1997,7 @@
       if (idx === -1) return;
       cart[idx].qty += delta;
       if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      renderMenu();
       syncCartUI();
       if (!cart.length) closeCartSheet();
     }
@@ -1838,7 +2023,7 @@
               <div style="font-size:0.76rem; color:var(--text-secondary);">${displaySize} · ${eur(c.price)}</div>
             </div>
             <div class="qty-box">
-              <button type="button" class="qty-circle" onclick="stepQty('${c.key}', -1)">-</button>
+              <button type="button" class="qty-circle" onclick="stepQty('${c.key}', -1)">−</button>
               <span style="min-width:18px; text-align:center; font-weight:700;">${c.qty}</span>
               <button type="button" class="qty-circle" onclick="stepQty('${c.key}', 1)">+</button>
             </div>
@@ -1853,12 +2038,49 @@
 
     function setDeliveryMode(mode) {
       deliveryMode = mode;
+      document.getElementById("btnModeTable").classList.toggle("selected", mode === "table");
       document.getElementById("btnModePickup").classList.toggle("selected", mode === "pickup");
       document.getElementById("btnModeDelivery").classList.toggle("selected", mode === "delivery");
+      document.getElementById("locationDetailInput").value = "";
+      renderLocationSubpanel();
       syncCartUI();
     }
 
+    function renderLocationSubpanel() {
+      const t = I18N[currentLang];
+      const chipsWrap = document.getElementById("quickLocationChips");
+      const input = document.getElementById("locationDetailInput");
+      let chips = [];
+
+      if (deliveryMode === "table") {
+        chips = t.tableChips;
+        input.placeholder = t.tablePlaceholder;
+      } else if (deliveryMode === "pickup") {
+        chips = t.pickupChips;
+        input.placeholder = t.pickupPlaceholder;
+      } else {
+        chips = t.deliveryChips;
+        input.placeholder = t.deliveryPlaceholder;
+      }
+
+      const currentVal = input.value.trim();
+      chipsWrap.innerHTML = chips.map(label => `
+        <button
+          type="button"
+          class="quick-chip ${currentVal === label ? 'active' : ''}"
+          onclick="selectQuickLocation('${label.replace(/'/g, "\'")}')"
+        >${label}</button>
+      `).join("");
+    }
+
+    function selectQuickLocation(val) {
+      const input = document.getElementById("locationDetailInput");
+      input.value = val;
+      renderLocationSubpanel();
+    }
+
     function openCartSheet() {
+      renderLocationSubpanel();
       syncCartUI();
       document.getElementById("cartOverlay").classList.add("open");
     }
@@ -1870,7 +2092,12 @@
     function checkoutWhatsapp() {
       if (!cart.length) return;
       const sum = cart.reduce((s, c) => s + c.qty * c.price, 0);
+      const locDetail = document.getElementById("locationDetailInput").value.trim();
       const notes = document.getElementById("orderExtraNotes").value.trim();
+
+      let modeLabel = "Para tomar en el local";
+      if (deliveryMode === "pickup") modeLabel = "Para llevar / recoger en barra";
+      if (deliveryMode === "delivery") modeLabel = "Reparto a domicilio";
 
       let text = `Hola *${CONFIG.name}*, me gustaría hacer este pedido:
 
@@ -1883,49 +2110,16 @@
       text += `
 *Total estimado:* ${eur(sum)}`;
       text += `
-*Entrega:* ${deliveryMode === "delivery" ? "Reparto a domicilio" : "Recoger en el local"}`;
+*Modalidad:* ${modeLabel}`;
+      if (locDetail) {
+        const detailTitle = deliveryMode === "table" ? "Mesa / Ubicación" : (deliveryMode === "pickup" ? "Recogida" : "Dirección");
+        text += `
+*${detailTitle}:* ${locDetail}`;
+      }
       if (notes) text += `
-*Notas / Dirección:* ${notes}`;
+*Observaciones:* ${notes}`;
 
       window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
-    }
-
-    // Modal Wi-Fi (sin QR, copia en un toque)
-    function openWifiModal() {
-      document.getElementById("wifiSsidDisplay").textContent = CONFIG.wifiSsid;
-      document.getElementById("wifiPassDisplay").textContent = CONFIG.wifiPass;
-      document.getElementById("copyWifiBtn").textContent = I18N[currentLang].wifiCopyBtn;
-      document.getElementById("wifiOverlay").classList.add("open");
-    }
-
-    function closeWifiModal() {
-      document.getElementById("wifiOverlay").classList.remove("open");
-    }
-
-    function copyWifiPassword() {
-      const btn = document.getElementById("copyWifiBtn");
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(CONFIG.wifiPass);
-      } else {
-        const temp = document.createElement("textarea");
-        temp.value = CONFIG.wifiPass;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand("copy");
-        document.body.removeChild(temp);
-      }
-      btn.textContent = I18N[currentLang].wifiCopiedBtn;
-      setTimeout(() => {
-        btn.textContent = I18N[currentLang].wifiCopyBtn;
-      }, 2200);
-    }
-
-    // Canal directo de sugerencias por WhatsApp (sin filtro previo de reseñas)
-    function openDirectFeedbackWa() {
-      const msg = currentLang === "es"
-        ? `Hola *${CONFIG.name}*, os escribo desde vuestra web para comentaros una sugerencia:`
-        : `Hello *${CONFIG.name}*, I'm messaging from your website to share some feedback:`;
-      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
     }
 
     // Inicialización

@@ -1,12 +1,12 @@
 {
   "name": "Bar Es Cau",
-  "short_name": "Bar Es Cau",
-  "description": "Carta digital, variados, pa amb oli y pedidos por WhatsApp de Bar Es Cau.",
+  "short_name": "Es Cau",
+  "description": "Carta digital, variados tradicionales, pa amb oli y pedidos por WhatsApp en Bar Es Cau.",
   "start_url": "/bar_es_cau/",
   "scope": "/bar_es_cau/",
   "display": "standalone",
-  "background_color": "#09090b",
-  "theme_color": "#141416",
+  "background_color": "#0d0d0f",
+  "theme_color": "#d4af37",
   "icons": [
     {
       "src": "icon-192.png",
