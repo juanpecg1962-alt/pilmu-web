@@ -1031,6 +1031,33 @@
       color: #121214;
     }
 
+    .cta-gold-dark {
+      background: linear-gradient(145deg, #5e440d, #3d2b06);
+      border: 1px solid var(--gold);
+      color: var(--text-primary);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      transition: transform 0.15s ease, filter 0.2s ease;
+    }
+
+    .cta-gold-dark:hover {
+      filter: brightness(1.1);
+    }
+
+    .cta-gold-dark:active {
+      transform: scale(0.985);
+    }
+
+    .google-word {
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+    }
+
+    .google-word .g-b { color: #5b9dff; }
+    .google-word .g-r { color: #ff5b4d; }
+    .google-word .g-y { color: #fbbc05; }
+    .google-word .g-g { color: #3ddc68; }
+
     .footer-sign {
       text-align: center;
       color: var(--text-secondary);
@@ -1093,7 +1120,7 @@
           <a class="action-row-btn" href="#seccion-resenas">
             <span class="action-left">
               <span class="action-icon">⭐</span>
-              <span data-i18n="btnReviews">Dejar una reseña</span>
+              <span data-i18n="btnReviews">Dejar Reseña en <span class="google-word"><span class="g-b">G</span><span class="g-r">O</span><span class="g-y">O</span><span class="g-b">G</span><span class="g-g">L</span><span class="g-r">E</span></span></span>
             </span>
             <span class="action-arrow">↓</span>
           </a>
@@ -1151,8 +1178,8 @@
         </p>
 
         <div class="review-actions-stack">
-          <a href="https://maps.google.com/?q=Bar+Es+Cau+Ronda+Felanitx+65" target="_blank" rel="noopener" class="cta-full cta-gold" data-i18n="reviewGoogleBtn">
-            ⭐ Dejar reseña en Google
+          <a id="googleReviewLink" href="https://search.google.com/local/writereview?placeid=ChIJaZ1rPglJlhIRVXGWaEU8epY" target="_blank" rel="noopener" class="cta-full cta-gold-dark" data-i18n="reviewGoogleBtn">
+            ⭐ Dejar Reseña en <span class="google-word"><span class="g-b">G</span><span class="g-r">O</span><span class="g-y">O</span><span class="g-b">G</span><span class="g-g">L</span><span class="g-r">E</span></span>
           </a>
           <button type="button" class="cta-full btn-suggestion" onclick="openSuggestionWhatsapp()" data-i18n="reviewSuggestionBtn">
             💬 Enviar sugerencia por WhatsApp
@@ -1315,6 +1342,7 @@
     const CONFIG = {
       name: "Bar Es Cau",
       whatsapp: "34665075934",
+      placeId: "ChIJaZ1rPglJlhIRVXGWaEU8epY",
       wifiSsid: "Bar_Es_Cau_Clientes",
       wifiPass: "escau2026",
       heroImage: "variado-ensaladilla.jpg"
@@ -1331,13 +1359,13 @@
         wifiCopyBtn: "📋 Copiar contraseña",
         wifiCopiedBtn: "✓ ¡Contraseña copiada!",
         btnInstagram: "Síguenos en Instagram",
-        btnReviews: "Dejar una reseña",
+        btnReviews: 'Dejar Reseña en <span class="google-word"><span class="g-b">G</span><span class="g-r">O</span><span class="g-y">O</span><span class="g-b">G</span><span class="g-g">L</span><span class="g-r">E</span></span>',
         galleryTitle: "Nuestras Especialidades",
         gallerySwipe: "Toca para ver la carta →",
         reviewEyebrow: "Tu opinión nos ayuda",
         reviewTitle: "¿Has disfrutado en Bar Es Cau?",
         reviewSubtitle: "Déjanos tu valoración en Google o envíanos una sugerencia directa por WhatsApp.",
-        reviewGoogleBtn: "⭐ Dejar reseña en Google",
+        reviewGoogleBtn: '⭐ Dejar Reseña en <span class="google-word"><span class="g-b">G</span><span class="g-r">O</span><span class="g-y">O</span><span class="g-b">G</span><span class="g-g">L</span><span class="g-r">E</span></span>',
         reviewSuggestionBtn: "💬 Enviar sugerencia por WhatsApp",
         suggestionWaText: "Hola *Bar Es Cau*, os escribo desde vuestra carta digital para compartir una sugerencia:\n\n",
         hoursTitle: "Horario",
@@ -1392,13 +1420,13 @@
         wifiCopyBtn: "📋 Copy password",
         wifiCopiedBtn: "✓ Password copied!",
         btnInstagram: "Follow us on Instagram",
-        btnReviews: "Leave a review",
+        btnReviews: 'Leave a Review on <span class="google-word"><span class="g-b">G</span><span class="g-r">O</span><span class="g-y">O</span><span class="g-b">G</span><span class="g-g">L</span><span class="g-r">E</span></span>',
         galleryTitle: "Our Specialties",
         gallerySwipe: "Tap to view menu →",
         reviewEyebrow: "We value your feedback",
         reviewTitle: "Enjoyed your visit to Bar Es Cau?",
         reviewSubtitle: "Leave us a review on Google or send a direct suggestion via WhatsApp.",
-        reviewGoogleBtn: "⭐ Leave a review on Google",
+        reviewGoogleBtn: '⭐ Leave a Review on <span class="google-word"><span class="g-b">G</span><span class="g-r">O</span><span class="g-y">O</span><span class="g-b">G</span><span class="g-g">L</span><span class="g-r">E</span></span>',
         reviewSuggestionBtn: "💬 Send a suggestion on WhatsApp",
         suggestionWaText: "Hello *Bar Es Cau*, I'm writing from your digital menu to share a suggestion:\n\n",
         hoursTitle: "Opening Hours",
@@ -1692,8 +1720,19 @@
       const t = I18N[lang];
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
-        if (t[key]) el.textContent = t[key];
+        if (t[key]) {
+          if (t[key].includes("<")) {
+            el.innerHTML = t[key];
+          } else {
+            el.textContent = t[key];
+          }
+        }
       });
+
+      const reviewLinkEl = document.getElementById("googleReviewLink");
+      if (reviewLinkEl && CONFIG.placeId) {
+        reviewLinkEl.href = "https://search.google.com/local/writereview?placeid=" + encodeURIComponent(CONFIG.placeId);
+      }
 
       document.getElementById("variadosNoticeBox").innerHTML = t.variadosNoticeHtml;
       document.getElementById("orderExtraNotes").placeholder = t.notesPlaceholder;
